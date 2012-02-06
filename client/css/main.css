@@ -1,0 +1,38 @@
+body {
+	margin: 0;
+	padding: 0;
+	background: black;
+}
+
+#screenWrapper { /*Simulating small screen and will be removed*/
+	position: absolute;
+	top: 25%;
+	left: 25%;
+}
+
+#screen { /*Simulating small screen and will be removed*/
+	position: absolute;
+	width: 640px;
+	height: 480px;
+	overflow: auto;
+	border: 1px dashed #333;
+	top: -25%;
+	left: -25%;
+}
+
+#pageWrapper {
+	width: 100%;
+	height: 100%;
+	border-collapse: collapse;
+}
+
+#topBar {
+	background: silver;
+	vertical-align: top;
+}
+
+#contentWrapper {
+	background: gray;
+	height: 100%;
+	vertical-align: top;
+}
