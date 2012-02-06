@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>admin</title>
+		<link rel="stylesheet" type="text/css" href="admin_newtemplate.css"/>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+		<div id="background">
+			<div id="menubar">
+				<div id="menuitem">Connected screens<a href="admin.html"><span id="linkspan"></span></a></div>
+				<div id="menuitem">Administrate templates<a href="admin_admintemplate.html"><span id="linkspan"></span></a></div>
+				<div id="menuitem">New template<a href="admin_newtemplate.html"><span id="linkspan"></span></a></div>
+			</div>
+			<div id="content">
+				<form method="post" action="newtemplate.php">
+					<div id="formcontent">
+						<p>
+							Name
+						</p>
+						<p>
+							<input type="text" required="required" name="name"/>
+						</p>
+						<p>
+							Note
+						</p>
+						<p>
+							<textarea id="TAform" name="note"></textarea>
+						</p>
+						<p>
+							<input type="submit"/>
+						</p>
+					</div>
+					<div id="rsscontent">
+						<p>
+							Main content
+						</p>
+						<p>
+							<textarea id="TArss" required="required" name="maincontent"></textarea>
+						</p>
+						<p>
+							Sub content
+						</p>
+						<p>
+							<textarea id="TArss" name="subcontent"></textarea>
+						</p>
+					</div>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
