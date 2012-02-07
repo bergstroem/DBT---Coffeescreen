@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<body>
 		<?php
 			function handleTemplate($mode, $filename){

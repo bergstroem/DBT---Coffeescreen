@@ -1,6 +1,6 @@
-<?php
+﻿<?php
 	if($handle = opendir('.')){
-		echo "<p>Template files:</p>";
+		echo "<div id='templateheader'>Name:</div>";
 		
 		while(false !== ($entry = readdir($handle))){
 			if(!strcmp(substr($entry, -4), ".txt")){
