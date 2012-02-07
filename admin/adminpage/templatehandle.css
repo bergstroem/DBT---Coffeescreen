@@ -76,6 +76,11 @@ p{
 }
 
 /* Form */
+#formbutton{
+	width:100px;
+	height:30px;
+}
+
 #sizebox{
 	width:40px;
 	margin:0 0 0 2px;

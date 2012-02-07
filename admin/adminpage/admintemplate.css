@@ -3,6 +3,7 @@ p{
 	margin:0 0 0 10px;
 }
 
+
 /* Menu */
 
 #menubar{
@@ -43,6 +44,52 @@ p{
 	height:650px;
 	position:absolute;
 	top:50px
+}
+
+#templatelist{
+	width:100%;
+	height:610px;
+	position:relative;
+}
+
+#templateitem{
+	background:teal;
+	width:100% - 10px;
+	height:30px;
+	position:relative;
+	padding:10px 0 0 10px;
+	margin:5px 0 0 0;
+}
+
+#TIedit{
+	background:white;
+	width:100px;
+	height:25px;
+	position:absolute;
+	top:0;
+	left:780px;
+	text-align:center;
+	padding:5px 0 0 0;
+	margin: 5px 0 0 0;
+}
+
+#TIdelete{
+	background:red;
+	width:100px;
+	height:25px;
+	position:absolute;
+	top:0;
+	left:890px;
+	text-align:center;
+	padding:5px 0 0 0;
+	margin: 5px 0 0 0;
+}
+
+#bottombar{
+	background:red;
+	width:100%;
+	height:40px;
+	position:relative;
 }
 
 #linkspan{
