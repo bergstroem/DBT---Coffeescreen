@@ -2,7 +2,7 @@
 	<head>
 		<title>Test</title>
 
-		<style type="text/css">
+		<!--<style type="text/css">
 			body {
 				font:12px/1.4em Verdana, sans-serif;
 				color:#333;
@@ -32,18 +32,19 @@
 				padding:5px 0;
 				border-bottom:1px solid #999;
 			}
-		</style>
+		</style>-->
 	</head>
 	<body>
 
 		<?php
 			require_once('simplepie.inc');
-
+			
+			$feedSourcesArray = explode(";", $_GET["feeds"]);
+			
 			$feed = new SimplePie();
-			$feed->set_feed_url('http://simplepie.org/blog/feed/');
+			$feed->set_feed_url($feedSourcesArray);
 			$feed->init();
 			$feed->handle_content_type();
-			
 			
 			$posts = array();
 			
@@ -58,13 +59,15 @@
 			$response = array();
 			$response['posts'] = $posts;
 
-			$myFile = "testFile.json";
+			echo json_encode($response);
+
+			/*$myFile = "testFile.json";
 			$fp = fopen($myFile, 'w');
 			fwrite($fp, json_encode($response));
-			fclose($fp);
+			fclose($fp);*/
 			
 		?>
-
+		<!--
 		<?php $feed->get_title(); ?>
 	
 			<div class="header">
@@ -87,6 +90,6 @@
 	 
 		<?php endforeach; ?>
 		
-
+		-->
 	</body>
 </html>
