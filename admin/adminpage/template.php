@@ -29,7 +29,7 @@
 			$subcontent = $splity[6];
 		}
 		
-		echo "<div id='formcontent'>
+		echo "<div class='formcontent'>
 			<p>
 				Name
 			</p>
@@ -40,25 +40,25 @@
 				Note
 			</p>
 			<p>
-				<textarea id='TAform' name='note'>$note</textarea>
+				<textarea class='TAform' name='note'>$note</textarea>
 			</p>
 			<p>
-				<input id='formbutton' type='submit' value='Save'/>
-				<button id='formbutton' type='button' onclick=\"window.location.href='admintemplate.php'\">Cancel</button>
+				<input class='formbutton' type='submit' value='Save'/>
+				<button class='formbutton' type='button' onclick=\"window.location.href='admintemplate.php'\">Cancel</button>
 			</p>
 		</div>
-		<div id='rsscontent'>
+		<div class='rsscontent'>
 			<p>
 				Main content
 			</p>
 			<p>
-				<textarea id='TArss' required='required' name='maincontent'>$maincontent</textarea>
+				<textarea class='TArss' required='required' name='maincontent'>$maincontent</textarea>
 			</p>
 			<p>
 				Sub content
 			</p>
 			<p>
-				<textarea id='TArss' name='subcontent'>$subcontent</textarea>
+				<textarea class='TArss' name='subcontent'>$subcontent</textarea>
 			</p>
 		</div>
 		";
