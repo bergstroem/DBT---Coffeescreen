@@ -8,7 +8,7 @@ $(function () {
         // connection is opened and ready to use
         var name = getQueryVariable('name');
         
-	connection.send('SetName: ' + name);
+	connection.send('Connect: ' + name);
     };
 
     connection.onerror = function (error) {

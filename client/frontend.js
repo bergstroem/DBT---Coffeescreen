@@ -21,7 +21,7 @@ function connectToServer () {
         console.log("Name: " + name);
         
         
-		connection.send('SetName: ' + name);
+		connection.send('Connect: ' + name);
     };
 
     connection.onerror = function (error) {

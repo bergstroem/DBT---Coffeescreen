@@ -5,7 +5,6 @@ function Screen(id, name, connection) {
 }
 
 var screens = [];
-var template;
 
 function removeConnection(connection) {
 	for(i = 0; i < screens.length; i++) {
@@ -55,9 +54,6 @@ wsServer = new WebSocketServer({
 // WebSocket server
 wsServer.on('request', function(request) {
     var connection = request.accept(null, request.origin);
-
-	var screen = new Screen(1, connection.socket._peername.address + ":" + connection.socket._peername.port, connection);
-	screens.push(screen);
 	
 
     // This is the most important callback for us, we'll handle
@@ -65,28 +61,27 @@ wsServer.on('request', function(request) {
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
             // process WebSocket message
-			if(message.utf8Data.substring(0, 7) == "SetName")
+			if(message.utf8Data.substring(0, 7) == "Connect")
 			{
 				var name = message.utf8Data.substring(9, message.utf8Data.length);
-				setScreenName(connection, name);
+				var screen = new Screen(1, name, connection);
+				screens.push(screen);
 				console.log("Screen " + screen.name + " connected.");
 				
+				
 				fs.readFile(name, 'utf8', function (err, data) {
-					template = data;
   					if (err) {
   						console.log("Looking for default");
 	  					fs.readFile("default_template", 'utf8', function (err, data) {
-	  						template = data;
 	  						if(err) {
 	  							//Send no data
-	  							template = "No data availible";
-	  							connection.send(template);
+	  							connection.send("No data availible");
 	  						}
-	  						else connection.send(template);
+	  						else connection.send(data);
 	  						
 	  					});
 	  				}
-	  				else connection.send(template);
+	  				else connection.send(data);
 				});
 			}
         }

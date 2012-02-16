@@ -54,9 +54,6 @@ wsServer = new WebSocketServer({
 // WebSocket server
 wsServer.on('request', function(request) {
     var connection = request.accept(null, request.origin);
-
-	var screen = new Screen(1, connection.socket._peername.address + ":" + connection.socket._peername.port, connection);
-	screens.push(screen);
 	
 
     // This is the most important callback for us, we'll handle
@@ -64,11 +61,13 @@ wsServer.on('request', function(request) {
     connection.on('message', function(message) {
         if (message.type === 'utf8') {
             // process WebSocket message
-			if(message.utf8Data.substring(0, 7) == "SetName")
+			if(message.utf8Data.substring(0, 7) == "Connect")
 			{
 				var name = message.utf8Data.substring(9, message.utf8Data.length);
-				setScreenName(connection, name);
+				var screen = new Screen(1, name, connection);
+				screens.push(screen);
 				console.log("Screen " + screen.name + " connected.");
+				
 				
 				fs.readFile(name, 'utf8', function (err, data) {
   					if (err) {
