@@ -55,9 +55,11 @@ function reconnect() {
 		cooldown *= 30;
 	}
 	
-    console.log("Will reconnect in " + (cooldown/1000) + "s.");
-	setTimeout(connectToServer, cooldown);
-	retries++;
+	if(retries < 10) {
+		console.log("Will reconnect in " + (cooldown/1000) + "s.");
+		setTimeout(connectToServer, cooldown);
+		retries++;
+	}
 }
 
 function setConnectionStatus(statusText) {
