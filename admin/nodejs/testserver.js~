@@ -5,6 +5,7 @@ function Screen(id, name, connection) {
 }
 
 var screens = [];
+var template;
 
 function removeConnection(connection) {
 	for(i = 0; i < screens.length; i++) {
@@ -71,18 +72,21 @@ wsServer.on('request', function(request) {
 				console.log("Screen " + screen.name + " connected.");
 				
 				fs.readFile(name, 'utf8', function (err, data) {
+					template = data;
   					if (err) {
   						console.log("Looking for default");
 	  					fs.readFile("default_template", 'utf8', function (err, data) {
+	  						template = data;
 	  						if(err) {
 	  							//Send no data
-	  							connection.send("No data availible");
+	  							template = "No data availible";
+	  							connection.send(template);
 	  						}
-	  						else connection.send(data);
+	  						else connection.send(template);
 	  						
 	  					});
 	  				}
-	  				else connection.send(data);
+	  				else connection.send(template);
 				});
 			}
         }
