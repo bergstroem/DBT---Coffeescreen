@@ -57,7 +57,7 @@ wsServer.on('request', function(request) {
 
 	var screen = new Screen(1, connection.socket._peername.address + ":" + connection.socket._peername.port, connection);
 	screens.push(screen);
-	console.log("Screen " + screen.name + " connected.");
+	
 
     // This is the most important callback for us, we'll handle
     // all messages from users here.
@@ -68,6 +68,7 @@ wsServer.on('request', function(request) {
 			{
 				var name = message.utf8Data.substring(9, message.utf8Data.length);
 				setScreenName(connection, name);
+				console.log("Screen " + screen.name + " connected.");
 				/*fs.readFile(name, 'utf8', function (err, data) {
   				if (err) throw err;
   					connection.send(data);
