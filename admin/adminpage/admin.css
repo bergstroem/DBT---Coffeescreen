@@ -55,7 +55,7 @@ p{
 	top:50px
 }
 
-/* template list */
+/* Template list */
 .templateheader{
 	background:black;
 	color:white;
@@ -87,24 +87,26 @@ p{
 .TIedit{
 	background:white;
 	width:100px;
-	height:25px;
+	height:30px;
 	position:absolute;
 	top:0;
 	left:780px;
 	text-align:center;
-	padding:5px 0 0 0;
+	border:0;
+	padding:0;
 	margin: 5px 0 0 0;
 }
 
 .TIdelete{
 	background:red;
 	width:100px;
-	height:25px;
+	height:30px;
 	position:absolute;
 	top:0;
 	left:890px;
 	text-align:center;
-	padding:5px 0 0 0;
+	border:0px;
+	padding:0;
 	margin: 5px 0 0 0;
 }
 
@@ -115,51 +117,7 @@ p{
 	position:relative;
 }
 
-/* Form */
-.formcontent{
-	background:teal;
-	width:290px;
-	height:630px;
-	position:absolute;
-	top:0;
-	left:0;
-	padding:10px 5px;
-}
-
-.rsscontent{
-	background:orange;
-	width:690px;
-	height:630px;
-	position:absolute;
-	top:0;
-	left:300px;
-	padding:10px 5px;
-}
-
-.formbutton{
-	width:100px;
-	height:30px;
-}
-
-.sizebox{
-	width:40px;
-	margin:0 0 0 2px;
-}
-
-.TAform{
-	resize:none;
-	width:280px;
-	height:150px;
-	margin:0 0 0 2px;
-}
-
-.TArss{
-	resize:none;
-	width:90%;
-	height:250px;
-}
-
-/* TEMP */
+/* Template stuff */
 
 .namebox{
 	width:160px;

@@ -1,103 +1,25 @@
-﻿<?php
-	function handleTemplate($mode, $filename){
-		if(!strcmp($mode,"delete")){
-			deleteTemplate($filename);
-		}
-		else{
-			displayForm($mode, $filename);
-		}
-	}
-	
-	function displayForm($mode, $filename){
-		if(!strcmp($mode,"new")){
-			echo "<form method='post' action='template.php?p=1'>";
-			$name = "";
-			$note = "";
-			$maincontent = "";
-			$subcontent = "";
-		}
-		else if(!strcmp($mode,"edit")){
-			echo "<form method='post' action='template.php?p=2&filename=$filename'>";
-			$fh = fopen("$filename", "r");
-			$content = fread($fh, filesize($filename));
-			fclose($fh);
-			$splity = preg_split('/ | /',$content, -1);
-		
-			$name = $splity[0];
-			$note = $splity[2];
-			$maincontent = $splity[4];
-			$subcontent = $splity[6];
-		}
-		
-		echo "<div class='formcontent'>
-			<p>
-				Name
-			</p>
-			<p>
-				<input type='text' required='required' name='name' value=$name></input>
-			</p>
-			<p>
-				Note
-			</p>
-			<p>
-				<textarea class='TAform' name='note'>$note</textarea>
-			</p>
-			<p>
-				<input class='formbutton' type='submit' value='Save'/>
-				<button class='formbutton' type='button' onclick=\"window.location.href='admintemplate.php'\">Cancel</button>
-			</p>
+﻿<html>
+	<head>
+		<title>template</title>
+		<link rel="stylesheet" type="text/css" href="admin.css"/>
+		<script type="text/javascript" src="jquery-1.7.1.js"></script>
+		<script type="text/javascript" src="json2.js"></script>
+		<script type="text/javascript" src="drag.js"></script>
+		<script type="text/javascript" src="template.js"></script>
+		<meta charset="UTF-8"/>
+	</head>
+	<body>
+		<div id="background" class="background">
+			<?php include("navigation.html") ?>
+			<div id="content" class="content">
+				<?php
+					include("form.html");
+					if($_GET['p'] == 2){
+						$name = $_GET['name'];
+						echo "<script>editTemplate(\"$name\")</script>";
+					}
+				?>
+			</div>
 		</div>
-		<div class='rsscontent'>
-			<p>
-				Main content
-			</p>
-			<p>
-				<textarea class='TArss' required='required' name='maincontent'>$maincontent</textarea>
-			</p>
-			<p>
-				Sub content
-			</p>
-			<p>
-				<textarea class='TArss' name='subcontent'>$subcontent</textarea>
-			</p>
-		</div>
-		";
-		echo "</form>";
-	}
-	
-	function deleteTemplate($filename){
-		unlink($filename);
-		header("location: admintemplate.php");
-	}
-	
-	if($_GET['p'] == 1){
-		$templatename = $_POST['name'];
-		$note = $_POST['note'];
-		$maincontent = $_POST['maincontent'];
-		$subcontent = $_POST['subcontent'];
-
-		$data = "$templatename | $note | $maincontent | $subcontent";
-
-		$fh = fopen("$templatename.txt", "w");
-		fwrite($fh, $data);
-
-		fclose($fh);
-		header("location: admintemplate.php");
-	}
-	else if($_GET['p'] == 2){
-		$filename = $_GET['filename'];
-		unlink($filename);
-		$templatename = $_POST['name'];
-		$note = $_POST['note'];
-		$maincontent = $_POST['maincontent'];
-		$subcontent = $_POST['subcontent'];
-
-		$data = "$templatename | $note | $maincontent | $subcontent";
-
-		$fh = fopen("$templatename.txt", "w");
-		fwrite($fh, $data);
-
-		fclose($fh);
-		header("location: admintemplate.php");
-	}
-?>
+	</body>
+</html>
