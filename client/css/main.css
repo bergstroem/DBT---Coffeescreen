@@ -4,20 +4,12 @@ body {
 	background: black;
 }
 
-#screenWrapper { /*Simulating small screen and will be removed*/
-	position: absolute;
-	top: 25%;
-	left: 25%;
-}
-
 #screen { /*Simulating small screen and will be removed*/
-	position: absolute;
+	position: relative;
 	width: 640px;
 	height: 480px;
 	overflow: auto;
 	border: 1px dashed #333;
-	top: -25%;
-	left: -25%;
 }
 
 #pageWrapper {
@@ -29,6 +21,18 @@ body {
 #topBar {
 	background: silver;
 	vertical-align: top;
+}
+
+.topBarSection {
+	width: 33%;
+}
+
+#topBarCenter {
+	text-align: center;
+}
+
+#topBarRight {
+	text-align: right;
 }
 
 #contentWrapper {
