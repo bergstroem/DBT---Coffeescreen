@@ -1,6 +1,6 @@
 ﻿<?php
 	if($handle = opendir('.')){
-		echo "<div class='templateheader'>Name:</div>";
+		echo "<div class='templateheader'>Name:<input type='button' value='New template' id='newbutton' class='TInew'></div>";
 		
 		while(false !== ($entry = readdir($handle))){
 			if(!strcmp(substr($entry, -5), ".json")){

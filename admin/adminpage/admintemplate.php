@@ -15,9 +15,6 @@
 				<div id="templatelist" class="templatelist">
 					<?php include("listdir.php") ?>
 				</div>
-				<div id="bottombar" class="bottombar">
-					<div id="new template" class="menuitem">New template<a href="template.php?p=1"><span class="linkspan"></span></a></div>
-				</div>
 			</div>
 		</div>
 	</body>

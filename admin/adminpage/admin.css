@@ -69,9 +69,10 @@ p{
 
 .templatelist{
 	width:100%;
-	height:610px;
+	height:650px;
 	position:relative;
 	padding:0;
+	overflow-y:auto;
 }
 
 .templateitem{
@@ -84,13 +85,26 @@ p{
 	top:-20px;
 }
 
+.TInew{
+	background:green;
+	width:100px;
+	height:30px;
+	position:absolute;
+	top:0;
+	left:880px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 5px 0 0 0;
+}
+
 .TIedit{
 	background:white;
 	width:100px;
 	height:30px;
 	position:absolute;
 	top:0;
-	left:780px;
+	left:770px;
 	text-align:center;
 	border:0;
 	padding:0;
@@ -103,7 +117,7 @@ p{
 	height:30px;
 	position:absolute;
 	top:0;
-	left:890px;
+	left:880px;
 	text-align:center;
 	border:0px;
 	padding:0;

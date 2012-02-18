@@ -1,5 +1,10 @@
-function createItem(name, target)
-{
+/* 
+ * createItem(name, target)
+ * Function used for creating a new drag-/droppable div inside a target div.
+ * name: Will be the id of the div
+ * target: The target div to place the new div inside
+*/
+function createItem(name, target){
 	var divTag = document.createElement("div");
 	divTag.id = "" + name;
 	divTag.setAttribute("draggable","true");
@@ -9,15 +14,26 @@ function createItem(name, target)
 	document.getElementById(target).appendChild(divTag);
 }
 
-function createCont(form)
-{
+/*
+ * createCont(form)
+ * Wrapper function for createItem, will create items and put them in the contentlist.
+ * form: The submitted form containing the input text.
+*/
+function createCont(form){
 	var name = form.input.value;
 	createItem(name, "contentlist");
 }
 
-function fillcontent(text, target){
-	if(text.length > 0){
-		var items = text.split(',');
+/*
+ * fillcontent(csv, target)
+ * Wrapper function for createItem, will create the given items from the csv 
+ * string and put them in the target div.
+ * csv: Comma-separated value containing the RSS sources.
+ * target: The id off the target div.
+*/
+function fillcontent(csv, target){
+	if(csv.length > 0){
+		var items = csv.split(',');
 		
 		for(var i = 0; i < items.length; i++){
 			createItem(items[i],target)
@@ -25,12 +41,20 @@ function fillcontent(text, target){
 	}
 }
 
+/*
+ * removeItem(element)
+ * Used for removing a source item.
+ * element: The element that will be removed.
+*/
 function removeItem(element){
 	var name = element.parentNode.getAttribute("id");
 	var parentname = element.parentNode.parentNode.getAttribute("id");
 	document.getElementById(parentname).removeChild(document.getElementById(name));
 }
 
+/*
+ *
+*/
 function saveTemplate(form){
 	var fname = form.name.value;
 	var fnote = form.note.value;
@@ -65,6 +89,9 @@ function saveTemplate(form){
 	});
 }
 
+/*
+ *
+*/
 function editTemplate(name){
 	$.ajax({
 		type: "POST",
@@ -90,6 +117,9 @@ function editTemplate(name){
 	});
 }
 
+/*
+ *
+*/
 function deleteTemplate(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.getAttribute("id");
@@ -104,19 +134,26 @@ function deleteTemplate(name){
 	});
 }
 
+/*
+ *
+*/
 $(document).ready(function(){
-	$('.TIdelete').click(delRedirect);
-	$('.TIedit').click(editRedirect);
+	$('.TInew').click(function(){
+		window.location = "template.php?p=1";
+	});
 	
-	function editRedirect(){
-		window.location = "template.php?p=2&name="+event.target.id;
-	}
-
-	function delRedirect(){
+	$('.TIdelete').click(function (){
 		deleteTemplate(event.target.id);
-	}
+	});
+	
+	$('.TIedit').click(function (){
+		window.location = "template.php?p=2&name="+event.target.id;
+	});
 });
 
+/*
+ *
+*/
 function createContTEST()
 {
 	for(var i = 0; i < 35; i++)
