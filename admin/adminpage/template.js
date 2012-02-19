@@ -20,8 +20,14 @@ function createItem(name, target){
  * form: The submitted form containing the input text.
 */
 function createCont(form){
-	var name = form.input.value;
-	createItem(name, "contentlist");
+	if(form.sourcename.value == ""){
+		alert("Please enter a sourcename");
+	}
+	else{
+		var name = form.sourcename.value;
+		createItem(name, "contentlist");
+		form.sourcename.value = "";
+	}
 }
 
 /*
@@ -53,44 +59,51 @@ function removeItem(element){
 }
 
 /*
- *
+ * saveTemplate(form)
+ * Used for saving a template, will use the information in the form.
 */
 function saveTemplate(form){
-	var fname = form.name.value;
-	var fnote = form.note.value;
+	if(form.name.value == ""){
+		alert("Please enter a name");
+	}
+	else{
+		var fname = form.name.value;	
+		var fnote = form.note.value;
 
-	var children = document.getElementById('maincontent').childNodes;
-	var length = children.length;
-	var mainContent = "";
-	
-	for(var n = 0; n < length; n++){
-		mainContent += children[n].getAttribute('id')  + ",";
-	}
-	mainContent = mainContent.substr(0,mainContent.length-1);
-	
-	children = document.getElementById('subcontent').childNodes;
-	var length = children.length;
-	var subContent = "";
-	
-	for(var n = 0; n < length; n++){
-		subContent += children[n].getAttribute('id') + ",";
-	}
-	
-	subContent = subContent.substr(0,subContent.length-1);
-	
-	$.ajax({
-		type: "POST",
-		url: "templatehandler.php",
-		data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
-		success: function(msg){
-			console.log("Succesful template save");
-			window.location = "admintemplate.php";
+		var children = document.getElementById('maincontent').childNodes;
+		var length = children.length;
+		var mainContent = "";
+		
+		for(var n = 0; n < length; n++){
+			mainContent += children[n].getAttribute('id')  + ",";
 		}
-	});
+		mainContent = mainContent.substr(0,mainContent.length-1);
+		
+		children = document.getElementById('subcontent').childNodes;
+		var length = children.length;
+		var subContent = "";
+		
+		for(var n = 0; n < length; n++){
+			subContent += children[n].getAttribute('id') + ",";
+		}
+		
+		subContent = subContent.substr(0,subContent.length-1);
+		
+		$.ajax({
+			type: "POST",
+			url: "templatehandler.php",
+			data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+			success: function(msg){
+				console.log("Succesful template save");
+				window.location = "admintemplate.php";
+			}
+		});
+	}
 }
 
 /*
- *
+ * editTemplate(name)
+ * 
 */
 function editTemplate(name){
 	$.ajax({
@@ -105,7 +118,7 @@ function editTemplate(name){
 			document.getElementById("noteTXB").innerHTML = jsonobj["note"];
 			fillcontent(jsonobj["maincontent"], "maincontent");
 			fillcontent(jsonobj["subcontent"], "subcontent");
-				
+			
 			$.ajax({
 				type: "POST",
 				url: "templatehandler.php",
