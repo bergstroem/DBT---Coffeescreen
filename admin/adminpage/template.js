@@ -258,7 +258,7 @@ function listScreens(){
 	document.getElementById("content").appendChild(screenHeader);
 	$.ajax({
 		type: "POST",
-		url: "http://localhost:8081",
+		url: "http://localhost:8081/listscreens",
 		data: "",
 		success: function(msg){
 			var screenNames = msg.split(";");

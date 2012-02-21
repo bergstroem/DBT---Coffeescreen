@@ -27,6 +27,7 @@ function setScreenName(connection, name) {
 
 var WebSocketServer = require('websocket').server;
 var http = require('http');
+var url = require('url');
 var fs = require('fs');
 
 var server = http.createServer(function(request, response) {
@@ -34,15 +35,36 @@ var server = http.createServer(function(request, response) {
     // we don't have to implement anything.
     response.writeHead(200, {'Content-Type': 'text/plain', 'Access-Control-Allow-Origin' : '*'});
     
-    var connectedScreens = "";
+    var url_parts = url.parse(request.url, true);
     
-    for(i = 0; i < screens.length; i++) {
-    	connectedScreens += screens[i].name + ";";
+    //List all connected screens
+    if(url_parts.pathname == '/listscreens' || url_parts.pathname == '/listscreens/'){
+    	var connectedScreens = "";
+    
+		for(i = 0; i < screens.length; i++) {
+			connectedScreens += screens[i].name + ";";
+		}
+		
+		connectedScreens = connectedScreens.substring(0, connectedScreens.length-1);
+		
+		response.end(connectedScreens);
     }
     
-    connectedScreens = connectedScreens.substring(0, connectedScreens.length-1);
-    
-    response.end(connectedScreens);
+    //Send panic template
+    else if(url_parts.pathname == "/panic" || url_parts.pathname == "/panic/"){
+    	var query = url_parts.query;
+    	
+    	//Send panic to user, bla bla bla
+    	if(query['screen'] != undefined){
+    		console.log("Sending panic to: " + query['screen']);
+    		var i;
+    		for(i = 0; i < screens.length; i++)
+    		{
+    			if(query['screen'] == screens[i].name)
+    				screens[i].connection.send(
+    		}
+    	}
+    }
 });
 server.listen(8081, function() { });
 
