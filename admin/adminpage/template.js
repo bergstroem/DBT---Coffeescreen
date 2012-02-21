@@ -260,7 +260,7 @@ function listScreens(){
 	document.getElementById("content").appendChild(screenHeader);
 	$.ajax({
 		type: "POST",
-		url: "http://localhost:8081/listscreens",
+		url: "http://85.24.223.52:8081/listscreens",
 		data: "",
 		success: function(msg){
 			var screenNames = msg.split(";");
