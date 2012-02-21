@@ -5,23 +5,28 @@
  * target: The target div to place the new div inside
 */
 function createItem(name, target){
-	var divTag = document.createElement("div");
-	divTag.id = "" + name;
-	divTag.setAttribute("draggable","true");
-	divTag.addEventListener('dragstart', handleDragStart, false);
-	divTag.addEventListener('dragend', handleDragEnd, false);
-	divTag.className ="contentitem";
-	divTag.innerHTML = name;
-	
-	var delbutton = document.createElement("input");
-	delbutton.setAttribute("type","button");
-	delbutton.setAttribute("name","rbutton");
-	delbutton.setAttribute("value","X");
-	delbutton.setAttribute("class","removebutton");
-	delbutton.setAttribute("onclick","removeItem(this)");
-	divTag.appendChild(delbutton);
-	
-	document.getElementById(target).appendChild(divTag);
+	if(sourceExists(name)){
+		alert("Source already exist");
+	}
+	else{
+		var divTag = document.createElement("div");
+		divTag.id = "" + name;
+		divTag.setAttribute("draggable","true");
+		divTag.addEventListener('dragstart', handleDragStart, false);
+		divTag.addEventListener('dragend', handleDragEnd, false);
+		divTag.className ="contentitem";
+		divTag.innerHTML = name;
+		
+		var delbutton = document.createElement("input");
+		delbutton.setAttribute("type","button");
+		delbutton.setAttribute("name","rbutton");
+		delbutton.setAttribute("value","X");
+		delbutton.setAttribute("class","removebutton");
+		delbutton.setAttribute("onclick","removeItem(this)");
+		divTag.appendChild(delbutton);
+		
+		document.getElementById(target).appendChild(divTag);
+	}
 }
 
 /*
@@ -68,24 +73,52 @@ function removeItem(element){
 	document.getElementById(parentname).removeChild(document.getElementById(name));
 }
 
+function sourceExists(name){
+	var children = document.getElementById('maincontent').childNodes;
+	var length = children.length;
+	for(var i = 0; i < length; i++){
+		if(name == children[i].getAttribute('id'))
+			return true;
+	}
+	
+	children = document.getElementById('subcontent').childNodes;
+	length = children.length;
+	for(var i = 0; i < length; i++){
+		if(name == children[i].getAttribute('id'))
+			return true;
+	}
+	
+	
+	children = document.getElementById('contentlist').childNodes;
+	length = children.length;
+	for(var i = 0; i < length; i++){
+		if(!(children[i].nodeName == "#text"))
+			if(name == children[i].getAttribute('id'))
+				return true;
+	}
+	
+	return false;
+}
+
 /*
  * saveTemplate(form)
  * Used for saving a template, will use the information in the form.
 */
-function saveTemplate(form){
-	if(form.name.value == ""){
+function saveTemplate(){
+	var name = document.getElementById("nameTXB");
+	if(name.value == ""){
 		alert("Please enter a name");
 	}
 	else{
-		var fname = form.name.value;	
-		var fnote = form.note.value;
+		var fname = name.value;	
+		var fnote = document.getElementById("noteTXB").value;
 
 		var children = document.getElementById('maincontent').childNodes;
 		var length = children.length;
 		var mainContent = "";
 		
-		for(var n = 0; n < length; n++){
-			mainContent += children[n].getAttribute('id')  + ",";
+		for(var i = 0; i < length; i++){
+			mainContent += children[i].getAttribute('id')  + ",";
 		}
 		mainContent = mainContent.substr(0,mainContent.length-1);
 		
@@ -93,8 +126,8 @@ function saveTemplate(form){
 		var length = children.length;
 		var subContent = "";
 		
-		for(var n = 0; n < length; n++){
-			subContent += children[n].getAttribute('id') + ",";
+		for(var i = 0; i < length; i++){
+			subContent += children[i].getAttribute('id') + ",";
 		}
 		
 		subContent = subContent.substr(0,subContent.length-1);

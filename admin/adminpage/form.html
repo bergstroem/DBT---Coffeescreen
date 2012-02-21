@@ -8,17 +8,15 @@
 		<script type="text/javascript" src="js/template.js"></script>
 	</head>
 	<body>
-		<form name="templateform" action="" method="GET">
-			<div id="namebox" class="namebox">
-				Name:
-				<input type="text" name="name" id="nameTXB" class="nameTXB"/>
-				<input type="button" name="savetemplatebutton" value="Save template" class="savetemplatebutton" onclick="saveTemplate(this.form)">
-			</div>
-			<div id="notebox" class="notebox">
-				Note:
-				<textarea name="note" id="noteTXB" class="noteTXB"></textarea>
-			</div>
-		</form>
+		<div id="namebox" class="namebox">
+			Name:
+			<input type="text" name="name" id="nameTXB" class="nameTXB"/>
+			<input type="button" name="savetemplatebutton" value="Save template" class="savetemplatebutton" onclick="saveTemplate()">
+		</div>
+		<div id="notebox" class="notebox">
+			Note:
+			<textarea name="note" id="noteTXB" class="noteTXB"></textarea>
+		</div>
 		<div id="maincontent" class="maindrop"></div>
 		<div id="subcontent" class="subdrop"></div>
 		<div id="contentlist" class="contentlist">
@@ -27,7 +25,7 @@
 				<input type="text" name="sourcename" id="sourcename" class="contentTXB"/>
 				<input type="button" name="button" value="save" class="savebutton" onclick="createCont()">
 			</div>
-		</div>	
+		</div>
 		<script>
 			addEL();
 		</script>
