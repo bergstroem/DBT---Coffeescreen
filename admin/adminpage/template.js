@@ -251,9 +251,17 @@ function listTemplates(){
 }
 
 function listScreens(){
-	for(var i = 0; i < 5; i++){
-		createScreen(i);
-	}
+	$.ajax({
+		type: "POST",
+		url: "http://localhost:8081",
+		data: "",
+		success: function(msg){
+			var screenNames = msg.split(";");
+			for(var i = 0; i < screenNames.length; i++){
+				createScreen(screenNames[i]);
+			}
+		}
+	});
 }
 
 function createScreen(name){
@@ -287,3 +295,4 @@ function createScreen(name){
 	divTag.appendChild(set);
 	document.getElementById("content").appendChild(divTag);
 }
+
