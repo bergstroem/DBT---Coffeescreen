@@ -13,19 +13,21 @@ body {
 
 #pageWrapper {
 	position: relative;
-	background: gray;
+	background: white;
 	width: 100%;
 	height: 100%;
 	border-collapse: collapse;
 	overflow: hidden;
+	font-family:"Droid Sans", "Calibri";
 }
 
 #topBar {
 	position: absolute;
-	background: silver;
+	background: #00aeef;
 	vertical-align: top;
 	width: 100%;
 	height: 20px;
+	
 }
 
 .topBarSection {
