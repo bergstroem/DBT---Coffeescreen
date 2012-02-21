@@ -8,45 +8,6 @@
 	</head>
 	<body>
 		<div id="screen">
-<<<<<<< HEAD
-			<!--Tables are nice and will gladly fill the entire height-->
-			<table id="pageWrapper">
-				<tr id="topBar">
-					<td id="topBarLeft" class="topBarSection">
-						Codemill!
-					</td>
-					<td id="topBarCenter" class="topBarSection">
-						<form name="Tick">
-                        <input type="text" size="11" name="Clock">
-                        </form>
-                        <script>
-                        function show(){
-                        var Digital=new Date()
-                        var hours=Digital.getHours()
-                        var minutes=Digital.getMinutes()
-                        if (minutes<=9)
-                        minutes="0"+minutes
-                        if (seconds<=9)
-                        document.Tick.Clock.value=hours+":"+minutes
-                        setTimeout("show()",1000)
-                        }
-                        show()
-                        //-->
-                        </script>
-					</td>
-					<td id="topBarRight" class="topBarSection">&nbsp;
-						
-					</td>
-				</tr>
-				<tr>
-					<td id="contentArea" colspan="3">
-						<div id="contentWrapper">
-							All the things goes here!
-						</div>
-					</td>
-				</tr>
-			</table>
-=======
 			<div id="pageWrapper">
 				<table id="topBar">
 					<tr>
@@ -54,7 +15,22 @@
 							Codemill!
 						</td>
 						<td id="topBarCenter" class="topBarSection">
-							13:37
+							<form name="Tick">
+                        <input type="text" size="11" name="Clock">
+                        </form>
+                        <script>
+                        function show(){
+                        var Digital=new Date();
+                        var hours=Digital.getHours();
+                        var minutes=Digital.getMinutes();
+                        if (hours<=9)
+                        minutes="0"+minutes;
+                        if (minutes<=9)
+                        document.getElementById("topBarCenter").innerHTML=hours+":"+minutes;
+                        setTimeout("show()",1000);
+                        }
+                        show();
+                        </script>
 						</td>
 						<td id="topBarRight" class="topBarSection">
 							&nbsp;
@@ -63,11 +39,10 @@
 				</table>
 				<div id="contentArea">
 					<div id="mainContent">
-						All the things goes here!
+						<p>Waiting for data...</p>
 					</div>
 				</div>
 			</div>
->>>>>>> f30d4919653aec1a6a28550b8c2e91f1c209a029
 		</div>
 	</body>
 </html>
