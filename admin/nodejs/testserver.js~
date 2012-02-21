@@ -44,7 +44,7 @@ var server = http.createServer(function(request, response) {
     
     response.end(connectedScreens);
 });
-server.listen(8080, function() { });
+server.listen(8081, function() { });
 
 // create the server
 wsServer = new WebSocketServer({
@@ -111,7 +111,7 @@ function prepareTemplateFileForDelivery(connection, template) {
 	var options = {
            host: 'localhost',   
            port: 80,   
-           path: '/dbt/services/RSSFetcher.php?feeds=' + mainContent
+           path: '/coffeescreen/services/RSSFetcher.php?feeds=' + mainContent
       };
 	var req = http.get(options, function(res) {  
 	 	res.setEncoding('utf8');
@@ -121,7 +121,7 @@ function prepareTemplateFileForDelivery(connection, template) {
 		    var options2 = {
            		host: 'localhost',   
            		port: 80,   
-           		path: '/dbt/services/RSSFetcher.php?feeds=' + subContent
+           		path: '/coffeescreen/services/RSSFetcher.php?feeds=' + subContent
       		};
 		    var req2 = http.get(options2, function(res2) {  
 			 	res2.setEncoding('utf8');

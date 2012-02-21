@@ -61,21 +61,13 @@ function connectToServer () {
         // try to decode json (I assume that each messagse from server is json)
         try {
             var json = JSON.parse(message.data);
+			currentInformation = json;
         } catch (e) {
             console.log('This doesn\'t look like a valid JSON: ', message.data);
             return;
         }
         // handle incoming message
 		console.log(message.data);
-		document.getElementById("contentWrapper").innerHTML =
-				"<p>Name: " + json.name + "</p>" + 
-				"<p>Note: " + json.note + "</p>" +
-				"<p>Main content: " + json.maincontent + "</p>" +
-				"<p>Sub content: " + json.subcontent + "</p>";
-				
-		json.maincontent = json.maincontent.split(",");
-		json.subcontent = json.subcontent.split(",");
-		currentInformation = json;
     };
 };
 
