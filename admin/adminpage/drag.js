@@ -15,14 +15,18 @@ function handleDragOver(e){
 	
 	return false;
 }
-
+/*
 function handleDragEnter(e){
+	this.style.background = '#00AEEF';
+	this.style.opacity = '0.3';
 	//this.style.border = '2px solid #000';
 }
 
 function handleDragLeave(e){
+	this.style.background = '#FFFFFF';
+	this.style.opacity = '1';
 	//this.style.border = '0';
-}
+}*/
 
 function handleDrop(e){
 	if(e.stopPropagation){
@@ -31,7 +35,8 @@ function handleDrop(e){
 	
 	if(dragSrcEl != this){
 		if(e.target.getAttribute("class") != "contentitem"){
-			//this.style.border = '0';
+			this.style.background = '#FFFFFF';
+			this.style.opacity = '1';
 			var data = e.dataTransfer.getData("Text");
 			e.target.appendChild(document.getElementById(data));
 			e.preventDefault();
