@@ -150,13 +150,40 @@ function saveTemplate(){
 					}
 				});
 		}
+		
 		$.ajax({
 			type: "POST",
-			url: "templatehandler.php",
-			data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+			url: "tempget.php",
+			data: "",
 			success: function(msg){
-				console.log("Succesful template save");
-				window.location = "admintemplate.php";
+				if(msg.length > 2){
+					var arr = msg.substr(2, msg.length-4).split('\",\"');
+					for(var i = 0; i < arr.length; i++){
+						if(arr[i] == fname){
+							var conflict = true;
+							if(confirm('This will replace an existing template. Continue?'))
+								$.ajax({
+									type: "POST",
+									url: "templatehandler.php",
+									data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+									success: function(msg){
+										console.log("Succesful template save");
+										window.location = "admintemplate.php";
+									}
+								});
+						}
+					}
+					if(!conflict)
+						$.ajax({
+							type: "POST",
+							url: "templatehandler.php",
+							data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+							success: function(msg){
+								console.log("Succesful template save");
+								window.location = "admintemplate.php";
+							}
+						});
+				}
 			}
 		});
 	}
