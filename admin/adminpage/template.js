@@ -165,7 +165,7 @@ $(document).ready(function(){
 		window.location = "template.php?p=1";
 	});
 	
-	$('.templatelist').click(function(e){
+	$('.content').click(function(e){
 		if($(e.target).is('.TIedit')){
 			window.location = "template.php?p=2&name="+e.target.id;
 		}
