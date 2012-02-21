@@ -123,7 +123,6 @@ function editTemplate(name){
 		success: function(msg){
 			console.log("Succesful template load");
 			var jsonobj = JSON.parse(msg);
-			console.log(jsonobj);
 			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
 			document.getElementById("noteTXB").innerHTML = jsonobj["note"];
 			fillcontent(jsonobj["maincontent"], "maincontent");
@@ -173,24 +172,63 @@ $(document).ready(function(){
 			deleteTemplate(e.target.id);
 		}
 	});
+	
+	$('.content').click(function(e){
+		if($(e.target).is('.screenAllPanicButton')){
+			$.ajax({
+				type: "POST",
+				url: "http://85.24.223.52:8081/panic/?screen=*",
+				data: "",
+				success: function(msg){
+					console.log(msg);
+				}
+			});
+		}
+			
+		if($(e.target).is('.screenPanicButton')){
+			var name = e.target.id.substr(e.target.id.indexOf(":")+1);
+			
+			$.ajax({
+				type: "POST",
+				url: "http://85.24.223.52:8081/panic/?screen="+name,
+				data: "",
+				success: function(msg){
+					console.log(msg);
+				}
+			});
+		}
+		if($(e.target).is('.screenSetButton')){
+			var name = e.target.id.substr(e.target.id.indexOf(":")+1);
+			var select = document.getElementById("select:"+name);
+			
+			$.ajax({
+				type: "POST",
+				url: "http://85.24.223.52:8081/set/?screen="+name+"&template="+select.value,
+				data: "",
+				success: function(msg){
+					console.log(msg);
+				}
+			});
+		}
+	});
 });
 
 
 function addEL(){
-	document.getElementById("maincontent").addEventListener('dragenter', handleDragEnter, false);
-	document.getElementById("maincontent").addEventListener('dragleave', handleDragLeave, false);
-	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
+	/*document.getElementById("maincontent").addEventListener('dragenter', handleDragEnter, false);
+	document.getElementById("maincontent").addEventListener('dragleave', handleDragLeave, false);*/
 	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
+	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
 	
-	document.getElementById("subcontent").addEventListener('dragenter', handleDragEnter, false);
-	document.getElementById("subcontent").addEventListener('dragleave', handleDragLeave, false);
-	document.getElementById("subcontent").addEventListener('drop', handleDrop, false);
+	/*document.getElementById("subcontent").addEventListener('dragenter', handleDragEnter, false);
+	document.getElementById("subcontent").addEventListener('dragleave', handleDragLeave, false);*/
 	document.getElementById("subcontent").addEventListener('dragover', handleDragOver, false);
+	document.getElementById("subcontent").addEventListener('drop', handleDrop, false);
 	
-	document.getElementById("contentlist").addEventListener('dragenter', handleDragEnter, false);
-	document.getElementById("contentlist").addEventListener('dragleave', handleDragLeave, false);
-	document.getElementById("contentlist").addEventListener('drop', handleDrop, false);
+	/*document.getElementById("contentlist").addEventListener('dragenter', handleDragEnter, false);
+	document.getElementById("contentlist").addEventListener('dragleave', handleDragLeave, false);*/
 	document.getElementById("contentlist").addEventListener('dragover', handleDragOver, false);
+	document.getElementById("contentlist").addEventListener('drop', handleDrop, false);
 }
 /*
  *
@@ -258,6 +296,14 @@ function listScreens(){
 	screenHeader.className = "templateheader";
 	screenHeader.innerHTML = "Name:";
 	document.getElementById("content").appendChild(screenHeader);
+	
+	var panicAllButton = document.createElement("input");
+	panicAllButton.id = "panic:All";
+	panicAllButton.type = "button";
+	panicAllButton.value = "Panic All";
+	panicAllButton.className = "screenAllPanicButton";
+	screenHeader.appendChild(panicAllButton);
+	
 	$.ajax({
 		type: "POST",
 		url: "http://85.24.223.52:8081/listscreens",
@@ -273,15 +319,19 @@ function listScreens(){
 
 function createScreen(name){
 	var screenItem = document.createElement("div");
-	screenItem.id = "" + name;
+	screenItem.id = "screen:" + name;
 	screenItem.className = "templateitem";
 	screenItem.innerHTML = name;
 	
 	var panicButton = document.createElement("input");
+	panicButton.id = "panic:" + name;
 	panicButton.type = "button";
 	panicButton.value = "Panic";
+	panicButton.className = "screenPanicButton";
 	
 	var select = document.createElement("select");
+	select.id = "select:" + name;
+	select.className = "screenTemplateSelect";
 	$.ajax({
 		type: "POST",
 		url: "tempget.php",
@@ -298,11 +348,14 @@ function createScreen(name){
 	});
 	
 	var set = document.createElement("input");
+	set.id = "set:" + name;
 	set.type = "button";
 	set.value = "set";
-	screenItem.appendChild(panicButton);
+	set.className = "screenSetButton";
+	
 	screenItem.appendChild(select);
 	screenItem.appendChild(set);
+	screenItem.appendChild(panicButton);
 	document.getElementById("content").appendChild(screenItem);
 }
 

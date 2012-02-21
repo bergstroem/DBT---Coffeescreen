@@ -67,6 +67,78 @@ p{
 	overflow-y:auto;
 }
 
+/* Screens */
+.screenAllPanicButton{
+	background:red;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0px;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.screenTemplateSelect{
+	width:200px;
+	height:30px;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:1px solid #00AEEF;
+	position:absolute;
+	top:0;
+	left:550px;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.screenSetButton{
+	background:#00AEEF;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:765px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.screenPanicButton{
+	background:red;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0px;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
 /* Template list */
 .templateheader{
 	background:#00AEEF;
@@ -115,6 +187,7 @@ p{
 	margin: 5px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
+	font-size:15px;
 }
 
 .TIedit{
@@ -133,6 +206,7 @@ p{
 	margin: 5px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
+	font-size:15px;
 }
 
 .TIdelete{
@@ -151,6 +225,7 @@ p{
 	margin: 5px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
+	font-size:15px;
 }
 
 /* Template stuff */
@@ -282,6 +357,7 @@ p{
 	margin:10px 0 0 10px;
 	padding:10px 10px;
 	font-family:"Calibri", Calibri, sans-serif;
+	z-index:100;
 }
 
 .removebutton{
