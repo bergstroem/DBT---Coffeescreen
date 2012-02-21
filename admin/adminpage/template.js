@@ -8,9 +8,19 @@ function createItem(name, target){
 	var divTag = document.createElement("div");
 	divTag.id = "" + name;
 	divTag.setAttribute("draggable","true");
-	divTag.setAttribute("ondragstart","drag(event)");
+	divTag.addEventListener('dragstart', handleDragStart, false);
+	divTag.addEventListener('dragend', handleDragEnd, false);
 	divTag.className ="contentitem";
-	divTag.innerHTML = name + "<INPUT type='button' name='rbutton' value='X' class='removebutton' onClick='removeItem(this)'>";
+	divTag.innerHTML = name;
+	
+	var delbutton = document.createElement("input");
+	delbutton.setAttribute("type","button");
+	delbutton.setAttribute("name","rbutton");
+	delbutton.setAttribute("value","X");
+	delbutton.setAttribute("class","removebutton");
+	delbutton.setAttribute("onclick","removeItem(this)");
+	divTag.appendChild(delbutton);
+	
 	document.getElementById(target).appendChild(divTag);
 }
 
@@ -151,19 +161,37 @@ function deleteTemplate(name){
  *
 */
 $(document).ready(function(){
-	$('.TInew').click(function(){
+	$('.TInew').click(function(e){
 		window.location = "template.php?p=1";
 	});
 	
-	$('.TIdelete').click(function (){
-		deleteTemplate(event.target.id);
-	});
-	
-	$('.TIedit').click(function (){
-		window.location = "template.php?p=2&name="+event.target.id;
+	$('.content').click(function(e){
+		if($(e.target).is('.TIedit')){
+			window.location = "template.php?p=2&name="+e.target.id;
+		}
+		if($(e.target).is('.TIdelete')){
+			deleteTemplate(e.target.id);
+		}
 	});
 });
 
+
+function addEL(){
+	document.getElementById("maincontent").addEventListener('dragenter', handleDragEnter, false);
+	document.getElementById("maincontent").addEventListener('dragleave', handleDragLeave, false);
+	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
+	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
+	
+	document.getElementById("subcontent").addEventListener('dragenter', handleDragEnter, false);
+	document.getElementById("subcontent").addEventListener('dragleave', handleDragLeave, false);
+	document.getElementById("subcontent").addEventListener('drop', handleDrop, false);
+	document.getElementById("subcontent").addEventListener('dragover', handleDragOver, false);
+	
+	document.getElementById("contentlist").addEventListener('dragenter', handleDragEnter, false);
+	document.getElementById("contentlist").addEventListener('dragleave', handleDragLeave, false);
+	document.getElementById("contentlist").addEventListener('drop', handleDrop, false);
+	document.getElementById("contentlist").addEventListener('dragover', handleDragOver, false);
+}
 /*
  *
 */
@@ -171,14 +199,108 @@ function createContTEST()
 {
 	for(var i = 0; i < 35; i++)
 	{
-		var name = i;
-	
-		var divTag = document.createElement("div");
-		divTag.id = "" + name;
-		divTag.setAttribute("draggable","true");
-		divTag.setAttribute("ondragstart","drag(event)");
-		divTag.className ="contentitem";
-		divTag.innerHTML = name + "<INPUT type='button' name='rbutton' value='X' class='removebutton' onClick='removeCont(this)'>";
-		document.getElementById("contentlist").appendChild(divTag);
+		createItem(i, "contentlist");
 	}
 }
+
+function listTemplates(){
+	var tempList = document.getElementById("content");
+	var tempHead = document.createElement("div");
+	tempHead.id = "templatehead";
+	tempHead.className = "templateheader";
+	tempHead.innerHTML = "Name:";
+	tempList.appendChild(tempHead);
+	var newButton = document.createElement("input");
+	newButton.type = "button";
+	newButton.id = "newbutton";
+	newButton.value = "New template";
+	newButton.className = "TInew";
+	tempHead.appendChild(newButton);
+	
+	
+	$.ajax({
+		type: "POST",
+		url: "tempget.php",
+		data: "",
+		success: function(msg){
+			var arr = msg.substr(2, msg.length-4).split('\",\"');
+			for(var i = 0; i < arr.length; i++){
+				var item = document.createElement("div");
+				item.id = arr[i];
+				item.className = "templateitem";
+				item.innerHTML = arr[i];
+				
+				var editButton = document.createElement("input");
+				editButton.type = "button";
+				editButton.id = arr[i] + ".json";
+				editButton.value = "Edit";
+				editButton.className = "TIedit";
+				item.appendChild(editButton);
+				
+				var delButton = document.createElement("input");
+				delButton.type = "button";
+				delButton.id = arr[i] + ".json";
+				delButton.value = "Delete";
+				delButton.className = "TIdelete";
+				item.appendChild(delButton);
+				
+				tempList.appendChild(item);
+			}
+		}
+	});
+}
+
+function listScreens(){
+	var screenHeader = document.createElement("div");
+	screenHeader.id = "screenheader";
+	screenHeader.className = "templateheader";
+	screenHeader.innerHTML = "Name:";
+	document.getElementById("content").appendChild(screenHeader);
+	$.ajax({
+		type: "POST",
+		url: "http://localhost:8081",
+		data: "",
+		success: function(msg){
+			var screenNames = msg.split(";");
+			for(var i = 0; i < screenNames.length; i++){
+				createScreen(screenNames[i]);
+			}
+		}
+	});
+}
+
+function createScreen(name){
+	var screenItem = document.createElement("div");
+	screenItem.id = "" + name;
+	screenItem.className = "templateitem";
+	screenItem.innerHTML = name;
+	
+	var panicButton = document.createElement("input");
+	panicButton.type = "button";
+	panicButton.value = "Panic";
+	
+	var select = document.createElement("select");
+	$.ajax({
+		type: "POST",
+		url: "tempget.php",
+		data: "",
+		success: function(msg){
+			var arr = msg.substr(2, msg.length-4).split('\",\"');
+			for(var i = 0; i < arr.length; i++){
+				var temp = document.createElement("option");
+				temp.value = arr[i];
+				temp.innerHTML = arr[i];
+				select.appendChild(temp);
+			}
+		}
+	});
+	
+	var set = document.createElement("input");
+	set.type = "button";
+	set.value = "set";
+	screenItem.appendChild(panicButton);
+	screenItem.appendChild(select);
+	screenItem.appendChild(set);
+	document.getElementById("content").appendChild(screenItem);
+}
+

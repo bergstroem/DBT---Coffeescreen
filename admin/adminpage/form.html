@@ -4,6 +4,8 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="admin.css"/>
 		<meta charset="UTF-8"/>
+		<script type="text/javascript" src="drag.js"></script>
+		<script type="text/javascript" src="template.js"></script>
 	</head>
 	<body>
 		<form name="templateform" action="" method="GET">
@@ -17,9 +19,9 @@
 				<textarea name="note" id="noteTXB" class="noteTXB"></textarea>
 			</div>
 		</form>
-		<div id="maincontent" class="maindrop" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-		<div id="subcontent" class="subdrop" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-		<div id="contentlist" class="contentlist" ondrop="drop(event)" ondragover="allowDrop(event)">
+		<div id="maincontent" class="maindrop"></div>
+		<div id="subcontent" class="subdrop"></div>
+		<div id="contentlist" class="contentlist">
 			<input type="button" name="button" value="save" class="spawnbutton" onclick="createContTEST()">
 			<div id="contentspawner" class="contentspawner">
 				<form name="itemform" action="" method="GET">
@@ -28,5 +30,8 @@
 				</form>
 			</div>
 		</div>	
+		<script>
+			addEL();
+		</script>
 	</body>
 </html>

@@ -12,9 +12,14 @@ function init() {
 function switchMainInformation() {
 	var displayTime = 1000;
 	if(currentInformation != null) {
-		document.getElementById("contentWrapper").innerHTML =
-				"<p>" + currentInformation.maincontent[mainContentCounter] + "</p>";
-		if(++mainContentCounter >= currentInformation.maincontent.length) {
+		var title = currentInformation.maincontent.posts[mainContentCounter].title;
+		var date = currentInformation.maincontent.posts[mainContentCounter].date;
+		var content = currentInformation.maincontent.posts[mainContentCounter].content;
+		document.getElementById("mainContent").innerHTML =
+				"<h1>" + title + "</h1>" +
+				"<p>" + date + "</p>" +
+				"<p>" + content + "</p>";
+		if(++mainContentCounter >= currentInformation.maincontent.posts.length) {
 			mainContentCounter = 0;
 			//TODO: request new information
 		}
@@ -61,21 +66,13 @@ function connectToServer () {
         // try to decode json (I assume that each messagse from server is json)
         try {
             var json = JSON.parse(message.data);
+			currentInformation = json;
         } catch (e) {
             console.log('This doesn\'t look like a valid JSON: ', message.data);
             return;
         }
         // handle incoming message
 		console.log(message.data);
-		document.getElementById("contentWrapper").innerHTML =
-				"<p>Name: " + json.name + "</p>" + 
-				"<p>Note: " + json.note + "</p>" +
-				"<p>Main content: " + json.maincontent + "</p>" +
-				"<p>Sub content: " + json.subcontent + "</p>";
-				
-		json.maincontent = json.maincontent.split(",");
-		json.subcontent = json.subcontent.split(",");
-		currentInformation = json;
     };
 };
 

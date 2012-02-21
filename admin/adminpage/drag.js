@@ -1,16 +1,47 @@
-﻿function allowDrop(ev)
-{
-	ev.preventDefault();
+﻿var dragSrcEl = null;
+
+function handleDragStart(e){
+	this.style.opacity = '0.5';
+	
+	dragSrcEl = this;
+	
+	e.dataTransfer.setData('Text', e.target.id);
 }
 
-function drag(ev)
-{
-	ev.dataTransfer.setData("Text",ev.target.id);
+function handleDragOver(e){
+	if(e.preventDefault){
+		e.preventDefault();
+	}
+	
+	return false;
 }
 
-function drop(ev)
-{
-	var data = ev.dataTransfer.getData("Text");
-	ev.target.appendChild(document.getElementById(data));
-	ev.preventDefault();
+function handleDragEnter(e){
+	this.style.border = '2px solid #000';
+}
+
+function handleDragLeave(e){
+	this.style.border = '0';
+}
+
+function handleDrop(e){
+	if(e.stopPropagation){
+		e.stopPropagation();
+	}
+	
+	if(dragSrcEl != this){
+		if(e.target.getAttribute("class") != "contentitem"){
+			this.style.border = '0';
+			var data = e.dataTransfer.getData("Text");
+			e.target.appendChild(document.getElementById(data));
+			e.preventDefault();
+		}
+	}
+	
+	return false;
+}
+
+function handleDragEnd(e){
+	this.style.border = '0';
+	this.style.opacity = '1';
 }
