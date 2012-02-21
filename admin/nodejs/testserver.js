@@ -1,7 +1,8 @@
-function Screen(id, name, connection) {
+function Screen(id, name, connection, template) {
 	this.id = id;
 	this.name = name;
 	this.connection = connection;
+	this.template = template;
 }
 
 var screens = [];
@@ -75,7 +76,20 @@ var server = http.createServer(function(request, response) {
 				}
     		}
     	}
-    	response.end("");
+    	response.end("Panic sent to: " + query['screen']);
+    }
+    
+    //Set template
+    else if(url_parts.pathname == "/set/") {
+    	var query = url_parts.query;
+    	if(query['screen'] != undefined && query['template'] != undefined) {
+    		console.log("Sending " + query['template'] + " to: " + query['screen']);
+    		for(var i = 0; i < screens.length; i++) {
+    			if(screens[i].name == query['screen'])
+    				sendFeeds(screens[i].connection, query['template']);
+    		}
+    		response.end("Set template: " + query['template'] + " to: " + query['screen']);
+    	}
     }
 });
 server.listen(8081, function() { });
