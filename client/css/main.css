@@ -13,7 +13,8 @@ body {
 }
 
 #pageWrapper {
-	width: 100%;
+	position: relative;
+	width: 640px;
 	height: 100%;
 	border-collapse: collapse;
 }
@@ -35,8 +36,14 @@ body {
 	text-align: right;
 }
 
-#contentWrapper {
+#contentArea {
 	background: gray;
 	height: 100%;
 	vertical-align: top;
+	width: 100%;
+}
+
+#contentWrapper {
+	width: 100%;
+	overflow: hidden;
 }

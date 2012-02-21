@@ -1,6 +1,27 @@
 var retries = 0;
+var currentInformation = null;
+var mainContentCounter = 0;
 
-window.onload = connectToServer;
+window.onload = init;
+
+function init() {
+	connectToServer();
+	switchMainInformation();
+}
+
+function switchMainInformation() {
+	var displayTime = 1000;
+	if(currentInformation != null) {
+		document.getElementById("contentWrapper").innerHTML =
+				"<p>" + currentInformation.maincontent[mainContentCounter] + "</p>";
+		if(++mainContentCounter >= currentInformation.maincontent.length) {
+			mainContentCounter = 0;
+			//TODO: request new information
+		}
+	}
+	
+	setTimeout(switchMainInformation, displayTime);
+}
 
 function connectToServer () {
     // if user is running mozilla then use it's built-in WebSocket
@@ -8,7 +29,8 @@ function connectToServer () {
 
 	console.log("Connecting to server...");
 	setConnectionStatus("Connecting...");
-    var connection = new WebSocket('ws://localhost:8080');
+	var host = window.location.host;
+    var connection = new WebSocket('ws://'+host+':8081');
 
     connection.onopen = function () {
         // connection is opened and ready to use
@@ -37,15 +59,15 @@ function connectToServer () {
 
     connection.onmessage = function (message) {
         // try to decode json (I assume that each messagse from server is json)
-        /*try {
+        try {
             var json = JSON.parse(message.data);
+			currentInformation = json;
         } catch (e) {
             console.log('This doesn\'t look like a valid JSON: ', message.data);
             return;
-        }*/
+        }
         // handle incoming message
 		console.log(message.data);
-		document.getElementById("contentWrapper").innerHTML = "<p>" + message.data + "</p>";
     };
 };
 

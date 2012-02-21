@@ -44,7 +44,7 @@ var server = http.createServer(function(request, response) {
     
     response.end(connectedScreens);
 });
-server.listen(8080, function() { });
+server.listen(8081, function() { });
 
 // create the server
 wsServer = new WebSocketServer({
@@ -75,13 +75,13 @@ wsServer.on('request', function(request) {
 	  					fs.readFile("default_template", 'utf8', function (err, data) {
 	  						if(err) {
 	  							//Send no data
-	  							connection.send("No data availible");
+	  							connection.send("No data available");
 	  						}
-	  						else connection.send(data);
+	  						else prepareTemplateFileForDelivery(connection, data);
 	  						
 	  					});
 	  				}
-	  				else connection.send(data);
+	  				else prepareTemplateFileForDelivery(connection, data);
 				});
 			}
         }
@@ -100,4 +100,63 @@ wsServer.on('request', function(request) {
 		});
 });
 
+function prepareTemplateFileForDelivery(connection, template) {
+	var jsonObject = eval('(' + template + ')');
+	var mainContent = jsonObject.maincontent;
+	var subContent = jsonObject.subcontent;
+	
+	var mainFeed;
+	var subFeed;
+	
+	var options = {
+           host: 'localhost',   
+           port: 80,   
+           path: '/coffeescreen/services/RSSFetcher.php?feeds=' + mainContent
+      };
+	var req = http.get(options, function(res) {  
+	 	res.setEncoding('utf8');
+		res.on('data', function(chunk) {  
+		    mainFeed = chunk;
+		    
+		    var options2 = {
+           		host: 'localhost',   
+           		port: 80,   
+           		path: '/coffeescreen/services/RSSFetcher.php?feeds=' + subContent
+      		};
+		    var req2 = http.get(options2, function(res2) {  
+			 	res2.setEncoding('utf8');
+				res2.on('data', function(chunk) {
+				
+					subFeed = chunk;
+				
+					var feed = '{' + '"maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
+					connection.send(feed);
+			
+				}).on('error', function(e) {
+					  console.log("Got error: " + e.message);
+				});  
+			}); 
+	}).on('error', function(e) {
+		  console.log("Got error: " + e.message);
+	});
+	});
+	
+}
+
+
+function fetchRSS(sources) {
+	var options = {
+           host: 'localhost',   
+           port: 80,   
+           path: '/dbt/services/RSSFetcher.php?feeds=' + sources
+      };
+	 var req = http.get(options, function(res) {  
+	 	res.setEncoding('utf8');
+		res.on('data', function(chunk) {  
+		     return chunk;   
+		});   
+	 }).on('error', function(e) {  
+		  console.log("Got error: " + e.message);   
+	 });
+}
 
