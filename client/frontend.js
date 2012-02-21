@@ -1,6 +1,27 @@
 var retries = 0;
+var currentInformation = null;
+var mainContentCounter = 0;
 
-window.onload = connectToServer;
+window.onload = init;
+
+function init() {
+	connectToServer();
+	switchMainInformation();
+}
+
+function switchMainInformation() {
+	var displayTime = 1000;
+	if(currentInformation != null) {
+		document.getElementById("contentWrapper").innerHTML =
+				"<p>" + currentInformation.maincontent[mainContentCounter] + "</p>";
+		if(++mainContentCounter >= currentInformation.maincontent.length) {
+			mainContentCounter = 0;
+			//TODO: request new information
+		}
+	}
+	
+	setTimeout(switchMainInformation, displayTime);
+}
 
 function connectToServer () {
     // if user is running mozilla then use it's built-in WebSocket
@@ -38,15 +59,23 @@ function connectToServer () {
 
     connection.onmessage = function (message) {
         // try to decode json (I assume that each messagse from server is json)
-        /*try {
+        try {
             var json = JSON.parse(message.data);
         } catch (e) {
             console.log('This doesn\'t look like a valid JSON: ', message.data);
             return;
-        }*/
+        }
         // handle incoming message
 		console.log(message.data);
-		document.getElementById("contentWrapper").innerHTML = "<p>" + message.data + "</p>";
+		document.getElementById("contentWrapper").innerHTML =
+				"<p>Name: " + json.name + "</p>" + 
+				"<p>Note: " + json.note + "</p>" +
+				"<p>Main content: " + json.maincontent + "</p>" +
+				"<p>Sub content: " + json.subcontent + "</p>";
+				
+		json.maincontent = json.maincontent.split(",");
+		json.subcontent = json.subcontent.split(",");
+		currentInformation = json;
     };
 };
 
