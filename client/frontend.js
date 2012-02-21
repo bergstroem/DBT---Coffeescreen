@@ -8,7 +8,8 @@ function connectToServer () {
 
 	console.log("Connecting to server...");
 	setConnectionStatus("Connecting...");
-    var connection = new WebSocket('ws://localhost:8080');
+	var host = window.location.host;
+    var connection = new WebSocket('ws://'+host+':8081');
 
     connection.onopen = function () {
         // connection is opened and ready to use
