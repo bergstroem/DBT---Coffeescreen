@@ -22,22 +22,14 @@ body {
 }
 
 #topBar {
-<<<<<<< HEAD
-	position: absolute;
+
+	position: fixed;
 	background: #00aeef;
 	vertical-align: top;
 	width: 100%;
 	height: 20px;
-	
-=======
-	position: fixed;
-	background: silver;
-	vertical-align: top;
-	width: 100%;
-	height: 20px;
 	top: 0;
-	left: 0;
->>>>>>> 56f9abcf21a09ecfb1033376e30c616da6e45912
+	left:0;
 }
 
 .topBarSection {
