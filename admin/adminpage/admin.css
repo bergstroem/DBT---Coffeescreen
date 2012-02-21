@@ -167,6 +167,7 @@ p{
 .nameTXB{
 	width:160px;
 	height:20px;
+	border:1px solid #00AEEF;
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
@@ -174,6 +175,7 @@ p{
 	width:250px;
 	height:100px;
 	resize:none;
+	border:1px solid #00AEEF;
 	font-family:"Calibri", Calibri, sans-serif;
 }
 

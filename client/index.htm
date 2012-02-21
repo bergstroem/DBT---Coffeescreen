@@ -15,23 +15,8 @@
 							Codemill!
 						</td>
 						<td id="topBarCenter" class="topBarSection">
-							<form name="Tick">
-                        <input type="text" size="11" name="Clock">
-                        </form>
-                        <script>
-                        function show(){
-                        var Digital=new Date();
-                        var hours=Digital.getHours();
-                        var minutes=Digital.getMinutes();
-                        if (hours<=9)
-                        minutes="0"+minutes;
-                        if (minutes<=9)
-                        document.getElementById("topBarCenter").innerHTML=hours+":"+minutes;
-                        setTimeout("show()",1000);
-                        }
-                        show();
-                        </script>
-						</td>
+							&nbsp;
+                    	</td>
 						<td id="topBarRight" class="topBarSection">
 							&nbsp;
 						</td>
@@ -43,6 +28,19 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> 
+		<script>
+		function show(){
+			var Digital=new Date();
+			var hours=Digital.getHours();
+			var minutes=Digital.getMinutes();
+			if (minutes<=9)
+			minutes="0"+minutes;
+			document.getElementById("topBarCenter").innerHTML=hours+":"+minutes;
+			setTimeout("show()",1000);
+		}
+		show();
+		//-->
+		</script>
 	</body>
 </html>

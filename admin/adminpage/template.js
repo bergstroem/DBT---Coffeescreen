@@ -223,28 +223,30 @@ function listTemplates(){
 		url: "tempget.php",
 		data: "",
 		success: function(msg){
-			var arr = msg.substr(2, msg.length-4).split('\",\"');
-			for(var i = 0; i < arr.length; i++){
-				var item = document.createElement("div");
-				item.id = arr[i];
-				item.className = "templateitem";
-				item.innerHTML = arr[i];
-				
-				var editButton = document.createElement("input");
-				editButton.type = "button";
-				editButton.id = arr[i] + ".json";
-				editButton.value = "Edit";
-				editButton.className = "TIedit";
-				item.appendChild(editButton);
-				
-				var delButton = document.createElement("input");
-				delButton.type = "button";
-				delButton.id = arr[i] + ".json";
-				delButton.value = "Delete";
-				delButton.className = "TIdelete";
-				item.appendChild(delButton);
-				
-				tempList.appendChild(item);
+			if(msg.length > 2){
+				var arr = msg.substr(2, msg.length-4).split('\",\"');
+				for(var i = 0; i < arr.length; i++){
+					var item = document.createElement("div");
+					item.id = arr[i];
+					item.className = "templateitem";
+					item.innerHTML = arr[i];
+					
+					var editButton = document.createElement("input");
+					editButton.type = "button";
+					editButton.id = arr[i] + ".json";
+					editButton.value = "Edit";
+					editButton.className = "TIedit";
+					item.appendChild(editButton);
+					
+					var delButton = document.createElement("input");
+					delButton.type = "button";
+					delButton.id = arr[i] + ".json";
+					delButton.value = "Delete";
+					delButton.className = "TIdelete";
+					item.appendChild(delButton);
+					
+					tempList.appendChild(item);
+				}
 			}
 		}
 	});
@@ -258,7 +260,7 @@ function listScreens(){
 	document.getElementById("content").appendChild(screenHeader);
 	$.ajax({
 		type: "POST",
-		url: "http://localhost:8081",
+		url: "http://localhost:8081/listscreens",
 		data: "",
 		success: function(msg){
 			var screenNames = msg.split(";");
