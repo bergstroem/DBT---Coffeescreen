@@ -44,7 +44,7 @@ function listScreens(){
 	var screenHeader = document.createElement("div");
 	screenHeader.id = "screenheader";
 	screenHeader.className = "templateheader";
-	screenHeader.innerHTML = "Name:";
+	screenHeader.appendChild(document.createTextNode("Name:"));
 	document.getElementById("content").appendChild(screenHeader);
 	
 	var panicAllButton = document.createElement("input");
@@ -71,7 +71,7 @@ function createScreen(name){
 	var screenItem = document.createElement("div");
 	screenItem.id = "screen:" + name;
 	screenItem.className = "templateitem";
-	screenItem.innerHTML = name;
+	screenItem.appendChild(document.createTextNode(name));
 	
 	var panicButton = document.createElement("input");
 	panicButton.id = "panic:" + name;
@@ -91,7 +91,7 @@ function createScreen(name){
 			for(var i = 0; i < arr.length; i++){
 				var temp = document.createElement("option");
 				temp.value = arr[i];
-				temp.innerHTML = arr[i];
+				temp.appendChild(document.createTextNode(arr[i]));
 				select.appendChild(temp);
 			}
 		}

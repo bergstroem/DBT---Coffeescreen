@@ -15,7 +15,7 @@ function createItem(name, target){
 		divTag.addEventListener('dragstart', handleDragStart, false);
 		divTag.addEventListener('dragend', handleDragEnd, false);
 		divTag.className ="contentitem";
-		divTag.innerHTML = name;
+		divTag.appendChild(document.createTextNode(name));
 		
 		var delbutton = document.createElement("input");
 		delbutton.setAttribute("type","button");
@@ -73,6 +73,11 @@ function removeItem(element){
 	document.getElementById(parentname).removeChild(document.getElementById(name));
 }
 
+/*
+ * sourceExists(name)
+ * Used for checking so that the source trying to be added does not already exist.
+ * name: The name of the source trying to be added.
+*/
 function sourceExists(name){
 	var children = document.getElementById('maincontent').childNodes;
 	var length = children.length;
@@ -157,7 +162,7 @@ function editTemplate(name){
 			console.log("Succesful template load");
 			var jsonobj = JSON.parse(msg);
 			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
-			document.getElementById("noteTXB").innerHTML = jsonobj["note"];
+			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
 			fillcontent(jsonobj["maincontent"], "maincontent");
 			fillcontent(jsonobj["subcontent"], "subcontent");
 			
@@ -234,7 +239,7 @@ function listTemplates(){
 	var tempHead = document.createElement("div");
 	tempHead.id = "templatehead";
 	tempHead.className = "templateheader";
-	tempHead.innerHTML = "Name:";
+	tempHead.appendChild(document.createTextNode("Name:"));
 	tempList.appendChild(tempHead);
 	var newButton = document.createElement("input");
 	newButton.type = "button";
@@ -255,7 +260,7 @@ function listTemplates(){
 					var item = document.createElement("div");
 					item.id = arr[i];
 					item.className = "templateitem";
-					item.innerHTML = arr[i];
+					item.appendChild(document.createTextNode(arr[i]));
 					
 					var editButton = document.createElement("input");
 					editButton.type = "button";
