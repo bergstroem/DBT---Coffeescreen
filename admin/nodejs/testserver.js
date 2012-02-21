@@ -56,14 +56,26 @@ var server = http.createServer(function(request, response) {
     	
     	//Send panic to user, bla bla bla
     	if(query['screen'] != undefined){
-    		console.log("Sending panic to: " + query['screen']);
-    		var i;
-    		for(i = 0; i < screens.length; i++)
-    		{
-    			if(query['screen'] == screens[i].name)
-    				screens[i].connection.send(
+    		
+    		if(query['screen'] == '*'){
+    			console.log("Sending panic feeds to all screens");
+				var i;
+				for(i = 0; i < screens.length; i++)
+				{
+					sendFeeds(screens[i].connection, "panic");
+				}
+    		}
+    		else {
+				console.log("Sending panic feeds to: " + query['screen']);
+				var i;
+				for(i = 0; i < screens.length; i++)
+				{
+					if(query['screen'] == screens[i].name)
+						sendFeeds(screens[i].connection, "panic");
+				}
     		}
     	}
+    	response.end("");
     }
 });
 server.listen(8081, function() { });
@@ -91,20 +103,7 @@ wsServer.on('request', function(request) {
 				console.log("Screen " + screen.name + " connected.");
 				
 				
-				fs.readFile(name, 'utf8', function (err, data) {
-  					if (err) {
-  						console.log("Looking for default");
-	  					fs.readFile("default_template", 'utf8', function (err, data) {
-	  						if(err) {
-	  							//Send no data
-	  							connection.send("No data available");
-	  						}
-	  						else prepareTemplateFileForDelivery(connection, data);
-	  						
-	  					});
-	  				}
-	  				else prepareTemplateFileForDelivery(connection, data);
-				});
+				sendFeeds(connection, name);
 			}
         }
     });
@@ -121,6 +120,23 @@ wsServer.on('request', function(request) {
 		console.log("");*/
 		});
 });
+
+function sendFeeds(connection, name) {
+	fs.readFile(name, 'utf8', function (err, data) {
+		if (err) {
+			console.log("Looking for default");
+			fs.readFile("default_template", 'utf8', function (err, data) {
+				if(err) {
+					//Send no data
+					connection.send("No data available");
+				}
+				else prepareTemplateFileForDelivery(connection, data);
+				
+			});
+		}
+		else prepareTemplateFileForDelivery(connection, data);
+	});
+}
 
 function prepareTemplateFileForDelivery(connection, template) {
 	var jsonObject = eval('(' + template + ')');
