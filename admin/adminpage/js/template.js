@@ -136,7 +136,20 @@ function saveTemplate(){
 		}
 		
 		subContent = subContent.substr(0,subContent.length-1);
-		
+		var url = document.URL;
+		url = url.substr(url.indexOf("?")+1);
+		var p = url.substr(0,3);
+		if(p == "p=2"){
+			var tname = url.substr(9);
+			if(!(tname.substr(0,tname.indexOf(".")) == fname))
+				$.ajax({
+					type: "POST",
+					url: "templatehandler.php",
+					data: "p=3&name="+tname,
+					success: function(msg){
+					}
+				});
+		}
 		$.ajax({
 			type: "POST",
 			url: "templatehandler.php",
@@ -165,14 +178,6 @@ function editTemplate(name){
 			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
 			fillcontent(jsonobj["maincontent"], "maincontent");
 			fillcontent(jsonobj["subcontent"], "subcontent");
-			
-			$.ajax({
-				type: "POST",
-				url: "templatehandler.php",
-				data: "p=3&name="+name,
-				success: function(msg){
-				}
-			});
 		}
 	});
 }
