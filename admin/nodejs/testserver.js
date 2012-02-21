@@ -105,8 +105,8 @@ function prepareTemplateFileForDelivery(connection, template) {
 	var mainContent = jsonObject.maincontent;
 	var subContent = jsonObject.subcontent;
 	
-	var mainFeed;
-	var subFeed;
+	var mainFeed = "";
+	var subFeed = "";
 	
 	var options = {
            host: 'localhost',   
@@ -116,26 +116,27 @@ function prepareTemplateFileForDelivery(connection, template) {
 	var req = http.get(options, function(res) {  
 	 	res.setEncoding('utf8');
 		res.on('data', function(chunk) {  
-		    mainFeed = chunk;
+		    mainFeed += chunk;
 		    
-		    var options2 = {
-           		host: 'localhost',   
-           		port: 80,   
-           		path: '/dbt/services/RSSFetcher.php?feeds=' + subContent
-      		};
-		    var req2 = http.get(options2, function(res2) {  
-			 	res2.setEncoding('utf8');
-				res2.on('data', function(chunk) {
+		    
+			}).on('end', function() {
+				var options2 = {
+			   		host: 'localhost',   
+			   		port: 80,   
+			   		path: '/dbt/services/RSSFetcher.php?feeds=' + subContent
+		  		};
+				var req2 = http.get(options2, function(res2) {  
+				 	res2.setEncoding('utf8');
+					res2.on('data', function(chunk) {
+						subFeed += chunk;
 				
-					subFeed = chunk;
-				
-					var feed = '{' + '"maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
-					connection.send(feed);
-			
-				}).on('error', function(e) {
-					  console.log("Got error: " + e.message);
-				});  
-			}); 
+						}).on('end', function() {
+							var feed = '{' + '"maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
+							connection.send(feed);
+					}).on('error', function(e) {
+						  console.log("Got error: " + e.message);
+					});  
+				}); 
 	}).on('error', function(e) {
 		  console.log("Got error: " + e.message);
 	});
