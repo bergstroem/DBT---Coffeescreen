@@ -29,14 +29,14 @@ function createItem(name, target){
  * Wrapper function for createItem, will create items and put them in the contentlist.
  * form: The submitted form containing the input text.
 */
-function createCont(form){
-	if(form.sourcename.value == ""){
+function createCont(){
+	var sourcename = document.getElementById("sourcename");
+	if(sourcename.value == ""){
 		alert("Please enter a sourcename");
 	}
 	else{
-		var name = form.sourcename.value;
-		createItem(name, "contentlist");
-		form.sourcename.value = "";
+		createItem(sourcename.value, "contentlist");
+		sourcename.value = "";
 	}
 }
 
