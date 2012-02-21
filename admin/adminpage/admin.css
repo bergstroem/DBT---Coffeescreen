@@ -59,10 +59,8 @@ p{
 .templateheader{
 	background:black;
 	color:white;
-	width:100% - 10px;
 	height:30px;
 	position:relative;
-	top:-20px;
 	left:0;
 	padding:10px 0 0 10px;
 }
@@ -77,12 +75,10 @@ p{
 
 .templateitem{
 	background:teal;
-	width:100% - 10px;
 	height:30px;
 	position:relative;
 	padding:10px 0 0 10px;
 	margin:5px 0 0 0;
-	top:-20px;
 }
 
 .TInew{

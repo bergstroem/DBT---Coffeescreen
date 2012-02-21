@@ -44,7 +44,7 @@ var server = http.createServer(function(request, response) {
     
     response.end(connectedScreens);
 });
-server.listen(8080, function() { });
+server.listen(8081, function() { });
 
 // create the server
 wsServer = new WebSocketServer({
