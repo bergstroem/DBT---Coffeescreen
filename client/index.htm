@@ -21,16 +21,15 @@
                         </form>
                         <script>
                         function show(){
-                        var Digital=new Date()
-                        var hours=Digital.getHours()
-                        var minutes=Digital.getMinutes()
-                        if (minutes<=9)
-                        minutes="0"+minutes
-                        if (seconds<=9)
-                        document.Tick.Clock.value=hours+":"+minutes
-                        setTimeout("show()",1000)
+							var Digital=new Date();
+							var hours=Digital.getHours();
+							var minutes=Digital.getMinutes();
+							if (minutes<=9)
+							minutes="0"+minutes;
+							document.Tick.Clock.value=hours+":"+minutes;
+							setTimeout("show()",1000);
                         }
-                        show()
+                        show();
                         //-->
                         </script>
 					</td>
@@ -56,8 +55,8 @@
 						<td id="topBarCenter" class="topBarSection">
 							13:37
 						</td>
-						<td id="topBarRight" class="topBarSection">
-							&nbsp;
+						<td id="topBarRight" class="topBarSection">&nbsp;
+							
 						</td>
 					</tr>
 				</table>
