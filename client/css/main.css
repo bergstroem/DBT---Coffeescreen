@@ -22,16 +22,27 @@ body {
 }
 
 #topBar {
+<<<<<<< HEAD
 	position: absolute;
 	background: #00aeef;
 	vertical-align: top;
 	width: 100%;
 	height: 20px;
 	
+=======
+	position: fixed;
+	background: silver;
+	vertical-align: top;
+	width: 100%;
+	height: 20px;
+	top: 0;
+	left: 0;
+>>>>>>> 56f9abcf21a09ecfb1033376e30c616da6e45912
 }
 
 .topBarSection {
 	width: 33%;
+	float: left;
 }
 
 #topBarCenter {
@@ -44,7 +55,7 @@ body {
 
 #contentArea {
 	position: relative;
-	margin-top: 30px;
+	margin: 20px 0;
 	padding: 10px 20px;
 }
 
