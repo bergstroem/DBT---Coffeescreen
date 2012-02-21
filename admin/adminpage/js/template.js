@@ -106,7 +106,7 @@ function sourceExists(name){
 }
 
 /*
- * saveTemplate(form)
+ * saveTemplate()
  * Used for saving a template, will use the information in the form.
 */
 function saveTemplate(){
@@ -164,7 +164,8 @@ function saveTemplate(){
 
 /*
  * editTemplate(name)
- * 
+ * Get the information from the json file and fill the form with the information.
+ * name: Name of the template that is going to be edited.
 */
 function editTemplate(name){
 	$.ajax({
@@ -183,7 +184,9 @@ function editTemplate(name){
 }
 
 /*
- *
+ * deleteTemplate(name)
+ * Will delete the template with the given name.
+ * name: Name of the template that is going to be deleted.
 */
 function deleteTemplate(name){
 	var divname = name.substr(0, name.length-5);
@@ -200,7 +203,7 @@ function deleteTemplate(name){
 }
 
 /*
- *
+ * Handle clicks in admintemplate.php
 */
 $(document).ready(function(){
 	$('.TInew').click(function(e){
@@ -217,7 +220,10 @@ $(document).ready(function(){
 	});
 });
 
-
+/*
+ * addEL()
+ * Used for adding eventhandlers to the template form.
+*/
 function addEL(){
 	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
 	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
@@ -228,31 +234,13 @@ function addEL(){
 	document.getElementById("contentlist").addEventListener('dragover', handleDragOver, false);
 	document.getElementById("contentlist").addEventListener('drop', handleDrop, false);
 }
-/*
- *
-*/
-function createContTEST()
-{
-	for(var i = 0; i < 35; i++)
-	{
-		createItem(i, "contentlist");
-	}
-}
 
+/*
+ * listTemplates()
+ * Used for listing all the existing templates and displaying them.
+*/
 function listTemplates(){
-	var tempList = document.getElementById("content");
-	var tempHead = document.createElement("div");
-	tempHead.id = "templatehead";
-	tempHead.className = "templateheader";
-	tempHead.appendChild(document.createTextNode("Name:"));
-	tempList.appendChild(tempHead);
-	var newButton = document.createElement("input");
-	newButton.type = "button";
-	newButton.id = "newbutton";
-	newButton.value = "New template";
-	newButton.className = "TInew";
-	tempHead.appendChild(newButton);
-	
+	var tempList = document.getElementById("admintemplatecontent");
 	
 	$.ajax({
 		type: "POST",
@@ -286,4 +274,16 @@ function listTemplates(){
 			}
 		}
 	});
+}
+
+/*
+ * createContTest()
+ * Used for testing purpose it will spawn 35 sourceitems.
+*/
+function createContTEST()
+{
+	for(var i = 0; i < 35; i++)
+	{
+		createItem(i, "contentlist");
+	}
 }

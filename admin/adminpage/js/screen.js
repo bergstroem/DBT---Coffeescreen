@@ -1,3 +1,6 @@
+/*
+ * Handles click events in index.php
+*/
 $(document).ready(function(){
 	$('.content').click(function(e){
 		if($(e.target).is('.screenAllPanicButton')){
@@ -39,21 +42,11 @@ $(document).ready(function(){
 	});
 });
 
-
+/*
+ * listScreens()
+ * Will connect to the node server and get all the connected screens and display them.
+*/
 function listScreens(){
-	var screenHeader = document.createElement("div");
-	screenHeader.id = "screenheader";
-	screenHeader.className = "templateheader";
-	screenHeader.appendChild(document.createTextNode("Name:"));
-	document.getElementById("content").appendChild(screenHeader);
-	
-	var panicAllButton = document.createElement("input");
-	panicAllButton.id = "panic:All";
-	panicAllButton.type = "button";
-	panicAllButton.value = "Panic All";
-	panicAllButton.className = "screenAllPanicButton";
-	screenHeader.appendChild(panicAllButton);
-	
 	$.ajax({
 		type: "POST",
 		url: "http://85.24.223.52:8081/listscreens",
@@ -67,6 +60,11 @@ function listScreens(){
 	});
 }
 
+/*
+ * createScreen(name)
+ * Used for creating a screen, used by listScreens().
+ * name: Name of the screen that will be displayed.
+*/
 function createScreen(name){
 	var screenItem = document.createElement("div");
 	screenItem.id = "screen:" + name;
@@ -106,5 +104,5 @@ function createScreen(name){
 	screenItem.appendChild(select);
 	screenItem.appendChild(set);
 	screenItem.appendChild(panicButton);
-	document.getElementById("content").appendChild(screenItem);
+	document.getElementById("screencontent").appendChild(screenItem);
 }
