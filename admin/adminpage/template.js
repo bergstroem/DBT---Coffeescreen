@@ -12,6 +12,7 @@ function createItem(name, target){
 	divTag.addEventListener('dragend', handleDragEnd, false);
 	divTag.className ="contentitem";
 	divTag.innerHTML = name;
+	
 	var delbutton = document.createElement("input");
 	delbutton.setAttribute("type","button");
 	delbutton.setAttribute("name","rbutton");
@@ -19,6 +20,7 @@ function createItem(name, target){
 	delbutton.setAttribute("class","removebutton");
 	delbutton.setAttribute("onclick","removeItem(this)");
 	divTag.appendChild(delbutton);
+	
 	document.getElementById(target).appendChild(divTag);
 }
 
@@ -163,7 +165,7 @@ $(document).ready(function(){
 		window.location = "template.php?p=1";
 	});
 	
-	$('.templatelist').click(function(e){
+	$('.content').click(function(e){
 		if($(e.target).is('.TIedit')){
 			window.location = "template.php?p=2&name="+e.target.id;
 		}
@@ -202,9 +204,7 @@ function createContTEST()
 }
 
 function listTemplates(){
-	var tempList = document.createElement("div");
-	tempList.id = "templatelist";
-	tempList.className = "templatelist";
+	var tempList = document.getElementById("content");
 	var tempHead = document.createElement("div");
 	tempHead.id = "templatehead";
 	tempHead.className = "templateheader";
@@ -229,12 +229,14 @@ function listTemplates(){
 				item.id = arr[i];
 				item.className = "templateitem";
 				item.innerHTML = arr[i];
+				
 				var editButton = document.createElement("input");
 				editButton.type = "button";
 				editButton.id = arr[i] + ".json";
 				editButton.value = "Edit";
 				editButton.className = "TIedit";
 				item.appendChild(editButton);
+				
 				var delButton = document.createElement("input");
 				delButton.type = "button";
 				delButton.id = arr[i] + ".json";
@@ -246,11 +248,14 @@ function listTemplates(){
 			}
 		}
 	});
-	
-	document.getElementById("content").appendChild(tempList);
 }
 
 function listScreens(){
+	var screenHeader = document.createElement("div");
+	screenHeader.id = "screenheader";
+	screenHeader.className = "templateheader";
+	screenHeader.innerHTML = "Name:";
+	document.getElementById("content").appendChild(screenHeader);
 	$.ajax({
 		type: "POST",
 		url: "http://localhost:8081",
@@ -265,13 +270,15 @@ function listScreens(){
 }
 
 function createScreen(name){
-	var divTag = document.createElement("div");
-	divTag.id = "" + name;
-	divTag.className = "templateitem";
-	divTag.innerHTML = name;
+	var screenItem = document.createElement("div");
+	screenItem.id = "" + name;
+	screenItem.className = "templateitem";
+	screenItem.innerHTML = name;
+	
 	var panicButton = document.createElement("input");
 	panicButton.type = "button";
 	panicButton.value = "Panic";
+	
 	var select = document.createElement("select");
 	$.ajax({
 		type: "POST",
@@ -287,12 +294,13 @@ function createScreen(name){
 			}
 		}
 	});
+	
 	var set = document.createElement("input");
 	set.type = "button";
 	set.value = "set";
-	divTag.appendChild(panicButton);
-	divTag.appendChild(select);
-	divTag.appendChild(set);
-	document.getElementById("content").appendChild(divTag);
+	screenItem.appendChild(panicButton);
+	screenItem.appendChild(select);
+	screenItem.appendChild(set);
+	document.getElementById("content").appendChild(screenItem);
 }
 
