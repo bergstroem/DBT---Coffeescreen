@@ -90,12 +90,14 @@ p{
 }
 
 .templateitem{
-	height:30px;
+	height:32px;
 	border-top:2px solid #00AEEF;
 	border-bottom:2px solid #00AEEF;
 	position:relative;
-	padding:10px 0 0 10px;
+	padding:8px 0 0 10px;
 	margin:5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-size:20px;
 }
 
 .TInew{
@@ -151,13 +153,6 @@ p{
 	font-weight:bold;
 }
 
-.bottombar{
-	background:red;
-	width:100%;
-	height:40px;
-	position:relative;
-}
-
 /* Template stuff */
 
 .namebox{
@@ -165,18 +160,21 @@ p{
 	height:20px;
 	position:relative;
 	float:left;
-	margin:10px 0 0 10px;
+	margin:0 0 0 10px;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .nameTXB{
 	width:160px;
 	height:20px;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .noteTXB{
 	width:250px;
 	height:100px;
 	resize:none;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .notebox{
@@ -185,96 +183,125 @@ p{
 	resize:none;
 	position:relative;
 	float:left;
-	margin:10px 0 0 10px;
+	margin:0 0 0 10px;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .savetemplatebutton{
-	background:teal;
 	width:160px;
 	height:50px;
-	border:1px solid #000000;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border:1px solid #00AEEF;
 	margin:30px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-size:17px;
 }
 
 .maindrop{
-	background:red;
 	width:740px;
-	height:310px;
+	height:308px;
+	border-top:2px solid #00AEEF;
 	position:absolute;
 	top:140px;
 	left:0;
 	overflow-y:auto;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
 }
 
 .subdrop{
-	background:blue;
 	width:740px;
-	height:200px;
+	height:192px;
+	border-top:2px solid #00AEEF;
+	border-bottom:2px solid #00AEEF;
 	position:absolute;
 	top:450px;
 	left:0;
 	overflow-y:auto;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
 }
 
 .contentlist{
-	background:orange;
-	width:260px;
-	height:650px;
+	width:254px;
+	height:594px;
+	border-bottom:2px solid #00AEEF;
+	border-left:2px solid #00AEEF;
 	position:absolute;
 	top:0;
 	left:740px;
+	padding:50px 0 0 0;
 	overflow-y:auto;
+	overflow-x:hidden;
 }
 
 .contentspawner{
-	background:purple;
-	width:210px;
-	position:relative;
-	margin:10px 0 0 10px;
-	padding:15px 10px;
+	background:#00AEEF;
+	width:254px;
+	height:50px;
+	border-top-right-radius:10px;
+	-moz-border-top-right-radius:10px;
+	-webkit-border-top-right-radius:10px;
+	position:absolute;
+	top:0;
 }
 
 .contentTXB{
 	width:160px;
 	height:20px;
 	position:absolute;
+	margin:15px 0 0 10px;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .savebutton{
-	background:green;
 	width:40px;
 	height:20px;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:0px;
 	position:absolute;
 	left:180px;
-	border:0px;
+	margin:15px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .contentitem{
 	float:left;
-	background:purple;
-	width:210px;
+	width:206px;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border:2px solid #00AEEF;
 	position:relative;
 	margin:10px 0 0 10px;
-	padding:15px 10px;
+	padding:10px 10px;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .removebutton{
 	background:red;
-	width:40px;
+	width:20px;
 	height:20px;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 	position:absolute;
 	margin:0;
-	left:180px;
+	left:198px;
 	border:0px;
 }
 
 .spawnbutton{
-	background:black;
+	background:transparent;
 	width:10px;
 	height:10px;
+	border:0px;
 	position:absolute;
 	top:0;
 	left:0;
+	z-index:9999;
 }
-
-
