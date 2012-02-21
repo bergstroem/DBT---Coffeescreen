@@ -8,20 +8,24 @@ body {
 	position: relative;
 	width: 640px;
 	height: 480px;
-	overflow: auto;
 	border: 1px dashed #333;
 }
 
 #pageWrapper {
 	position: relative;
-	width: 640px;
+	background: gray;
+	width: 100%;
 	height: 100%;
 	border-collapse: collapse;
+	overflow: hidden;
 }
 
 #topBar {
+	position: absolute;
 	background: silver;
 	vertical-align: top;
+	width: 100%;
+	height: 20px;
 }
 
 .topBarSection {
@@ -37,13 +41,11 @@ body {
 }
 
 #contentArea {
-	background: gray;
-	height: 100%;
-	vertical-align: top;
-	width: 100%;
+	position: relative;
+	margin-top: 30px;
+	padding: 10px 20px;
 }
 
-#contentWrapper {
+#mainContent {
 	width: 100%;
-	overflow: hidden;
 }

@@ -12,9 +12,14 @@ function init() {
 function switchMainInformation() {
 	var displayTime = 1000;
 	if(currentInformation != null) {
-		document.getElementById("contentWrapper").innerHTML =
-				"<p>" + currentInformation.maincontent[mainContentCounter] + "</p>";
-		if(++mainContentCounter >= currentInformation.maincontent.length) {
+		var title = currentInformation.maincontent.posts[mainContentCounter].title;
+		var date = currentInformation.maincontent.posts[mainContentCounter].date;
+		var content = currentInformation.maincontent.posts[mainContentCounter].content;
+		document.getElementById("mainContent").innerHTML =
+				"<h1>" + title + "</h1>" +
+				"<p>" + date + "</p>" +
+				"<p>" + content + "</p>";
+		if(++mainContentCounter >= currentInformation.maincontent.posts.length) {
 			mainContentCounter = 0;
 			//TODO: request new information
 		}
