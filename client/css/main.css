@@ -1,7 +1,12 @@
+html {
+	height: 100%;
+}
+
 body {
 	margin: 0;
 	padding: 0;
 	background: black;
+	height: 100%;
 }
 
 #screen { /*Simulating small screen and will be removed*/
