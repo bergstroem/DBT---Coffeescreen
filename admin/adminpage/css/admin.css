@@ -67,6 +67,19 @@ p{
 	overflow-y:auto;
 }
 
+.contentheader{
+	background:#00AEEF;
+	color:white;
+	height:32px;
+	position:relative;
+	left:0;
+	padding:8px 0 0 10px;
+	margin:5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:20px;
+}
+
 /* Screens */
 .screenAllPanicButton{
 	background:red;
@@ -140,19 +153,6 @@ p{
 }
 
 /* Template list */
-.templateheader{
-	background:#00AEEF;
-	color:white;
-	height:32px;
-	position:relative;
-	left:0;
-	padding:8px 0 0 10px;
-	margin:5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:20px;
-}
-
 .templatelist{
 	width:100%;
 	height:650px;
@@ -382,4 +382,23 @@ p{
 	top:0;
 	left:0;
 	z-index:9999;
+}
+
+/* Feeds */
+.newFeedButton{
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
 }
