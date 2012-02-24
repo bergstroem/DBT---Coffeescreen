@@ -1,5 +1,5 @@
 <?php
-	if($handle = opendir('.')){
+	if($handle = opendir('../../templates/')){
 		$temps = array();
 		while(false !== ($entry = readdir($handle))){
 			if(!strcmp(substr($entry, -5), ".json")){
