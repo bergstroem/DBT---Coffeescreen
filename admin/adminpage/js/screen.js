@@ -1,4 +1,4 @@
-var host = window.location.host;
+var host = /*window.location.host*/"85.24.223.52";
 
 /*
  * Handles click events in index.php
