@@ -26,6 +26,7 @@ function switchMainInformation() {
 	var urls = new Array();
 	if(images.length > 0){
 		for(var i = 0; i < images.length; i++){
+			images[i].src = images[i].src.replace("%20", "").replace(" ", "")
 			urls.push(images[i].src);
 		}
 	}
