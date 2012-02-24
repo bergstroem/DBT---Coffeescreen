@@ -54,9 +54,11 @@ function listScreens(){
 		url: "http://" + host + ":8081/listscreens",
 		data: "",
 		success: function(msg){
-			var screenNames = msg.split(";");
-			for(var i = 0; i < screenNames.length; i++){
-				createScreen(screenNames[i]);
+			if(msg.length > 2){
+				var screenNames = msg.split(";");
+				for(var i = 0; i < screenNames.length; i++){
+					createScreen(screenNames[i]);
+				}
 			}
 		}
 	});
