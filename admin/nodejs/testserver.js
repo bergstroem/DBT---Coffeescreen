@@ -156,6 +156,7 @@ function prepareTemplateFileForDelivery(connection, template) {
 	var jsonObject = eval('(' + template + ')');
 	var mainContent = jsonObject.maincontent;
 	var subContent = jsonObject.subcontent;
+	var name = jsonObject.name;
 	
 	var mainFeed = "";
 	var subFeed = "";
@@ -183,7 +184,7 @@ function prepareTemplateFileForDelivery(connection, template) {
 						subFeed += chunk;
 				
 						}).on('end', function() {
-							var feed = '{' + '"maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
+							var feed = '{' + '"name":"' + name + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
 							connection.send(feed);
 					}).on('error', function(e) {
 						  console.log("Got error: " + e.message);

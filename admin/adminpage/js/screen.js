@@ -1,3 +1,5 @@
+var host = window.location.host;
+
 /*
  * Handles click events in index.php
 */
@@ -6,7 +8,7 @@ $(document).ready(function(){
 		if($(e.target).is('.screenAllPanicButton')){
 			$.ajax({
 				type: "POST",
-				url: "http://85.24.223.52:8081/panic/?screen=*",
+				url: "http://" + host + ":8081/panic/?screen=*",
 				data: "",
 				success: function(msg){
 					console.log(msg);
@@ -19,7 +21,7 @@ $(document).ready(function(){
 			
 			$.ajax({
 				type: "POST",
-				url: "http://85.24.223.52:8081/panic/?screen="+name,
+				url: "http://" + host + ":8081/panic/?screen="+name,
 				data: "",
 				success: function(msg){
 					console.log(msg);
@@ -32,7 +34,7 @@ $(document).ready(function(){
 			
 			$.ajax({
 				type: "POST",
-				url: "http://85.24.223.52:8081/set/?screen="+name+"&template="+select.value,
+				url: "http://" + host + ":8081/set/?screen="+name+"&template="+select.value,
 				data: "",
 				success: function(msg){
 					console.log(msg);
@@ -49,7 +51,7 @@ $(document).ready(function(){
 function listScreens(){
 	$.ajax({
 		type: "POST",
-		url: "http://85.24.223.52:8081/listscreens",
+		url: "http://" + host + ":8081/listscreens",
 		data: "",
 		success: function(msg){
 			var screenNames = msg.split(";");
