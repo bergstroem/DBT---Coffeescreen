@@ -1,8 +1,4 @@
-/*
- * listTemplates()
- * Used for listing all the existing templates and displaying them.
-*/
-function powerUsage(){
+﻿function powerUsage(){
 	var tmp = document.getElementById("temp");
 	$.ajax({
 		type: "POST",

@@ -10,19 +10,19 @@
 		$jsondata = json_encode($data);
 		echo $jsondata;
 		
-		$fh = fopen("../../templates/$name.json", "w");
+		$fh = fopen("../../channels/$name.json", "w");
 		fwrite($fh, $jsondata);
 
 		fclose($fh);
 	}
 	else if($p == 2){
-		$name = "../../templates/$name";
+		$name = "../../channels/$name";
 		$fh = fopen("$name", "r");
 		$jsondata = fread($fh, filesize($name));
 		fclose($fh);
 		echo $jsondata;
 	}
 	else if($p == 3){
-		unlink("../../templates/$name");
+		unlink("../../channels/$name");
 	}
 ?>

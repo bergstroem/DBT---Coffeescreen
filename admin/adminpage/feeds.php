@@ -1,4 +1,4 @@
-<html>
+﻿<html>
 	<head>
 		<title>Feeds</title>
 		<link rel="stylesheet" type="text/css" href="css/admin.css"/>
@@ -14,7 +14,7 @@
 					Name:
 					<input type="button" id="newFeedButton" class="newFeedButton" value="New Feed"/>
 				</div>
-				<div id="temperature" class="templateitem"><text id="temp"></text></div>
+				<div id="temperature" class="channelitem"><text id="temp"></text></div>
 			</div>
 		</div>
 	</body>

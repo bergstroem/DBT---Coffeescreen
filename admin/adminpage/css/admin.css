@@ -1,4 +1,4 @@
-/* Text */
+﻿/* Text */
 p{
 	margin:0 0 0 10px;
 }
@@ -100,7 +100,7 @@ p{
 	font-size:15px;
 }
 
-.screenTemplateSelect{
+.screenChannelSelect{
 	width:200px;
 	height:30px;
 	border-radius:5px;
@@ -152,8 +152,8 @@ p{
 	font-size:15px;
 }
 
-/* Template list */
-.templatelist{
+/* Channel list */
+.channellist{
 	width:100%;
 	height:650px;
 	position:relative;
@@ -161,7 +161,7 @@ p{
 	overflow-y:auto;
 }
 
-.templateitem{
+.channelitem{
 	height:32px;
 	border-top:2px solid #00AEEF;
 	border-bottom:2px solid #00AEEF;
@@ -228,7 +228,7 @@ p{
 	font-size:15px;
 }
 
-/* Template stuff */
+/* Channel stuff */
 
 .namebox{
 	width:160px;
@@ -264,7 +264,7 @@ p{
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
-.savetemplatebutton{
+.savechannelbutton{
 	width:160px;
 	height:50px;
 	border-radius:10px;

@@ -1,4 +1,4 @@
-/* 
+﻿/* 
  * createItem(name, target)
  * Function used for creating a new drag-/droppable div inside a target div.
  * name: Will be the id of the div
@@ -106,10 +106,10 @@ function sourceExists(name){
 }
 
 /*
- * saveTemplate()
- * Used for saving a template, will use the information in the form.
+ * saveChannel()
+ * Used for saving a channel, will use the information in the form.
 */
-function saveTemplate(){
+function saveChannel(){
 	var name = document.getElementById("nameTXB");
 	if(name.value == ""){
 		alert("Please enter a name");
@@ -144,7 +144,7 @@ function saveTemplate(){
 			if(!(tname.substr(0,tname.indexOf(".")) == fname))
 				$.ajax({
 					type: "POST",
-					url: "templatehandler.php",
+					url: "channelhandler.php",
 					data: "p=3&name="+tname,
 					success: function(msg){
 					}
@@ -153,7 +153,7 @@ function saveTemplate(){
 		
 		$.ajax({
 			type: "POST",
-			url: "tempget.php",
+			url: "getchannels.php",
 			data: "",
 			success: function(msg){
 				if(msg.length > 2){
@@ -161,14 +161,14 @@ function saveTemplate(){
 					for(var i = 0; i < arr.length; i++){
 						if(arr[i] == fname){
 							var conflict = true;
-							if(confirm('This will replace an existing template. Continue?'))
+							if(confirm('This will replace an existing channel. Continue?'))
 								$.ajax({
 									type: "POST",
-									url: "templatehandler.php",
+									url: "channelhandler.php",
 									data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
 									success: function(msg){
-										console.log("Succesful template save");
-										window.location = "admintemplate.php";
+										console.log("Succesful channel save");
+										window.location = "adminchannel.php";
 									}
 								});
 						}
@@ -176,11 +176,11 @@ function saveTemplate(){
 					if(!conflict)
 						$.ajax({
 							type: "POST",
-							url: "templatehandler.php",
+							url: "channelhandler.php",
 							data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
 							success: function(msg){
-								console.log("Succesful template save");
-								window.location = "admintemplate.php";
+								console.log("Succesful channel save");
+								window.location = "adminchannel.php";
 							}
 						});
 				}
@@ -190,17 +190,17 @@ function saveTemplate(){
 }
 
 /*
- * editTemplate(name)
+ * editChannel(name)
  * Get the information from the json file and fill the form with the information.
- * name: Name of the template that is going to be edited.
+ * name: Name of the channel that is going to be edited.
 */
-function editTemplate(name){
+function editChannel(name){
 	$.ajax({
 		type: "POST",
-		url: "templatehandler.php",
+		url: "channelhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
-			console.log("Succesful template load");
+			console.log("Succesful channel load");
 			var jsonobj = JSON.parse(msg);
 			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
 			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
@@ -211,45 +211,45 @@ function editTemplate(name){
 }
 
 /*
- * deleteTemplate(name)
- * Will delete the template with the given name.
- * name: Name of the template that is going to be deleted.
+ * deleteChannel(name)
+ * Will delete the channel with the given name.
+ * name: Name of the channel that is going to be deleted.
 */
-function deleteTemplate(name){
+function deleteChannel(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.getAttribute("id");
 	$.ajax({
 		type: "POST",
-		url: "templatehandler.php",
+		url: "channelhandler.php",
 		data: "p=3&name="+name,
 		success: function(msg){
 			document.getElementById(parentname).removeChild(document.getElementById(divname));
-			console.log("Succesful template delete");
+			console.log("Succesful channel delete");
 		}
 	});
 }
 
 /*
- * Handle clicks in admintemplate.php
+ * Handle clicks in adminchannel.php
 */
 $(document).ready(function(){
 	$('.TInew').click(function(e){
-		window.location = "template.php?p=1";
+		window.location = "channel.php?p=1";
 	});
 	
 	$('.content').click(function(e){
 		if($(e.target).is('.TIedit')){
-			window.location = "template.php?p=2&name="+e.target.id;
+			window.location = "channel.php?p=2&name="+e.target.id;
 		}
 		if($(e.target).is('.TIdelete')){
-			deleteTemplate(e.target.id);
+			deleteChannel(e.target.id);
 		}
 	});
 });
 
 /*
  * addEL()
- * Used for adding eventhandlers to the template form.
+ * Used for adding eventhandlers to the channel form.
 */
 function addEL(){
 	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
@@ -263,15 +263,15 @@ function addEL(){
 }
 
 /*
- * listTemplates()
- * Used for listing all the existing templates and displaying them.
+ * listChannels()
+ * Used for listing all the existing channels and displaying them.
 */
-function listTemplates(){
-	var tempList = document.getElementById("admintemplatecontent");
+function listChannels(){
+	var chanList = document.getElementById("adminchannelcontent");
 	
 	$.ajax({
 		type: "POST",
-		url: "tempget.php",
+		url: "getchannels.php",
 		data: "",
 		success: function(msg){
 			if(msg.length > 2){
@@ -279,7 +279,7 @@ function listTemplates(){
 				for(var i = 0; i < arr.length; i++){
 					var item = document.createElement("div");
 					item.id = arr[i];
-					item.className = "templateitem";
+					item.className = "channelitem";
 					item.appendChild(document.createTextNode(arr[i]));
 					
 					var editButton = document.createElement("input");
@@ -296,7 +296,7 @@ function listTemplates(){
 					delButton.className = "TIdelete";
 					item.appendChild(delButton);
 					
-					tempList.appendChild(item);
+					chanList.appendChild(item);
 				}
 			}
 		}

@@ -1,4 +1,4 @@
-var host = /*window.location.host*/"85.24.223.52";
+﻿var host = window.location.host/*"85.24.223.52"*/;
 
 /*
  * Handles click events in index.php
@@ -34,7 +34,7 @@ $(document).ready(function(){
 			
 			$.ajax({
 				type: "POST",
-				url: "http://" + host + ":8081/set/?screen="+name+"&template="+select.value,
+				url: "http://" + host + ":8081/set/?screen="+name+"&channel="+select.value,
 				data: "",
 				success: function(msg){
 					console.log(msg);
@@ -72,7 +72,7 @@ function listScreens(){
 function createScreen(name){
 	var screenItem = document.createElement("div");
 	screenItem.id = "screen:" + name;
-	screenItem.className = "templateitem";
+	screenItem.className = "channelitem";
 	screenItem.appendChild(document.createTextNode(name));
 	
 	var panicButton = document.createElement("input");
@@ -83,10 +83,10 @@ function createScreen(name){
 	
 	var select = document.createElement("select");
 	select.id = "select:" + name;
-	select.className = "screenTemplateSelect";
+	select.className = "screenChannelSelect";
 	$.ajax({
 		type: "POST",
-		url: "tempget.php",
+		url: "getchannels.php",
 		data: "",
 		success: function(msg){
 			var arr = msg.substr(2, msg.length-4).split('\",\"');
