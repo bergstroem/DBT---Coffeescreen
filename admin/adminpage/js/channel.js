@@ -5,8 +5,8 @@
  * target: The target div to place the new div inside
 */
 function createItem(name, target){
-	if(sourceExists(name)){
-		alert("Source already exist");
+	if(feedExists(name)){
+		alert("Feed already exist");
 	}
 	else{
 		var divTag = document.createElement("div");
@@ -35,13 +35,13 @@ function createItem(name, target){
  * form: The submitted form containing the input text.
 */
 function createCont(){
-	var sourcename = document.getElementById("sourcename");
-	if(sourcename.value == ""){
-		alert("Please enter a sourcename");
+	var feedname = document.getElementById("feedname");
+	if(feedname.value == ""){
+		alert("Please enter a feedname");
 	}
 	else{
-		createItem(sourcename.value, "contentlist");
-		sourcename.value = "";
+		createItem(feedname.value, "contentlist");
+		feedname.value = "";
 	}
 }
 
@@ -49,7 +49,7 @@ function createCont(){
  * fillcontent(csv, target)
  * Wrapper function for createItem, will create the given items from the csv 
  * string and put them in the target div.
- * csv: Comma-separated value containing the RSS sources.
+ * csv: Comma-separated value containing the RSS feeds.
  * target: The id off the target div.
 */
 function fillcontent(csv, target){
@@ -64,7 +64,7 @@ function fillcontent(csv, target){
 
 /*
  * removeItem(element)
- * Used for removing a source item.
+ * Used for removing a feed item.
  * element: The element that will be removed.
 */
 function removeItem(element){
@@ -74,11 +74,11 @@ function removeItem(element){
 }
 
 /*
- * sourceExists(name)
- * Used for checking so that the source trying to be added does not already exist.
- * name: The name of the source trying to be added.
+ * feedExists(name)
+ * Used for checking so that the feed trying to be added does not already exist.
+ * name: The name of the feed trying to be added.
 */
-function sourceExists(name){
+function feedExists(name){
 	var children = document.getElementById('maincontent').childNodes;
 	var length = children.length;
 	for(var i = 0; i < length; i++){
@@ -154,7 +154,7 @@ function saveChannel(){
 		$.ajax({
 			type: "POST",
 			url: "getchannels.php",
-			data: "",
+			data: "dir=channels",
 			success: function(msg){
 				if(msg.length > 2){
 					var arr = msg.substr(2, msg.length-4).split('\",\"');
@@ -272,7 +272,7 @@ function listChannels(){
 	$.ajax({
 		type: "POST",
 		url: "getchannels.php",
-		data: "",
+		data: "dir=channels",
 		success: function(msg){
 			if(msg.length > 2){
 				var arr = msg.substr(2, msg.length-4).split('\",\"');
@@ -305,7 +305,7 @@ function listChannels(){
 
 /*
  * createContTest()
- * Used for testing purpose it will spawn 35 sourceitems.
+ * Used for testing purpose it will spawn 35 feeditems.
 */
 function createContTEST()
 {

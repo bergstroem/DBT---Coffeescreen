@@ -87,7 +87,7 @@ function createScreen(name){
 	$.ajax({
 		type: "POST",
 		url: "getchannels.php",
-		data: "",
+		data: "dir=channels",
 		success: function(msg){
 			var arr = msg.substr(2, msg.length-4).split('\",\"');
 			for(var i = 0; i < arr.length; i++){
