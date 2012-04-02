@@ -136,10 +136,10 @@ wsServer.on('request', function(request) {
 });
 
 function sendFeeds(connection, name) {
-	fs.readFile(name, 'utf8', function (err, data) {
+	fs.readFile("../../templates/" + name + ".json", 'utf8', function (err, data) {
 		if (err) {
 			console.log("Looking for default");
-			fs.readFile("default_template", 'utf8', function (err, data) {
+			fs.readFile("../../templates/default_template.json", 'utf8', function (err, data) {
 				if(err) {
 					//Send no data
 					connection.send("No data available");
