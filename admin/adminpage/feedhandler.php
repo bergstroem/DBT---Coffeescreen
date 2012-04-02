@@ -8,16 +8,7 @@
 		$priority = $_POST['priority'];
 		$displaytime = $_POST['displaytime'];
 		$expiretime = $_POST['expiretime'];
-		
-		/*
-		$name = 'name';
-		$source = 'source';
-		$type = 'type';
-		$note = 'note';
-		$priority = 'priority';
-		$displaytime = 'displaytime';
-		$expiretime = 'expiretime';
-		*/
+
 		$data = array('name' => $name, 'source' => $source, 'type' => $type, 'note' => $note, 'priority' => $priority, 'displaytime' => $displaytime, 'expiretime' => $expiretime);
 		$jsondata = json_encode($data);
 		echo $jsondata;

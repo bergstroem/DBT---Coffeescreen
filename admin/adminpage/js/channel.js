@@ -17,6 +17,7 @@ function createItem(name, target, filler, feeddata){
 		divTag.id = "" + name;
 		divTag.setAttribute("draggable","true");
 		divTag.setAttribute("data",data);
+		divTag.setAttribute("disabled","true");
 		divTag.addEventListener('dragstart', handleDragStart, false);
 		divTag.addEventListener('dragend', handleDragEnd, false);
 		divTag.className = "contentitem";
@@ -33,21 +34,6 @@ function createItem(name, target, filler, feeddata){
 		document.getElementById(target).appendChild(divTag);
 	}
 }
-
-/*
- * createCont()
- * Wrapper function for createItem, will create items and put them in the contentlist.
-*//*
-function createCont(){
-	var feedname = document.getElementById("feedname");
-	if(feedname.value == ""){
-		alert("Please enter a feedname");
-	}
-	else{
-		createItem(feedname.value, "contentlist");
-		feedname.value = "";
-	}
-}*/
 
 /*
  * fillcontent(csv, target)
@@ -119,7 +105,7 @@ function saveChannel(){
 		alert("Please enter a name");
 	}
 	else{
-		var fname = name.value;	
+		var fname = name.value;
 		var fnote = document.getElementById("noteTXB").value;
 
 		var children = document.getElementById('maincontent').childNodes;
@@ -127,7 +113,7 @@ function saveChannel(){
 		var mainContent = "";
 		
 		for(var i = 0; i < length; i++){
-			mainContent += children[i].getAttribute('data')  + ",";
+			mainContent += children[i].getAttribute('data') + ",";
 		}
 		mainContent = mainContent.substr(0,mainContent.length-1);
 		
@@ -158,37 +144,34 @@ function saveChannel(){
 		$.ajax({
 			type: "POST",
 			url: "channelhandler.php",
-			data: "p=9",
+			data: "p=list",
 			success: function(msg){
-				if(msg.length > 2){
-					var arr = msg.substr(2, msg.length-4).split('\",\"');
-					for(var i = 0; i < arr.length; i++){
-						if(arr[i] == fname){
-							var conflict = true;
-							if(confirm('This will replace an existing channel. Continue?'))
-								$.ajax({
-									type: "POST",
-									url: "channelhandler.php",
-									data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
-									success: function(msg){
-										console.log("Succesful channel save");
-										window.location = "adminchannel.php";
-									}
-								});
-						}
+				var jsonobj = JSON.parse(msg);
+				for(var i = 0; i < jsonobj.length; i++){
+					var jsonitem = JSON.parse(jsonobj[i]);
+					if(jsonitem["name"] == fname){
+						var conflict = true;
+						if(confirm('This will replace an existing channel. Continue?'))
+							$.ajax({
+								type: "POST",
+								url: "channelhandler.php",
+								data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+								success: function(msg){
+									window.location = "adminchannel.php";
+								}
+							});
 					}
-					if(!conflict)
-						$.ajax({
-							type: "POST",
-							url: "channelhandler.php",
-							data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
-							success: function(msg){
-								console.log("Succesful channel save");
-								window.location = "adminchannel.php";
-							}
-						});
 				}
-			}
+				if(!conflict)
+					$.ajax({
+						type: "POST",
+						url: "channelhandler.php",
+						data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+						success: function(msg){
+							window.location = "adminchannel.php";
+						}
+					});
+				}
 		});
 	}
 }
@@ -204,10 +187,10 @@ function editChannel(name){
 		url: "channelhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
-			console.log("Succesful channel load");
 			var jsonobj = JSON.parse(msg);
 			document.getElementById("nameTXB").value = jsonobj["name"];
 			document.getElementById("noteTXB").value = jsonobj["note"];
+			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
 			arr[0] += "}";
 			if(arr.length > 1){
@@ -244,7 +227,6 @@ function deleteChannel(name){
 		data: "p=3&name="+name,
 		success: function(msg){
 			document.getElementById(parentname).removeChild(document.getElementById(divname));
-			console.log("Succesful channel delete");
 		}
 	});
 }
@@ -292,32 +274,39 @@ function listChannels(){
 	$.ajax({
 		type: "POST",
 		url: "channelhandler.php",
-		data: "p=9",
+		data: "p=list",
 		success: function(msg){
-			if(msg.length > 2){
-				var arr = msg.substr(2, msg.length-4).split('\",\"');
-				for(var i = 0; i < arr.length; i++){
-					var item = document.createElement("div");
-					item.id = arr[i];
-					item.className = "channelitem";
-					item.appendChild(document.createTextNode(arr[i]));
-					
-					var editButton = document.createElement("input");
-					editButton.type = "button";
-					editButton.id = arr[i] + ".json";
-					editButton.value = "Edit";
-					editButton.className = "editItemButton";
-					item.appendChild(editButton);
-					
-					var delButton = document.createElement("input");
-					delButton.type = "button";
-					delButton.id = arr[i] + ".json";
-					delButton.value = "Delete";
-					delButton.className = "deleteItemButton";
-					item.appendChild(delButton);
-					
-					chanList.appendChild(item);
-				}
+			var jsonobj = JSON.parse(msg);
+			for(var i = 0; i < jsonobj.length; i++){
+				var jsonitem = JSON.parse(jsonobj[i]);
+				var item = document.createElement("div");
+				item.id = jsonitem["name"];
+				item.className = "channelitem";
+				
+				var p1 = document.createElement("p");
+				p1.appendChild(document.createTextNode(jsonitem["name"]));
+				var p2 = document.createElement("p");
+				p2.className = "note";
+				p2.appendChild(document.createTextNode("Note: " + jsonitem["note"]));
+				
+				item.appendChild(p1);
+				item.appendChild(p2);
+				
+				var editButton = document.createElement("input");
+				editButton.type = "button";
+				editButton.id = jsonitem["name"] + ".json";
+				editButton.value = "Edit";
+				editButton.className = "editItemButton";
+				item.appendChild(editButton);
+				
+				var delButton = document.createElement("input");
+				delButton.type = "button";
+				delButton.id = jsonitem["name"] + ".json";
+				delButton.value = "Delete";
+				delButton.className = "deleteItemButton";
+				item.appendChild(delButton);
+				
+				chanList.appendChild(item);
 			}
 		}
 	});

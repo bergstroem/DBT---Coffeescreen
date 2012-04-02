@@ -20,75 +20,27 @@ function saveFeed(){
 			url: "feedhandler.php",
 			data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 			success: function(msg){
-				console.log("Succesful channel save");
 				window.location = "adminfeed.php";
 			}
 		});
-		/*
-		var url = document.URL;
-		url = url.substr(url.indexOf("?")+1);
-		var p = url.substr(0,3);
-		if(p == "p=2"){
-			var tname = url.substr(9);
-			if(!(tname.substr(0,tname.indexOf(".")) == fname))
-				$.ajax({
-					type: "POST",
-					url: "channelhandler.php",
-					data: "p=3&name="+tname,
-					success: function(msg){
-					}
-				});
-		}
-		
-		$.ajax({
-			type: "POST",
-			url: "getchannels.php",
-			data: "dir=channels",
-			success: function(msg){
-				if(msg.length > 2){
-					var arr = msg.substr(2, msg.length-4).split('\",\"');
-					for(var i = 0; i < arr.length; i++){
-						if(arr[i] == fname){
-							var conflict = true;
-							if(confirm('This will replace an existing channel. Continue?'))
-								$.ajax({
-									type: "POST",
-									url: "channelhandler.php",
-									data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
-									success: function(msg){
-										console.log("Succesful channel save");
-										window.location = "adminchannel.php";
-									}
-								});
-						}
-					}
-					if(!conflict)
-						$.ajax({
-							type: "POST",
-							url: "channelhandler.php",
-							data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
-							success: function(msg){
-								console.log("Succesful channel save");
-								window.location = "adminchannel.php";
-							}
-						});
-				}
-			}
-		});*/
 	}
 }
 
 function editFeed(name){
+	getFeedTypes();
 	$.ajax({
 		type: "POST",
-		url: "channelhandler.php",
+		url: "feedhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
-			console.log("Succesful channel load");
 			var jsonobj = JSON.parse(msg);
-			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
-			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
-			getFeeds();
+			document.getElementById("name").value = jsonobj["name"];
+			document.getElementById("source").value = jsonobj["source"];
+			document.getElementById("typeSelect").value = jsonobj["type"];
+			document.getElementById("note").value = jsonobj["note"];
+			document.getElementById("priority").value = jsonobj["priority"];
+			document.getElementById("displayTime").value = jsonobj["displaytime"];
+			document.getElementById("expireTime").value = jsonobj["expiretime"];
 		}
 	});
 }
@@ -129,7 +81,8 @@ function listFeeds(){
 				var p1 = document.createElement("p");
 				p1.appendChild(document.createTextNode(jsonitem["name"] + " - " + jsonitem["type"] +":" + jsonitem["source"]));
 				var p2 = document.createElement("p");
-				p2.appendChild(document.createTextNode(jsonitem["note"]));
+				p2.className = "note";
+				p2.appendChild(document.createTextNode("Note: " + jsonitem["note"]));
 				
 				item.appendChild(p1);
 				item.appendChild(p2);
@@ -186,7 +139,6 @@ function deleteFeed(name){
 		data: "p=3&name="+name,
 		success: function(msg){
 			document.getElementById(parentname).removeChild(document.getElementById(divname));
-			console.log("Succesful channel delete");
 		}
 	});
 }

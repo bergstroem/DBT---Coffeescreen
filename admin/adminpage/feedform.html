@@ -20,7 +20,7 @@
 					<input type="text" name="source" id="source" class="formTXB"/>
 				</li>
 				<li>
-					<label for=typeDD>Type</label>
+					<label for=typeSelect>Type</label>
 					<select id="typeSelect" class="formTypeSelect">
 					</select>
 				</li>
@@ -29,10 +29,6 @@
 		<fieldset>
 			<legend>Customization</legend>
 			<ol>
-				<li>
-					<label for=noteTXB>Note</label>
-					<textarea name="note" id="note" class="noteTXB"></textarea>
-				</li>
 				<li>
 					<label for=priority>Priority</label>
 					<input type="text" name="priority" id="priority" class="formNB" value=0 />
@@ -45,8 +41,12 @@
 					<label for=expireTime>ExpireTime (h)</label>
 					<input type="text" name="expireTime" id="expireTime" class="formNB" value=0 />
 				</li>
+				<li>
+					<label for=noteTXB>Note</label>
+					<textarea name="note" id="note" class="noteTXB"></textarea>
+				</li>
 			</ol>
 		</fieldset>
-		<input type="button" name="savechannelbutton" value="Save feed" class="savechannelbutton" onclick="saveFeed()">
+		<input type="button" name="savebutton" value="Save feed" class="saveButton" onclick="saveFeed()">
 	</body>
 </html>
