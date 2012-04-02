@@ -100,13 +100,12 @@ function feedExists(name){
  * Used for saving a channel, will use the information in the form.
 */
 function saveChannel(){
-	var name = document.getElementById("nameTXB");
-	if(name.value == ""){
+	var name = document.getElementById("nameTXB").value;
+	if(name == ""){
 		alert("Please enter a name");
 	}
 	else{
-		var fname = name.value;
-		var fnote = document.getElementById("noteTXB").value;
+		var note = document.getElementById("noteTXB").value;
 
 		var children = document.getElementById('maincontent').childNodes;
 		var length = children.length;
@@ -129,50 +128,62 @@ function saveChannel(){
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
+		var oname = url.substr(9);
 		if(p == "p=2"){
-			var tname = url.substr(9);
-			if(!(tname.substr(0,tname.indexOf(".")) == fname))
+			if(!(oname.substr(0,oname.indexOf(".")) == name))
 				$.ajax({
 					type: "POST",
 					url: "channelhandler.php",
-					data: "p=3&name="+tname,
+					data: "p=3&name="+oname,
 					success: function(msg){
 					}
 				});
 		}
 		
-		$.ajax({
-			type: "POST",
-			url: "channelhandler.php",
-			data: "p=list",
-			success: function(msg){
-				var jsonobj = JSON.parse(msg);
-				for(var i = 0; i < jsonobj.length; i++){
-					var jsonitem = JSON.parse(jsonobj[i]);
-					if(jsonitem["name"] == fname){
-						var conflict = true;
-						if(confirm('This will replace an existing channel. Continue?'))
-							$.ajax({
-								type: "POST",
-								url: "channelhandler.php",
-								data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
-								success: function(msg){
-									window.location = "adminchannel.php";
-								}
-							});
-					}
-				}
-				if(!conflict)
-					$.ajax({
-						type: "POST",
-						url: "channelhandler.php",
-						data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
-						success: function(msg){
-							window.location = "adminchannel.php";
+		if(oname.substr(0,oname.length-5) != name){
+			$.ajax({
+				type: "POST",
+				url: "channelhandler.php",
+				data: "p=list",
+				success: function(msg){
+					var jsonobj = JSON.parse(msg);
+					for(var i = 0; i < jsonobj.length; i++){
+						var jsonitem = JSON.parse(jsonobj[i]);
+						if(jsonitem["name"] == name){
+							var conflict = true;
+							if(confirm('This will replace an existing channel. Continue?'))
+								$.ajax({
+									type: "POST",
+									url: "channelhandler.php",
+									data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
+									success: function(msg){
+										window.location = "adminchannel.php";
+									}
+								});
 						}
-					});
+					}
+					if(!conflict)
+						$.ajax({
+							type: "POST",
+							url: "channelhandler.php",
+							data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
+							success: function(msg){
+								window.location = "adminchannel.php";
+							}
+						});
+					}
+			});
+		}
+		else{
+			$.ajax({
+				type: "POST",
+				url: "channelhandler.php",
+				data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
+				success: function(msg){
+					window.location = "adminchannel.php";
 				}
-		});
+			});
+		}
 	}
 }
 

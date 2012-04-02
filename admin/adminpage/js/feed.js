@@ -15,14 +15,65 @@ function saveFeed(){
 		var displaytime = document.getElementById("displayTime").value;
 		var expiretime = document.getElementById("expireTime").value;
 		
-		$.ajax({
-			type: "POST",
-			url: "feedhandler.php",
-			data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
-			success: function(msg){
-				window.location = "adminfeed.php";
-			}
-		});
+		var url = document.URL;
+		url = url.substr(url.indexOf("?")+1);
+		var p = url.substr(0,3);
+		var oname = url.substr(9);
+		if(p == "p=2"){
+			if(!(oname.substr(0,oname.indexOf(".")) == name))
+				$.ajax({
+					type: "POST",
+					url: "feedhandler.php",
+					data: "p=3&name="+oname,
+					success: function(msg){
+					}
+				});
+		}
+		
+		if(oname.substr(0,oname.length-5) != name){
+			$.ajax({
+				type: "POST",
+				url: "feedhandler.php",
+				data: "p=list",
+				success: function(msg){
+					var jsonobj = JSON.parse(msg);
+					for(var i = 0; i < jsonobj.length; i++){
+						var jsonitem = JSON.parse(jsonobj[i]);
+						if(jsonitem["name"] == name){
+							var conflict = true;
+							if(confirm('This will replace an existing feed. Continue?'))
+								$.ajax({
+									type: "POST",
+									url: "feedhandler.php",
+									data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+									success: function(msg){
+										window.location = "adminfeed.php";
+									}
+								});
+						}
+					}
+					if(!conflict)
+						$.ajax({
+							type: "POST",
+							url: "feedhandler.php",
+							data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+							success: function(msg){
+								window.location = "adminfeed.php";
+							}
+						});
+					}
+			});
+		}
+		else{
+			$.ajax({
+				type: "POST",
+				url: "feedhandler.php",
+				data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+				success: function(msg){
+					window.location = "adminfeed.php";
+				}
+			});
+		}
 	}
 }
 
