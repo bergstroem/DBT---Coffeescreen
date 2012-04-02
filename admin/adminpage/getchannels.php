@@ -1,14 +1,16 @@
-<?php
-	if($handle = opendir('../../templates/')){
-		$temps = array();
+﻿<?php
+	$dir = $_POST["dir"];
+
+	if($handle = opendir("../../$dir/")){
+		$data = array();
 		while(false !== ($entry = readdir($handle))){
 			if(!strcmp(substr($entry, -5), ".json")){
 				$name = substr($entry, 0, -5);
-				$temps[] = "$name";
+				$data[] = "$name";
 			}
 		}
-		$temps = json_encode($temps);
-		echo "$temps";
+		$data = json_encode($data);
+		echo "$data";
 		closedir($handle);
 	}
 ?>

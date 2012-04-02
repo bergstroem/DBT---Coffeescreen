@@ -1,12 +1,15 @@
-/* 
+﻿/* 
  * createItem(name, target)
  * Function used for creating a new drag-/droppable div inside a target div.
  * name: Will be the id of the div
  * target: The target div to place the new div inside
 */
-function createItem(name, target){
-	if(sourceExists(name)){
-		alert("Source already exist");
+function createItem(name, target, filler){
+	var fill = filler || false;
+	if(feedExists(name)){
+		if(!fill){
+			alert("Feed already exist");
+		}
 	}
 	else{
 		var divTag = document.createElement("div");
@@ -30,18 +33,17 @@ function createItem(name, target){
 }
 
 /*
- * createCont(form)
+ * createCont()
  * Wrapper function for createItem, will create items and put them in the contentlist.
- * form: The submitted form containing the input text.
 */
 function createCont(){
-	var sourcename = document.getElementById("sourcename");
-	if(sourcename.value == ""){
-		alert("Please enter a sourcename");
+	var feedname = document.getElementById("feedname");
+	if(feedname.value == ""){
+		alert("Please enter a feedname");
 	}
 	else{
-		createItem(sourcename.value, "contentlist");
-		sourcename.value = "";
+		createItem(feedname.value, "contentlist");
+		feedname.value = "";
 	}
 }
 
@@ -49,7 +51,7 @@ function createCont(){
  * fillcontent(csv, target)
  * Wrapper function for createItem, will create the given items from the csv 
  * string and put them in the target div.
- * csv: Comma-separated value containing the RSS sources.
+ * csv: Comma-separated value containing the RSS feeds.
  * target: The id off the target div.
 */
 function fillcontent(csv, target){
@@ -64,21 +66,21 @@ function fillcontent(csv, target){
 
 /*
  * removeItem(element)
- * Used for removing a source item.
+ * Used for removing a feed item.
  * element: The element that will be removed.
 */
 function removeItem(element){
 	var name = element.parentNode.getAttribute("id");
 	var parentname = element.parentNode.parentNode.getAttribute("id");
-	document.getElementById(parentname).removeChild(document.getElementById(name));
+	document.getElementById("contentlist").appendChild(document.getElementById(name));
 }
 
 /*
- * sourceExists(name)
- * Used for checking so that the source trying to be added does not already exist.
- * name: The name of the source trying to be added.
+ * feedExists(name)
+ * Used for checking so that the feed trying to be added does not already exist.
+ * name: The name of the feed trying to be added.
 */
-function sourceExists(name){
+function feedExists(name){
 	var children = document.getElementById('maincontent').childNodes;
 	var length = children.length;
 	for(var i = 0; i < length; i++){
@@ -106,10 +108,10 @@ function sourceExists(name){
 }
 
 /*
- * saveTemplate()
- * Used for saving a template, will use the information in the form.
+ * saveChannel()
+ * Used for saving a channel, will use the information in the form.
 */
-function saveTemplate(){
+function saveChannel(){
 	var name = document.getElementById("nameTXB");
 	if(name.value == ""){
 		alert("Please enter a name");
@@ -144,7 +146,7 @@ function saveTemplate(){
 			if(!(tname.substr(0,tname.indexOf(".")) == fname))
 				$.ajax({
 					type: "POST",
-					url: "templatehandler.php",
+					url: "channelhandler.php",
 					data: "p=3&name="+tname,
 					success: function(msg){
 					}
@@ -153,22 +155,22 @@ function saveTemplate(){
 		
 		$.ajax({
 			type: "POST",
-			url: "tempget.php",
-			data: "",
+			url: "getchannels.php",
+			data: "dir=channels",
 			success: function(msg){
 				if(msg.length > 2){
 					var arr = msg.substr(2, msg.length-4).split('\",\"');
 					for(var i = 0; i < arr.length; i++){
 						if(arr[i] == fname){
 							var conflict = true;
-							if(confirm('This will replace an existing template. Continue?'))
+							if(confirm('This will replace an existing channel. Continue?'))
 								$.ajax({
 									type: "POST",
-									url: "templatehandler.php",
+									url: "channelhandler.php",
 									data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
 									success: function(msg){
-										console.log("Succesful template save");
-										window.location = "admintemplate.php";
+										console.log("Succesful channel save");
+										window.location = "adminchannel.php";
 									}
 								});
 						}
@@ -176,11 +178,11 @@ function saveTemplate(){
 					if(!conflict)
 						$.ajax({
 							type: "POST",
-							url: "templatehandler.php",
+							url: "channelhandler.php",
 							data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
 							success: function(msg){
-								console.log("Succesful template save");
-								window.location = "admintemplate.php";
+								console.log("Succesful channel save");
+								window.location = "adminchannel.php";
 							}
 						});
 				}
@@ -190,66 +192,67 @@ function saveTemplate(){
 }
 
 /*
- * editTemplate(name)
+ * editChannel(name)
  * Get the information from the json file and fill the form with the information.
- * name: Name of the template that is going to be edited.
+ * name: Name of the channel that is going to be edited.
 */
-function editTemplate(name){
+function editChannel(name){
 	$.ajax({
 		type: "POST",
-		url: "templatehandler.php",
+		url: "channelhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
-			console.log("Succesful template load");
+			console.log("Succesful channel load");
 			var jsonobj = JSON.parse(msg);
 			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
 			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
 			fillcontent(jsonobj["maincontent"], "maincontent");
 			fillcontent(jsonobj["subcontent"], "subcontent");
+			getFeeds();
 		}
 	});
 }
 
 /*
- * deleteTemplate(name)
- * Will delete the template with the given name.
- * name: Name of the template that is going to be deleted.
+ * deleteChannel(name)
+ * Will delete the channel with the given name.
+ * name: Name of the channel that is going to be deleted.
 */
-function deleteTemplate(name){
+function deleteChannel(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.getAttribute("id");
 	$.ajax({
 		type: "POST",
-		url: "templatehandler.php",
+		url: "channelhandler.php",
 		data: "p=3&name="+name,
 		success: function(msg){
 			document.getElementById(parentname).removeChild(document.getElementById(divname));
-			console.log("Succesful template delete");
+			console.log("Succesful channel delete");
 		}
 	});
 }
 
 /*
- * Handle clicks in admintemplate.php
+ * Handle clicks in adminchannel.php
 */
 $(document).ready(function(){
-	$('.TInew').click(function(e){
-		window.location = "template.php?p=1";
+	$('.newItemButton').click(function(e){
+		window.location = "channel.php?p=1";
 	});
 	
 	$('.content').click(function(e){
-		if($(e.target).is('.TIedit')){
-			window.location = "template.php?p=2&name="+e.target.id;
+		if($(e.target).is('.editItemButton')){
+			window.location = "channel.php?p=2&name="+e.target.id;
 		}
-		if($(e.target).is('.TIdelete')){
-			deleteTemplate(e.target.id);
+		if($(e.target).is('.deleteItemButton')){
+			deleteChannel(e.target.id);
 		}
 	});
 });
 
 /*
  * addEL()
- * Used for adding eventhandlers to the template form.
+ * Used for adding eventhandlers to the channel form.
 */
 function addEL(){
 	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
@@ -263,54 +266,58 @@ function addEL(){
 }
 
 /*
- * listTemplates()
- * Used for listing all the existing templates and displaying them.
+ * listChannels()
+ * Used for listing all the existing channels and displaying them.
 */
-function listTemplates(){
-	var tempList = document.getElementById("admintemplatecontent");
+function listChannels(){
+	var chanList = document.getElementById("adminchannelcontent");
 	
 	$.ajax({
 		type: "POST",
-		url: "tempget.php",
-		data: "",
+		url: "getchannels.php",
+		data: "dir=channels",
 		success: function(msg){
 			if(msg.length > 2){
 				var arr = msg.substr(2, msg.length-4).split('\",\"');
 				for(var i = 0; i < arr.length; i++){
 					var item = document.createElement("div");
 					item.id = arr[i];
-					item.className = "templateitem";
+					item.className = "channelitem";
 					item.appendChild(document.createTextNode(arr[i]));
 					
 					var editButton = document.createElement("input");
 					editButton.type = "button";
 					editButton.id = arr[i] + ".json";
 					editButton.value = "Edit";
-					editButton.className = "TIedit";
+					editButton.className = "editItemButton";
 					item.appendChild(editButton);
 					
 					var delButton = document.createElement("input");
 					delButton.type = "button";
 					delButton.id = arr[i] + ".json";
 					delButton.value = "Delete";
-					delButton.className = "TIdelete";
+					delButton.className = "deleteItemButton";
 					item.appendChild(delButton);
 					
-					tempList.appendChild(item);
+					chanList.appendChild(item);
 				}
 			}
 		}
 	});
 }
 
-/*
- * createContTest()
- * Used for testing purpose it will spawn 35 sourceitems.
-*/
-function createContTEST()
-{
-	for(var i = 0; i < 35; i++)
-	{
-		createItem(i, "contentlist");
-	}
+function getFeeds(){
+	$.ajax({
+		type: "POST",
+		url: "getchannels.php",
+		data: "dir=feeds",
+		success: function(msg){
+			if(msg.length > 2){
+				var arr = msg.substr(2, msg.length-4).split('\",\"');
+				for(var i = 0; i < arr.length; i++){
+					createItem(arr[i],"contentlist", true)
+				}
+			}
+		}
+	});
 }

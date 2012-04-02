@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 	$xml = simplexml_load_file("http://titan.codemill.se/~denols/infoboard/power/graphs/lastdata.xml");
 	$arr = array();
 	foreach($xml->data->row as $row){
