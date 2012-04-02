@@ -4,9 +4,12 @@
  * name: Will be the id of the div
  * target: The target div to place the new div inside
 */
-function createItem(name, target){
+function createItem(name, target, filler){
+	var fill = filler || false;
 	if(feedExists(name)){
-		alert("Feed already exist");
+		if(!fill){
+			alert("Feed already exist");
+		}
 	}
 	else{
 		var divTag = document.createElement("div");
@@ -30,9 +33,8 @@ function createItem(name, target){
 }
 
 /*
- * createCont(form)
+ * createCont()
  * Wrapper function for createItem, will create items and put them in the contentlist.
- * form: The submitted form containing the input text.
 */
 function createCont(){
 	var feedname = document.getElementById("feedname");
@@ -70,7 +72,7 @@ function fillcontent(csv, target){
 function removeItem(element){
 	var name = element.parentNode.getAttribute("id");
 	var parentname = element.parentNode.parentNode.getAttribute("id");
-	document.getElementById(parentname).removeChild(document.getElementById(name));
+	document.getElementById("contentlist").appendChild(document.getElementById(name));
 }
 
 /*
@@ -206,6 +208,7 @@ function editChannel(name){
 			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
 			fillcontent(jsonobj["maincontent"], "maincontent");
 			fillcontent(jsonobj["subcontent"], "subcontent");
+			getFeeds();
 		}
 	});
 }
@@ -233,15 +236,15 @@ function deleteChannel(name){
  * Handle clicks in adminchannel.php
 */
 $(document).ready(function(){
-	$('.TInew').click(function(e){
+	$('.newItemButton').click(function(e){
 		window.location = "channel.php?p=1";
 	});
 	
 	$('.content').click(function(e){
-		if($(e.target).is('.TIedit')){
+		if($(e.target).is('.editItemButton')){
 			window.location = "channel.php?p=2&name="+e.target.id;
 		}
-		if($(e.target).is('.TIdelete')){
+		if($(e.target).is('.deleteItemButton')){
 			deleteChannel(e.target.id);
 		}
 	});
@@ -286,14 +289,14 @@ function listChannels(){
 					editButton.type = "button";
 					editButton.id = arr[i] + ".json";
 					editButton.value = "Edit";
-					editButton.className = "TIedit";
+					editButton.className = "editItemButton";
 					item.appendChild(editButton);
 					
 					var delButton = document.createElement("input");
 					delButton.type = "button";
 					delButton.id = arr[i] + ".json";
 					delButton.value = "Delete";
-					delButton.className = "TIdelete";
+					delButton.className = "deleteItemButton";
 					item.appendChild(delButton);
 					
 					chanList.appendChild(item);
@@ -303,14 +306,18 @@ function listChannels(){
 	});
 }
 
-/*
- * createContTest()
- * Used for testing purpose it will spawn 35 feeditems.
-*/
-function createContTEST()
-{
-	for(var i = 0; i < 35; i++)
-	{
-		createItem(i, "contentlist");
-	}
+function getFeeds(){
+	$.ajax({
+		type: "POST",
+		url: "getchannels.php",
+		data: "dir=feeds",
+		success: function(msg){
+			if(msg.length > 2){
+				var arr = msg.substr(2, msg.length-4).split('\",\"');
+				for(var i = 0; i < arr.length; i++){
+					createItem(arr[i],"contentlist", true)
+				}
+			}
+		}
+	});
 }

@@ -3,6 +3,14 @@ p{
 	margin:0 0 0 10px;
 }
 
+li{
+	margin:5px 0 0 0;
+}
+
+fieldset{
+	margin: 0 10px 0 10px;
+}
+
 .linkspan{
 	position:absolute;
 	width:100%;
@@ -162,7 +170,7 @@ p{
 }
 
 .channelitem{
-	height:32px;
+	min-height:32px;
 	border-top:2px solid #00AEEF;
 	border-bottom:2px solid #00AEEF;
 	position:relative;
@@ -172,7 +180,7 @@ p{
 	font-size:20px;
 }
 
-.TInew{
+.newItemButton{
 	width:100px;
 	height:30px;
 	border-radius:10px;
@@ -190,7 +198,27 @@ p{
 	font-size:15px;
 }
 
-.TIedit{
+/*
+.newItemButton:hover{
+	background: rgba(255,0,255,0.1);
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}*/
+
+.editItemButton{
 	background:#00AEEF;
 	width:100px;
 	height:30px;
@@ -209,7 +237,7 @@ p{
 	font-size:15px;
 }
 
-.TIdelete{
+.deleteItemButton{
 	background:red;
 	width:100px;
 	height:30px;
@@ -230,27 +258,45 @@ p{
 
 /* Channel stuff */
 
+.formTXB{
+	width:160px;
+	height:20px;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.formNB{
+	width:50px;
+	height:20px;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+	text-align:right;
+}
+
+.noteTXB{
+	width:550px;
+	height:100px;
+	resize:none;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.formTypeSelect{
+	width:160px;
+	height:20px;
+	/*border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;*/
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
 .namebox{
 	width:160px;
 	height:20px;
 	position:relative;
 	float:left;
 	margin:0 0 0 10px;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
-.nameTXB{
-	width:160px;
-	height:20px;
-	border:1px solid #00AEEF;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
-.noteTXB{
-	width:250px;
-	height:100px;
-	resize:none;
-	border:1px solid #00AEEF;
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
@@ -382,23 +428,4 @@ p{
 	top:0;
 	left:0;
 	z-index:9999;
-}
-
-/* Feeds */
-.newFeedButton{
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:875px;
-	text-align:center;
-	border:0;
-	padding:0;
-	margin: 5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:15px;
 }

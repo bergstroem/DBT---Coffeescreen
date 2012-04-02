@@ -7,17 +7,14 @@
 		<script type="text/javascript" src="js/channel.js"></script>
 		<meta charset="UTF-8"/>
 	</head>
-	<body>
+	<body onload="listChannels()">
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="adminchannelcontent" class="content">
 				<div id="channelheader" class="contentheader">
 					Name:
-					<input type="button" id="newButton" class="TInew" value="New Channel"/>
+					<input type="button" id="newButton" class="newItemButton" value="New Channel"/>
 				</div>
-				<script>
-					listChannels();
-				</script>
 			</div>
 		</div>
 	</body>
