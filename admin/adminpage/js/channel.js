@@ -4,8 +4,9 @@
  * name: Will be the id of the div
  * target: The target div to place the new div inside
 */
-function createItem(name, target, filler){
+function createItem(name, target, filler, feeddata){
 	var fill = filler || false;
+	var data = feeddata || null;
 	if(feedExists(name)){
 		if(!fill){
 			alert("Feed already exist");
@@ -15,9 +16,10 @@ function createItem(name, target, filler){
 		var divTag = document.createElement("div");
 		divTag.id = "" + name;
 		divTag.setAttribute("draggable","true");
+		divTag.setAttribute("data",feeddata);
 		divTag.addEventListener('dragstart', handleDragStart, false);
 		divTag.addEventListener('dragend', handleDragEnd, false);
-		divTag.className ="contentitem";
+		divTag.className = "contentitem";
 		divTag.appendChild(document.createTextNode(name));
 		
 		var delbutton = document.createElement("input");
@@ -124,6 +126,20 @@ function saveChannel(){
 		var length = children.length;
 		var mainContent = "";
 		
+		for(var i = 0; i < children.length; i++){
+			$.ajax({
+				type: "POST",
+				url: "feedhandler.php",
+				data: "p=2&name="+children[i].getAttribute('id')+".json",
+				success: function(msg){
+					var jsonobj = JSON.parse(msg);
+					
+					console.log(jsonobj);
+				}
+			});
+		}
+		
+		
 		for(var i = 0; i < length; i++){
 			mainContent += children[i].getAttribute('id')  + ",";
 		}
@@ -155,8 +171,8 @@ function saveChannel(){
 		
 		$.ajax({
 			type: "POST",
-			url: "getchannels.php",
-			data: "dir=channels",
+			url: "channelhandler.php",
+			data: "p=9",
 			success: function(msg){
 				if(msg.length > 2){
 					var arr = msg.substr(2, msg.length-4).split('\",\"');
@@ -274,8 +290,8 @@ function listChannels(){
 	
 	$.ajax({
 		type: "POST",
-		url: "getchannels.php",
-		data: "dir=channels",
+		url: "channelhandler.php",
+		data: "p=9",
 		success: function(msg){
 			if(msg.length > 2){
 				var arr = msg.substr(2, msg.length-4).split('\",\"');
@@ -318,6 +334,18 @@ function getFeeds(){
 					createItem(arr[i],"contentlist", true)
 				}
 			}
+		}
+	});
+	
+	$.ajax({
+		type: "POST",
+		url: "feedhandler.php",
+		data: "p=4",
+		success: function(msg){
+			var jsonobj = JSON.parse(msg);
+			
+			p1.appendChild(document.createTextNode(" - (" + jsonobj["source"] + ")"));
+			p2.appendChild(document.createTextNode(jsonobj["note"]));
 		}
 	});
 }

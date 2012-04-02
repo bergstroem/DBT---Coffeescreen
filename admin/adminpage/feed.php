@@ -14,7 +14,7 @@
 					include("feedform.html");
 					if($_GET['p'] == 2){
 						$name = $_GET['name'];
-						echo "<script>editChannel(\"$name\")</script>";
+						echo "<script>editFeed(\"$name\")</script>";
 					}
 				?>
 			</div>
