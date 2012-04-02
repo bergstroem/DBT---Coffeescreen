@@ -298,7 +298,8 @@ function listChannels(){
 				p1.appendChild(document.createTextNode(jsonitem["name"]));
 				var p2 = document.createElement("p");
 				p2.className = "note";
-				p2.appendChild(document.createTextNode("Note: " + jsonitem["note"]));
+				var note = (jsonitem["note"].length > 300) ? jsonitem["note"].substr(0,300) + "...": jsonitem["note"];
+				p2.appendChild(document.createTextNode("Note: " + note));
 				
 				item.appendChild(p1);
 				item.appendChild(p2);
