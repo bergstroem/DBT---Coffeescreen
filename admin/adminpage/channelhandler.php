@@ -1,7 +1,7 @@
 ﻿<?php
 	$p = $_POST['p'];
-	$name = $_POST['name'];
 	if($p == 1){
+		$name = $_POST['name'];
 		$note = $_POST['note'];
 		$maincontent = $_POST['maincontent'];
 		$subcontent = $_POST['subcontent'];
@@ -16,6 +16,7 @@
 		fclose($fh);
 	}
 	else if($p == 2){
+		$name = $_POST['name'];
 		$name = "../../channels/$name";
 		$fh = fopen("$name", "r");
 		$jsondata = fread($fh, filesize($name));
@@ -23,6 +24,21 @@
 		echo $jsondata;
 	}
 	else if($p == 3){
+		$name = $_POST['name'];
 		unlink("../../channels/$name");
+	}
+	else if($p == 9){
+		if($handle = opendir("../../channels/")){
+			$data = array();
+			while(false !== ($entry = readdir($handle))){
+				if(!strcmp(substr($entry, -5), ".json")){
+					$name = substr($entry, 0, -5);
+					$data[] = "$name";
+				}
+			}
+			$data = json_encode($data);
+			echo "$data";
+			closedir($handle);
+		}
 	}
 ?>

@@ -93,29 +93,12 @@ function editFeed(name){
 	});
 }
 
-function getFeedData(name){
-	var jsonobj = null;
-	$.ajax({
-		type: "POST",
-		url: "channelhandler.php",
-		data: "p=2&name="+name,
-		success: function(msg){
-			console.log("Succesful channel load");
-			jsonobj = JSON.parse(msg);
-			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
-			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
-			console.log(jsonobj);
-		}
-	});
-	return jsonobj;
-}
-
 function getFeedTypes(){
 	var select = document.getElementById("typeSelect");
 	$.ajax({
 		type: "POST",
-		url: "getFeedTypes.php",
-		data: "",
+		url: "feedhandler.php",
+		data: "p=type",
 		success: function(msg){
 			var arr = msg.substr(2, msg.length-4).split('\",\"');
 			for(var i = 0; i < arr.length; i++){
@@ -133,48 +116,39 @@ function listFeeds(){
 	
 	$.ajax({
 		type: "POST",
-		url: "getchannels.php",
-		data: "dir=feeds",
+		url: "feedhandler.php",
+		data: "p=list",
 		success: function(msg){
-			if(msg.length > 2){
-				var arr = msg.substr(2, msg.length-4).split('\",\"');
-				for(var i = 0; i < arr.length; i++){
-					var item = document.createElement("div");
-					item.id = arr[i];
-					item.className = "channelitem";
-					var p1 = document.createElement("p");
-					var p2 = document.createElement("p");
-					item.appendChild(p1);
-					item.appendChild(p2);
-					p1.appendChild(document.createTextNode(arr[i]));
-					$.ajax({
-						type: "POST",
-						url: "feedhandler.php",
-						data: "p=2&name="+arr[i]+".json",
-						success: function(msg){
-							var jsonobj = JSON.parse(msg);
-							
-							p1.appendChild(document.createTextNode(" - (" + jsonobj["source"] + ")"));
-							p2.appendChild(document.createTextNode(jsonobj["note"]));
-						}
-					});
-					
-					var editButton = document.createElement("input");
-					editButton.type = "button";
-					editButton.id = arr[i] + ".json";
-					editButton.value = "Edit";
-					editButton.className = "editItemButton";
-					item.appendChild(editButton);
-					
-					var delButton = document.createElement("input");
-					delButton.type = "button";
-					delButton.id = arr[i] + ".json";
-					delButton.value = "Delete";
-					delButton.className = "deleteItemButton";
-					item.appendChild(delButton);
-					
-					chanList.appendChild(item);
-				}
+			var jsonobj = JSON.parse(msg);
+			for(var i = 0; i < jsonobj.length; i++){
+				var jsonitem = JSON.parse(jsonobj[i]);
+				var item = document.createElement("div");
+				item.id = jsonitem["name"];
+				item.className = "channelitem";
+				
+				var p1 = document.createElement("p");
+				p1.appendChild(document.createTextNode(jsonitem["name"] + " - (" + jsonitem["source"] + ")"));
+				var p2 = document.createElement("p");
+				p2.appendChild(document.createTextNode(jsonitem["note"]));
+				
+				item.appendChild(p1);
+				item.appendChild(p2);
+				
+				var editButton = document.createElement("input");
+				editButton.type = "button";
+				editButton.id = jsonitem["name"] + ".json";
+				editButton.value = "Edit";
+				editButton.className = "editItemButton";
+				item.appendChild(editButton);
+				
+				var delButton = document.createElement("input");
+				delButton.type = "button";
+				delButton.id = jsonitem["name"] + ".json";
+				delButton.value = "Delete";
+				delButton.className = "deleteItemButton";
+				item.appendChild(delButton);
+				
+				chanList.appendChild(item);
 			}
 		}
 	});
