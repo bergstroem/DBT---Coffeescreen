@@ -16,7 +16,7 @@ function createItem(name, target, filler, feeddata){
 		var divTag = document.createElement("div");
 		divTag.id = "" + name;
 		divTag.setAttribute("draggable","true");
-		divTag.setAttribute("data",feeddata);
+		divTag.setAttribute("data",data);
 		divTag.addEventListener('dragstart', handleDragStart, false);
 		divTag.addEventListener('dragend', handleDragEnd, false);
 		divTag.className = "contentitem";
@@ -37,7 +37,7 @@ function createItem(name, target, filler, feeddata){
 /*
  * createCont()
  * Wrapper function for createItem, will create items and put them in the contentlist.
-*/
+*//*
 function createCont(){
 	var feedname = document.getElementById("feedname");
 	if(feedname.value == ""){
@@ -47,7 +47,7 @@ function createCont(){
 		createItem(feedname.value, "contentlist");
 		feedname.value = "";
 	}
-}
+}*/
 
 /*
  * fillcontent(csv, target)
@@ -126,22 +126,8 @@ function saveChannel(){
 		var length = children.length;
 		var mainContent = "";
 		
-		for(var i = 0; i < children.length; i++){
-			$.ajax({
-				type: "POST",
-				url: "feedhandler.php",
-				data: "p=2&name="+children[i].getAttribute('id')+".json",
-				success: function(msg){
-					var jsonobj = JSON.parse(msg);
-					
-					console.log(jsonobj);
-				}
-			});
-		}
-		
-		
 		for(var i = 0; i < length; i++){
-			mainContent += children[i].getAttribute('id')  + ",";
+			mainContent += children[i].getAttribute('data')  + ",";
 		}
 		mainContent = mainContent.substr(0,mainContent.length-1);
 		
@@ -150,7 +136,7 @@ function saveChannel(){
 		var subContent = "";
 		
 		for(var i = 0; i < length; i++){
-			subContent += children[i].getAttribute('id') + ",";
+			subContent += children[i].getAttribute('data') + ",";
 		}
 		
 		subContent = subContent.substr(0,subContent.length-1);
@@ -220,11 +206,24 @@ function editChannel(name){
 		success: function(msg){
 			console.log("Succesful channel load");
 			var jsonobj = JSON.parse(msg);
-			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
-			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
-			fillcontent(jsonobj["maincontent"], "maincontent");
-			fillcontent(jsonobj["subcontent"], "subcontent");
-			getFeeds();
+			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
+			arr[0] += "}";
+			if(arr.length > 1){
+				for(var i = 0; i < arr.length; i++){
+					var jsonitem = JSON.parse(arr[i]);
+					var data = jsonToString(jsonitem);
+					createItem(jsonitem["name"], "maincontent", true, jsonToString(jsonitem))
+				}
+			}
+			var arr = jsonobj["subcontent"].substr(0, jsonobj["subcontent"].length).split('},');
+			arr[0] += "}";
+			if(arr.length > 1){
+				for(var i = 0; i < arr.length; i++){
+					var jsonitem = JSON.parse(arr[i]);
+					createItem(jsonitem["name"], "subcontent", true, jsonToString(jsonitem))
+				}
+			}
+			//getFeeds();
 		}
 	});
 }
@@ -325,27 +324,26 @@ function listChannels(){
 function getFeeds(){
 	$.ajax({
 		type: "POST",
-		url: "getchannels.php",
-		data: "dir=feeds",
+		url: "feedhandler.php",
+		data: "p=list",
 		success: function(msg){
-			if(msg.length > 2){
-				var arr = msg.substr(2, msg.length-4).split('\",\"');
-				for(var i = 0; i < arr.length; i++){
-					createItem(arr[i],"contentlist", true)
-				}
+			var jsonobj = JSON.parse(msg);
+			for(var i = 0; i < jsonobj.length; i++){
+				var jsonitem = JSON.parse(jsonobj[i])
+				var data = jsonToString(jsonitem);
+				createItem(jsonitem["name"], "contentlist", true, data);
 			}
 		}
 	});
+}
+
+function jsonToString(jsonitem){
+	var data = "{";
+	for(var key in jsonitem){
+		data += "\"" + key + "\"" + ":" + "\"" + jsonitem[key] + "\"" + ",";
+	}
+	data = data.substr(0, data.length-1);
+	data += "}";
 	
-	$.ajax({
-		type: "POST",
-		url: "feedhandler.php",
-		data: "p=4",
-		success: function(msg){
-			var jsonobj = JSON.parse(msg);
-			
-			p1.appendChild(document.createTextNode(" - (" + jsonobj["source"] + ")"));
-			p2.appendChild(document.createTextNode(jsonobj["note"]));
-		}
-	});
+	return data;
 }

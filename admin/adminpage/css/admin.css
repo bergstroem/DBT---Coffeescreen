@@ -349,17 +349,17 @@ fieldset{
 
 .contentlist{
 	width:254px;
-	height:594px;
+	height:644px;
 	border-bottom:2px solid #00AEEF;
 	border-left:2px solid #00AEEF;
 	position:absolute;
 	top:0;
 	left:740px;
-	padding:50px 0 0 0;
+	padding:0;
 	overflow-y:auto;
 	overflow-x:hidden;
 }
-
+/*
 .contentspawner{
 	background:#00AEEF;
 	width:254px;
@@ -390,7 +390,7 @@ fieldset{
 	left:180px;
 	margin:15px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
-}
+}*/
 
 .contentitem{
 	float:left;
