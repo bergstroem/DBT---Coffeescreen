@@ -206,6 +206,8 @@ function editChannel(name){
 		success: function(msg){
 			console.log("Succesful channel load");
 			var jsonobj = JSON.parse(msg);
+			document.getElementById("nameTXB").value = jsonobj["name"];
+			document.getElementById("noteTXB").value = jsonobj["note"];
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
 			arr[0] += "}";
 			if(arr.length > 1){
@@ -223,7 +225,7 @@ function editChannel(name){
 					createItem(jsonitem["name"], "subcontent", true, jsonToString(jsonitem))
 				}
 			}
-			//getFeeds();
+			getFeeds();
 		}
 	});
 }

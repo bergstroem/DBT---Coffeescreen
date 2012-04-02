@@ -127,7 +127,7 @@ function listFeeds(){
 				item.className = "channelitem";
 				
 				var p1 = document.createElement("p");
-				p1.appendChild(document.createTextNode(jsonitem["name"] + " - (" + jsonitem["source"] + ")"));
+				p1.appendChild(document.createTextNode(jsonitem["name"] + " - " + jsonitem["type"] +":" + jsonitem["source"]));
 				var p2 = document.createElement("p");
 				p2.appendChild(document.createTextNode(jsonitem["note"]));
 				
