@@ -1,11 +1,41 @@
-function Screen(id, name, connection, template) {
+function Screen(id, name, channel, connection) {
 	this.id = id;
 	this.name = name;
+	this.channel = channel;
 	this.connection = connection;
-	this.template = template;
+	
+	this.setChannel = function(newChannel) {
+		channel = newChannel;
+	}
+	
+	this.sendChannel = function() {
+		//TODO: Start reading from channels instead of templates
+		fs.readFile("../../templates/" + channel + ".json", 'utf8', function (err, data) {
+			if (err) {
+				console.log("Looking for default");
+				fs.readFile("../../templates/default_template.json", 'utf8', function (err, data) {
+					if(err) {
+						//Send no data
+						this.connection.send("No data available");
+					}
+					else prepareChannelFileForDelivery(connection, data);
+				
+				});
+			}
+			else prepareChannelFileForDelivery(connection, data);
+		});
+	}
 }
 
 var screens = [];
+
+function getScreen(connection) {
+	for(i = 0; i < screens.length; i++) {
+		if(connection === screens[i].connection) {
+			return screens[i];
+		}
+	}
+}
 
 function removeConnection(connection) {
 	for(i = 0; i < screens.length; i++) {
@@ -20,8 +50,9 @@ function removeConnection(connection) {
 function setScreenName(connection, name) {
 	for(i = 0; i < screens.length; i++) {
 		if(connection === screens[i].connection) {
-			//console.log("Screen " + screens[i].name + " disconnected.");
+			console.log(screens[i].name + " changed name to " + name);
 			screens[i].name = name;
+			break;
 		}
 	}
 }
@@ -32,8 +63,6 @@ var url = require('url');
 var fs = require('fs');
 
 var server = http.createServer(function(request, response) {
-    // process HTTP request. Since we're writing just WebSockets server
-    // we don't have to implement anything.
     response.writeHead(200, {'Content-Type': 'text/plain', 'Access-Control-Allow-Origin' : '*'});
     
     var url_parts = url.parse(request.url, true);
@@ -63,7 +92,8 @@ var server = http.createServer(function(request, response) {
 				var i;
 				for(i = 0; i < screens.length; i++)
 				{
-					sendFeeds(screens[i].connection, "panic");
+					screens[i].setChannel("panic");
+					screens[i].sendChannel();
 				}
     		}
     		else {
@@ -72,7 +102,8 @@ var server = http.createServer(function(request, response) {
 				for(i = 0; i < screens.length; i++)
 				{
 					if(query['screen'] == screens[i].name)
-						sendFeeds(screens[i].connection, "panic");
+						screens[i].setChannel("panic");
+						screens[i].sendChannel();
 				}
     		}
     	}
@@ -82,13 +113,14 @@ var server = http.createServer(function(request, response) {
     //Set template
     else if(url_parts.pathname == "/set/") {
     	var query = url_parts.query;
-    	if(query['screen'] != undefined && query['template'] != undefined) {
-    		console.log("Sending " + query['template'] + " to: " + query['screen']);
+    	if(query['screen'] != undefined && query['channel'] != undefined) {
+    		console.log("Sending " + query['channel'] + " to: " + query['screen']);
     		for(var i = 0; i < screens.length; i++) {
     			if(screens[i].name == query['screen'])
-    				sendFeeds(screens[i].connection, query['template']);
+    				screens[i].setChannel(query['channel']);
+    				screens[i].sendChannel();
     		}
-    		response.end("Set template: " + query['template'] + " to: " + query['screen']);
+    		response.end("Set template: " + query['channel'] + " to: " + query['screen']);
     	}
     }
 });
@@ -112,12 +144,11 @@ wsServer.on('request', function(request) {
 			if(message.utf8Data.substring(0, 7) == "Connect")
 			{
 				var name = message.utf8Data.substring(9, message.utf8Data.length);
-				var screen = new Screen(1, name, connection);
+				var screen = new Screen(1, name, name, connection);
 				screens.push(screen);
 				console.log("Screen " + screen.name + " connected.");
 				
-				
-				sendFeeds(connection, name);
+				screen.sendChannel();
 			}
         }
     });
@@ -125,35 +156,11 @@ wsServer.on('request', function(request) {
     connection.on('close', function() {
         // close user connection
         removeConnection(connection);
-        
-        //Debug print
-        /*console.log("These are the screens connected");
-		for(i = 0; i < screens.length; i++) {
-			console.log(screens[i].name + " " + screens[i].id);
-		}
-		console.log("");*/
-		});
+    });
 });
 
-function sendFeeds(connection, name) {
-	fs.readFile("../../templates/" + name + ".json", 'utf8', function (err, data) {
-		if (err) {
-			console.log("Looking for default");
-			fs.readFile("../../templates/default_template.json", 'utf8', function (err, data) {
-				if(err) {
-					//Send no data
-					connection.send("No data available");
-				}
-				else prepareTemplateFileForDelivery(connection, data);
-				
-			});
-		}
-		else prepareTemplateFileForDelivery(connection, data);
-	});
-}
-
-function prepareTemplateFileForDelivery(connection, template) {
-	var jsonObject = eval('(' + template + ')');
+function prepareChannelFileForDelivery(connection, template) {
+	var jsonObject = eval('(' + template + ')'); // TODO: Note to self, stop using eval!
 	var mainContent = jsonObject.maincontent;
 	var subContent = jsonObject.subcontent;
 	var name = jsonObject.name;
