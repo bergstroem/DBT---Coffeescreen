@@ -3,8 +3,16 @@ p{
 	margin:0 0 0 10px;
 }
 
+p.note{
+	width:725px;
+	color:gray;
+	font-size:15px;
+	padding: 0 0 8px 0;
+}
+
 li{
-	margin:5px 0 0 0;
+	margin:5px 0 0 -38px;
+	list-style:none;
 }
 
 fieldset{
@@ -181,6 +189,7 @@ fieldset{
 }
 
 .newItemButton{
+	background:#FFFFFF;
 	width:100px;
 	height:30px;
 	border-radius:10px;
@@ -198,25 +207,10 @@ fieldset{
 	font-size:15px;
 }
 
-/*
 .newItemButton:hover{
-	background: rgba(255,0,255,0.1);
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:875px;
-	text-align:center;
-	border:0;
-	padding:0;
-	margin: 5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:15px;
-}*/
+	background: rgba(155,155,155,0.5);
+	border:1px solid #000;
+}
 
 .editItemButton{
 	background:#00AEEF;
@@ -231,14 +225,19 @@ fieldset{
 	text-align:center;
 	border:0;
 	padding:0;
-	margin: 5px 0 0 0;
+	margin: 15px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
 	font-size:15px;
 }
 
+.editItemButton:hover{
+	background: rgba(0,174,239,0.5);
+	border:1px solid #000;
+}
+
 .deleteItemButton{
-	background:red;
+	background:#FF0000;
 	width:100px;
 	height:30px;
 	border-radius:10px;
@@ -250,10 +249,15 @@ fieldset{
 	text-align:center;
 	border:0px;
 	padding:0;
-	margin: 5px 0 0 0;
+	margin: 15px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
 	font-size:15px;
+}
+
+.deleteItemButton:hover{
+	background: rgba(255,0,0,0.5);
+	border:1px solid #000;
 }
 
 /* Channel stuff */
@@ -310,7 +314,8 @@ fieldset{
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
-.savechannelbutton{
+.saveButton{
+	background:#00AEEF;
 	width:160px;
 	height:50px;
 	border-radius:10px;
@@ -320,6 +325,10 @@ fieldset{
 	margin:30px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-size:17px;
+}
+
+.saveButton:hover{
+	background: rgba(0,174,239,0.5);
 }
 
 .maindrop{
@@ -349,47 +358,15 @@ fieldset{
 
 .contentlist{
 	width:254px;
-	height:594px;
+	height:644px;
 	border-bottom:2px solid #00AEEF;
 	border-left:2px solid #00AEEF;
 	position:absolute;
 	top:0;
 	left:740px;
-	padding:50px 0 0 0;
+	padding:0;
 	overflow-y:auto;
 	overflow-x:hidden;
-}
-
-.contentspawner{
-	background:#00AEEF;
-	width:254px;
-	height:50px;
-	border-top-right-radius:10px;
-	-moz-border-top-right-radius:10px;
-	-webkit-border-top-right-radius:10px;
-	position:absolute;
-	top:0;
-}
-
-.contentTXB{
-	width:160px;
-	height:20px;
-	position:absolute;
-	margin:15px 0 0 10px;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
-.savebutton{
-	width:40px;
-	height:20px;
-	border-radius:5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border:0px;
-	position:absolute;
-	left:180px;
-	margin:15px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .contentitem{

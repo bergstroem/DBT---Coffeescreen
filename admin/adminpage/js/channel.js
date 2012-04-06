@@ -4,8 +4,9 @@
  * name: Will be the id of the div
  * target: The target div to place the new div inside
 */
-function createItem(name, target, filler){
+function createItem(name, target, filler, feeddata){
 	var fill = filler || false;
+	var data = feeddata || null;
 	if(feedExists(name)){
 		if(!fill){
 			alert("Feed already exist");
@@ -15,9 +16,11 @@ function createItem(name, target, filler){
 		var divTag = document.createElement("div");
 		divTag.id = "" + name;
 		divTag.setAttribute("draggable","true");
+		divTag.setAttribute("data",data);
+		divTag.setAttribute("disabled","true");
 		divTag.addEventListener('dragstart', handleDragStart, false);
 		divTag.addEventListener('dragend', handleDragEnd, false);
-		divTag.className ="contentitem";
+		divTag.className = "contentitem";
 		divTag.appendChild(document.createTextNode(name));
 		
 		var delbutton = document.createElement("input");
@@ -29,21 +32,6 @@ function createItem(name, target, filler){
 		divTag.appendChild(delbutton);
 		
 		document.getElementById(target).appendChild(divTag);
-	}
-}
-
-/*
- * createCont()
- * Wrapper function for createItem, will create items and put them in the contentlist.
-*/
-function createCont(){
-	var feedname = document.getElementById("feedname");
-	if(feedname.value == ""){
-		alert("Please enter a feedname");
-	}
-	else{
-		createItem(feedname.value, "contentlist");
-		feedname.value = "";
 	}
 }
 
@@ -112,20 +100,19 @@ function feedExists(name){
  * Used for saving a channel, will use the information in the form.
 */
 function saveChannel(){
-	var name = document.getElementById("nameTXB");
-	if(name.value == ""){
+	var name = document.getElementById("nameTXB").value;
+	if(name == ""){
 		alert("Please enter a name");
 	}
 	else{
-		var fname = name.value;	
-		var fnote = document.getElementById("noteTXB").value;
+		var note = document.getElementById("noteTXB").value;
 
 		var children = document.getElementById('maincontent').childNodes;
 		var length = children.length;
 		var mainContent = "";
 		
 		for(var i = 0; i < length; i++){
-			mainContent += children[i].getAttribute('id')  + ",";
+			mainContent += children[i].getAttribute('data') + ",";
 		}
 		mainContent = mainContent.substr(0,mainContent.length-1);
 		
@@ -134,42 +121,42 @@ function saveChannel(){
 		var subContent = "";
 		
 		for(var i = 0; i < length; i++){
-			subContent += children[i].getAttribute('id') + ",";
+			subContent += children[i].getAttribute('data') + ",";
 		}
 		
 		subContent = subContent.substr(0,subContent.length-1);
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
+		var oname = url.substr(9);
 		if(p == "p=2"){
-			var tname = url.substr(9);
-			if(!(tname.substr(0,tname.indexOf(".")) == fname))
+			if(!(oname.substr(0,oname.indexOf(".")) == name))
 				$.ajax({
 					type: "POST",
 					url: "channelhandler.php",
-					data: "p=3&name="+tname,
+					data: "p=3&name="+oname,
 					success: function(msg){
 					}
 				});
 		}
 		
-		$.ajax({
-			type: "POST",
-			url: "getchannels.php",
-			data: "dir=channels",
-			success: function(msg){
-				if(msg.length > 2){
-					var arr = msg.substr(2, msg.length-4).split('\",\"');
-					for(var i = 0; i < arr.length; i++){
-						if(arr[i] == fname){
+		if(oname.substr(0,oname.length-5) != name){
+			$.ajax({
+				type: "POST",
+				url: "channelhandler.php",
+				data: "p=list",
+				success: function(msg){
+					var jsonobj = JSON.parse(msg);
+					for(var i = 0; i < jsonobj.length; i++){
+						var jsonitem = JSON.parse(jsonobj[i]);
+						if(jsonitem["name"] == name){
 							var conflict = true;
 							if(confirm('This will replace an existing channel. Continue?'))
 								$.ajax({
 									type: "POST",
 									url: "channelhandler.php",
-									data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+									data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
 									success: function(msg){
-										console.log("Succesful channel save");
 										window.location = "adminchannel.php";
 									}
 								});
@@ -179,15 +166,24 @@ function saveChannel(){
 						$.ajax({
 							type: "POST",
 							url: "channelhandler.php",
-							data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+							data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
 							success: function(msg){
-								console.log("Succesful channel save");
 								window.location = "adminchannel.php";
 							}
 						});
+					}
+			});
+		}
+		else{
+			$.ajax({
+				type: "POST",
+				url: "channelhandler.php",
+				data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
+				success: function(msg){
+					window.location = "adminchannel.php";
 				}
-			}
-		});
+			});
+		}
 	}
 }
 
@@ -202,12 +198,27 @@ function editChannel(name){
 		url: "channelhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
-			console.log("Succesful channel load");
 			var jsonobj = JSON.parse(msg);
-			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
-			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
-			fillcontent(jsonobj["maincontent"], "maincontent");
-			fillcontent(jsonobj["subcontent"], "subcontent");
+			document.getElementById("nameTXB").value = jsonobj["name"];
+			document.getElementById("noteTXB").value = jsonobj["note"];
+			
+			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
+			arr[0] += "}";
+			if(arr.length > 1){
+				for(var i = 0; i < arr.length; i++){
+					var jsonitem = JSON.parse(arr[i]);
+					var data = jsonToString(jsonitem);
+					createItem(jsonitem["name"], "maincontent", true, jsonToString(jsonitem))
+				}
+			}
+			var arr = jsonobj["subcontent"].substr(0, jsonobj["subcontent"].length).split('},');
+			arr[0] += "}";
+			if(arr.length > 1){
+				for(var i = 0; i < arr.length; i++){
+					var jsonitem = JSON.parse(arr[i]);
+					createItem(jsonitem["name"], "subcontent", true, jsonToString(jsonitem))
+				}
+			}
 			getFeeds();
 		}
 	});
@@ -227,7 +238,6 @@ function deleteChannel(name){
 		data: "p=3&name="+name,
 		success: function(msg){
 			document.getElementById(parentname).removeChild(document.getElementById(divname));
-			console.log("Succesful channel delete");
 		}
 	});
 }
@@ -274,33 +284,41 @@ function listChannels(){
 	
 	$.ajax({
 		type: "POST",
-		url: "getchannels.php",
-		data: "dir=channels",
+		url: "channelhandler.php",
+		data: "p=list",
 		success: function(msg){
-			if(msg.length > 2){
-				var arr = msg.substr(2, msg.length-4).split('\",\"');
-				for(var i = 0; i < arr.length; i++){
-					var item = document.createElement("div");
-					item.id = arr[i];
-					item.className = "channelitem";
-					item.appendChild(document.createTextNode(arr[i]));
-					
-					var editButton = document.createElement("input");
-					editButton.type = "button";
-					editButton.id = arr[i] + ".json";
-					editButton.value = "Edit";
-					editButton.className = "editItemButton";
-					item.appendChild(editButton);
-					
-					var delButton = document.createElement("input");
-					delButton.type = "button";
-					delButton.id = arr[i] + ".json";
-					delButton.value = "Delete";
-					delButton.className = "deleteItemButton";
-					item.appendChild(delButton);
-					
-					chanList.appendChild(item);
-				}
+			var jsonobj = JSON.parse(msg);
+			for(var i = 0; i < jsonobj.length; i++){
+				var jsonitem = JSON.parse(jsonobj[i]);
+				var item = document.createElement("div");
+				item.id = jsonitem["name"];
+				item.className = "channelitem";
+				
+				var p1 = document.createElement("p");
+				p1.appendChild(document.createTextNode(jsonitem["name"]));
+				var p2 = document.createElement("p");
+				p2.className = "note";
+				var note = (jsonitem["note"].length > 300) ? jsonitem["note"].substr(0,300) + "...": jsonitem["note"];
+				p2.appendChild(document.createTextNode("Note: " + note));
+				
+				item.appendChild(p1);
+				item.appendChild(p2);
+				
+				var editButton = document.createElement("input");
+				editButton.type = "button";
+				editButton.id = jsonitem["name"] + ".json";
+				editButton.value = "Edit";
+				editButton.className = "editItemButton";
+				item.appendChild(editButton);
+				
+				var delButton = document.createElement("input");
+				delButton.type = "button";
+				delButton.id = jsonitem["name"] + ".json";
+				delButton.value = "Delete";
+				delButton.className = "deleteItemButton";
+				item.appendChild(delButton);
+				
+				chanList.appendChild(item);
 			}
 		}
 	});
@@ -309,15 +327,26 @@ function listChannels(){
 function getFeeds(){
 	$.ajax({
 		type: "POST",
-		url: "getchannels.php",
-		data: "dir=feeds",
+		url: "feedhandler.php",
+		data: "p=list",
 		success: function(msg){
-			if(msg.length > 2){
-				var arr = msg.substr(2, msg.length-4).split('\",\"');
-				for(var i = 0; i < arr.length; i++){
-					createItem(arr[i],"contentlist", true)
-				}
+			var jsonobj = JSON.parse(msg);
+			for(var i = 0; i < jsonobj.length; i++){
+				var jsonitem = JSON.parse(jsonobj[i])
+				var data = jsonToString(jsonitem);
+				createItem(jsonitem["name"], "contentlist", true, data);
 			}
 		}
 	});
+}
+
+function jsonToString(jsonitem){
+	var data = "{";
+	for(var key in jsonitem){
+		data += "\"" + key + "\"" + ":" + "\"" + jsonitem[key] + "\"" + ",";
+	}
+	data = data.substr(0, data.length-1);
+	data += "}";
+	
+	return data;
 }

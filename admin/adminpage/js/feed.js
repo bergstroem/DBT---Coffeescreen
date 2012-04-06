@@ -15,49 +15,39 @@ function saveFeed(){
 		var displaytime = document.getElementById("displayTime").value;
 		var expiretime = document.getElementById("expireTime").value;
 		
-		$.ajax({
-			type: "POST",
-			url: "feedhandler.php",
-			data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
-			success: function(msg){
-				console.log("Succesful channel save");
-				window.location = "adminfeed.php";
-			}
-		});
-		/*
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
+		var oname = url.substr(9);
 		if(p == "p=2"){
-			var tname = url.substr(9);
-			if(!(tname.substr(0,tname.indexOf(".")) == fname))
+			if(!(oname.substr(0,oname.indexOf(".")) == name))
 				$.ajax({
 					type: "POST",
-					url: "channelhandler.php",
-					data: "p=3&name="+tname,
+					url: "feedhandler.php",
+					data: "p=3&name="+oname,
 					success: function(msg){
 					}
 				});
 		}
 		
-		$.ajax({
-			type: "POST",
-			url: "getchannels.php",
-			data: "dir=channels",
-			success: function(msg){
-				if(msg.length > 2){
-					var arr = msg.substr(2, msg.length-4).split('\",\"');
-					for(var i = 0; i < arr.length; i++){
-						if(arr[i] == fname){
+		if(oname.substr(0,oname.length-5) != name){
+			$.ajax({
+				type: "POST",
+				url: "feedhandler.php",
+				data: "p=list",
+				success: function(msg){
+					var jsonobj = JSON.parse(msg);
+					for(var i = 0; i < jsonobj.length; i++){
+						var jsonitem = JSON.parse(jsonobj[i]);
+						if(jsonitem["name"] == name){
 							var conflict = true;
-							if(confirm('This will replace an existing channel. Continue?'))
+							if(confirm('This will replace an existing feed. Continue?'))
 								$.ajax({
 									type: "POST",
-									url: "channelhandler.php",
-									data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+									url: "feedhandler.php",
+									data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 									success: function(msg){
-										console.log("Succesful channel save");
-										window.location = "adminchannel.php";
+										window.location = "adminfeed.php";
 									}
 								});
 						}
@@ -65,57 +55,53 @@ function saveFeed(){
 					if(!conflict)
 						$.ajax({
 							type: "POST",
-							url: "channelhandler.php",
-							data: "p=1&name="+fname+"&note="+fnote+"&maincontent="+mainContent+"&subcontent="+subContent,
+							url: "feedhandler.php",
+							data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 							success: function(msg){
-								console.log("Succesful channel save");
-								window.location = "adminchannel.php";
+								window.location = "adminfeed.php";
 							}
 						});
+					}
+			});
+		}
+		else{
+			$.ajax({
+				type: "POST",
+				url: "feedhandler.php",
+				data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+				success: function(msg){
+					window.location = "adminfeed.php";
 				}
-			}
-		});*/
+			});
+		}
 	}
 }
 
 function editFeed(name){
+	getFeedTypes();
 	$.ajax({
 		type: "POST",
-		url: "channelhandler.php",
+		url: "feedhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
-			console.log("Succesful channel load");
 			var jsonobj = JSON.parse(msg);
-			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
-			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
-			getFeeds();
+			document.getElementById("name").value = jsonobj["name"];
+			document.getElementById("source").value = jsonobj["source"];
+			document.getElementById("typeSelect").value = jsonobj["type"];
+			document.getElementById("note").value = jsonobj["note"];
+			document.getElementById("priority").value = jsonobj["priority"];
+			document.getElementById("displayTime").value = jsonobj["displaytime"];
+			document.getElementById("expireTime").value = jsonobj["expiretime"];
 		}
 	});
-}
-
-function getFeedData(name){
-	var jsonobj = null;
-	$.ajax({
-		type: "POST",
-		url: "channelhandler.php",
-		data: "p=2&name="+name,
-		success: function(msg){
-			console.log("Succesful channel load");
-			jsonobj = JSON.parse(msg);
-			document.getElementById("nameTXB").setAttribute("value",jsonobj["name"]);
-			document.getElementById("noteTXB").appendChild(document.createTextNode(jsonobj["note"]));
-			console.log(jsonobj);
-		}
-	});
-	return jsonobj;
 }
 
 function getFeedTypes(){
 	var select = document.getElementById("typeSelect");
 	$.ajax({
 		type: "POST",
-		url: "getFeedTypes.php",
-		data: "",
+		url: "feedhandler.php",
+		data: "p=type",
 		success: function(msg){
 			var arr = msg.substr(2, msg.length-4).split('\",\"');
 			for(var i = 0; i < arr.length; i++){
@@ -133,48 +119,41 @@ function listFeeds(){
 	
 	$.ajax({
 		type: "POST",
-		url: "getchannels.php",
-		data: "dir=feeds",
+		url: "feedhandler.php",
+		data: "p=list",
 		success: function(msg){
-			if(msg.length > 2){
-				var arr = msg.substr(2, msg.length-4).split('\",\"');
-				for(var i = 0; i < arr.length; i++){
-					var item = document.createElement("div");
-					item.id = arr[i];
-					item.className = "channelitem";
-					var p1 = document.createElement("p");
-					var p2 = document.createElement("p");
-					item.appendChild(p1);
-					item.appendChild(p2);
-					p1.appendChild(document.createTextNode(arr[i]));
-					$.ajax({
-						type: "POST",
-						url: "feedhandler.php",
-						data: "p=2&name="+arr[i]+".json",
-						success: function(msg){
-							var jsonobj = JSON.parse(msg);
-							
-							p1.appendChild(document.createTextNode(" - (" + jsonobj["source"] + ")"));
-							p2.appendChild(document.createTextNode(jsonobj["note"]));
-						}
-					});
-					
-					var editButton = document.createElement("input");
-					editButton.type = "button";
-					editButton.id = arr[i] + ".json";
-					editButton.value = "Edit";
-					editButton.className = "editItemButton";
-					item.appendChild(editButton);
-					
-					var delButton = document.createElement("input");
-					delButton.type = "button";
-					delButton.id = arr[i] + ".json";
-					delButton.value = "Delete";
-					delButton.className = "deleteItemButton";
-					item.appendChild(delButton);
-					
-					chanList.appendChild(item);
-				}
+			var jsonobj = JSON.parse(msg);
+			for(var i = 0; i < jsonobj.length; i++){
+				var jsonitem = JSON.parse(jsonobj[i]);
+				var item = document.createElement("div");
+				item.id = jsonitem["name"];
+				item.className = "channelitem";
+				
+				var p1 = document.createElement("p");
+				p1.appendChild(document.createTextNode(jsonitem["name"] + " - " + jsonitem["type"] +":" + jsonitem["source"]));
+				var p2 = document.createElement("p");
+				p2.className = "note";
+				var note = (jsonitem["note"].length > 300) ? jsonitem["note"].substr(0,300) + "...": jsonitem["note"];
+				p2.appendChild(document.createTextNode("Note: " + note));
+				
+				item.appendChild(p1);
+				item.appendChild(p2);
+				
+				var editButton = document.createElement("input");
+				editButton.type = "button";
+				editButton.id = jsonitem["name"] + ".json";
+				editButton.value = "Edit";
+				editButton.className = "editItemButton";
+				item.appendChild(editButton);
+				
+				var delButton = document.createElement("input");
+				delButton.type = "button";
+				delButton.id = jsonitem["name"] + ".json";
+				delButton.value = "Delete";
+				delButton.className = "deleteItemButton";
+				item.appendChild(delButton);
+				
+				chanList.appendChild(item);
 			}
 		}
 	});
@@ -212,7 +191,6 @@ function deleteFeed(name){
 		data: "p=3&name="+name,
 		success: function(msg){
 			document.getElementById(parentname).removeChild(document.getElementById(divname));
-			console.log("Succesful channel delete");
 		}
 	});
 }

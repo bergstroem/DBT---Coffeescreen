@@ -9,21 +9,15 @@
 	</head>
 	<body>
 		<div id="namebox" class="namebox">
-			Name:<input type="text" name="name" id="nameTXB" class="formTXB"/>
-			<input type="button" name="savechannelbutton" value="Save channel" class="savechannelbutton" onclick="saveChannel()">
+			<label for=nameTXB>Name</label><input type="text" name="name" id="nameTXB" class="formTXB"/>
+			<input type="button" name="savechannelbutton" value="Save channel" class="saveButton" onclick="saveChannel()">
 		</div>
 		<div id="notebox" class="notebox">
-			Note:<textarea name="note" id="noteTXB" class="noteTXB"></textarea>
+			<label for=noteTXB>Note</label><textarea name="note" id="noteTXB" class="noteTXB"></textarea>
 		</div>
 		<div id="maincontent" class="maindrop"></div>
 		<div id="subcontent" class="subdrop"></div>
-		<div id="contentlist" class="contentlist">
-			<div id="contentspawner" class="contentspawner">
-				<input type="button" name="button" class="spawnbutton" onclick="createContTEST()">
-				<input type="text" name="feedname" id="feedname" class="contentTXB"/>
-				<input type="button" name="button" value="save" class="savebutton" onclick="createCont()">
-			</div>
-		</div>
+		<div id="contentlist" class="contentlist"></div>
 		<script>
 			addEL();
 		</script>

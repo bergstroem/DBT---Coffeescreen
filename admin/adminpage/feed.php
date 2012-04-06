@@ -6,7 +6,7 @@
 		<script type="text/javascript" src="js/feed.js"></script>
 		<meta charset="UTF-8"/>
 	</head>
-	<body onload="getFeedTypes()">
+	<body>
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="feedcontent" class="content">
@@ -14,7 +14,10 @@
 					include("feedform.html");
 					if($_GET['p'] == 2){
 						$name = $_GET['name'];
-						echo "<script>editChannel(\"$name\")</script>";
+						echo "<script>editFeed(\"$name\")</script>";
+					}
+					else{
+						echo "<script>getFeedTypes()</script>";
 					}
 				?>
 			</div>
