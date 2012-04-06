@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Coffeescreen Client</title>
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+		<link type="text/css" href="css/main.css" rel="stylesheet" />
+		<script src="frontend.js"></script>
+		
+	</head>
+	<body>
+	
+		<!-- <div id="screen"> -->
+			<div id="pageWrapper">
+				<div id="contentArea">
+					<div id="mainContent">
+						Waiting for content...
+					</div>
+				</div>
+			</div>
+		<!-- </div> -->
+		<div id="topBar">
+			<div id="topBarLeft" class="topBarSection">
+                <img src="./Codemill_logo_vit.svg" height="20" alt="some_text"/> 
+			</div>
+			<div id="topBarCenter" class="topBarSection">
+				&nbsp;
+        	</div>
+			<div id="topBarRight" class="topBarSection">
+				&nbsp;
+			</div>
+		</div>
+		<script>
+		function show(){
+			var Digital=new Date();
+			var hours=Digital.getHours();
+			var minutes=Digital.getMinutes();
+			if (minutes<=9)
+			minutes="0"+minutes;
+			document.getElementById("topBarCenter").innerHTML=hours+":"+minutes;
+			setTimeout("show()",1000);
+		}
+		show();
+		//-->
+		</script>
+	</body>
+</html>

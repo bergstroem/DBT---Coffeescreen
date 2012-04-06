@@ -1,0 +1,408 @@
+﻿/* Text */
+p{
+	margin:0 0 0 10px;
+}
+
+p.note{
+	width:725px;
+	color:gray;
+	font-size:15px;
+	padding: 0 0 8px 0;
+}
+
+li{
+	margin:5px 0 0 -38px;
+	list-style:none;
+}
+
+fieldset{
+	margin: 0 10px 0 10px;
+}
+
+.linkspan{
+	position:absolute;
+	width:100%;
+	height:100%;
+	top:0;
+	left:0;
+	
+	z-index:1;
+}
+
+/* Menu */
+
+.menubar{
+	background:#00AEEF;
+	width:100%;
+	height:40px;
+	border-radius:15px;
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
+	position:absolute;
+	top:0;
+	left:0;
+}
+
+.menuitem{
+	background:white;
+	width:150px;
+	height:25px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:relative;
+	float:left;
+	margin:5px 0 0 20px;
+	padding:5px 0 0 0;
+	text-align:center;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+}
+
+/* Main */
+
+.background{
+	width:1000px;
+	height:700px;
+	position:relative;
+	top:2px;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.content{
+	width:996px;
+	height:646px;
+	border-radius:15px;
+	-webkit-border-radius:15px;
+	-moz-border-radius:15px;
+	border:2px solid #00AEEF;
+	position:absolute;
+	top:50px;
+	padding:10px 0 0 0;
+	overflow-y:auto;
+}
+
+.contentheader{
+	background:#00AEEF;
+	color:white;
+	height:32px;
+	position:relative;
+	left:0;
+	padding:8px 0 0 10px;
+	margin:5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:20px;
+}
+
+/* Screens */
+.screenAllPanicButton{
+	background:red;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0px;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.screenChannelSelect{
+	width:200px;
+	height:30px;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:1px solid #00AEEF;
+	position:absolute;
+	top:0;
+	left:550px;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.screenSetButton{
+	background:#00AEEF;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:765px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.screenPanicButton{
+	background:red;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0px;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+/* Channel list */
+.channellist{
+	width:100%;
+	height:650px;
+	position:relative;
+	padding:0;
+	overflow-y:auto;
+}
+
+.channelitem{
+	min-height:32px;
+	border-top:2px solid #00AEEF;
+	border-bottom:2px solid #00AEEF;
+	position:relative;
+	padding:8px 0 0 10px;
+	margin:5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-size:20px;
+}
+
+.newItemButton{
+	background:#FFFFFF;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.newItemButton:hover{
+	background: rgba(155,155,155,0.5);
+	border:1px solid #000;
+}
+
+.editItemButton{
+	background:#00AEEF;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:765px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 15px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.editItemButton:hover{
+	background: rgba(0,174,239,0.5);
+	border:1px solid #000;
+}
+
+.deleteItemButton{
+	background:#FF0000;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0px;
+	padding:0;
+	margin: 15px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.deleteItemButton:hover{
+	background: rgba(255,0,0,0.5);
+	border:1px solid #000;
+}
+
+/* Channel stuff */
+
+.formTXB{
+	width:160px;
+	height:20px;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.formNB{
+	width:50px;
+	height:20px;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+	text-align:right;
+}
+
+.noteTXB{
+	width:550px;
+	height:100px;
+	resize:none;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.formTypeSelect{
+	width:160px;
+	height:20px;
+	/*border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;*/
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.namebox{
+	width:160px;
+	height:20px;
+	position:relative;
+	float:left;
+	margin:0 0 0 10px;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.notebox{
+	width:250px;
+	height:100px;
+	resize:none;
+	position:relative;
+	float:left;
+	margin:0 0 0 10px;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.saveButton{
+	background:#00AEEF;
+	width:160px;
+	height:50px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border:1px solid #00AEEF;
+	margin:30px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-size:17px;
+}
+
+.saveButton:hover{
+	background: rgba(0,174,239,0.5);
+}
+
+.maindrop{
+	width:740px;
+	height:308px;
+	border-top:2px solid #00AEEF;
+	position:absolute;
+	top:140px;
+	left:0;
+	overflow-y:auto;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+}
+
+.subdrop{
+	width:740px;
+	height:192px;
+	border-top:2px solid #00AEEF;
+	border-bottom:2px solid #00AEEF;
+	position:absolute;
+	top:450px;
+	left:0;
+	overflow-y:auto;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+}
+
+.contentlist{
+	width:254px;
+	height:644px;
+	border-bottom:2px solid #00AEEF;
+	border-left:2px solid #00AEEF;
+	position:absolute;
+	top:0;
+	left:740px;
+	padding:0;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+
+.contentitem{
+	float:left;
+	width:206px;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	border:2px solid #00AEEF;
+	position:relative;
+	margin:10px 0 0 10px;
+	padding:10px 10px;
+	font-family:"Calibri", Calibri, sans-serif;
+	z-index:100;
+}
+
+.removebutton{
+	background:red;
+	width:20px;
+	height:20px;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	position:absolute;
+	margin:0;
+	left:198px;
+	border:0px;
+}
+
+.spawnbutton{
+	background:transparent;
+	width:10px;
+	height:10px;
+	border:0px;
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:9999;
+}
