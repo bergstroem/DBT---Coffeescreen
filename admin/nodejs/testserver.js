@@ -16,7 +16,7 @@ function Screen(id, name, channel, connection) {
 				fs.readFile("../../templates/default_template.json", 'utf8', function (err, data) {
 					if(err) {
 						//Send no data
-						this.connection.send("No data available");
+						connection.send("No data available");
 					}
 					else prepareChannelFileForDelivery(connection, data);
 				
