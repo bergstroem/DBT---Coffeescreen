@@ -1,55 +1,110 @@
 <?
 
 abstract class Service {
-	private static $ME = NULL;
+	private static $ME = null;
 
-	private $this->parameters = array();
+	private $parameters = array();
 
 	public function __construct() {
-		Service::ME = $this;
+		Service::$ME = $this;
 	}
 
+	/**
+	 * Load parameters into the service from the given JSON string.
+	**/
 	public function loadParameters($json) {
-		$this->parameters = json_decode($json);
-		if($this->parameters == NULL) {
-			echo "Bad JSON string for the parameters."
-			$this->parameters = array();
+		$params = json_decode($json);
+		$this->parameters = array();
+		if($params != null) {
+			foreach ($params as $key => $value) {
+				$this->parameters[$key]["value"] = $value;
+			}
 		}
 	}
 
-	protected function readParameter($key) {
-		return $this->parameters[$key];
-	}
-
-	protected function createParameter($key, $name="", $defaultValue="") {
-		$this->parameters[$key] = $defaultValue;
-	}
-
+	/**
+	 * Returns a list of the required parameters for the service.
+	**/
 	public function getParameters() {
-		$this->createParameters();
+		$this->specifyParameters();
+
+		echo json_encode($this->parameters);
 	}
 
-	private abstract function createParameters();
+	/**
+	 * Returns an instance of the service class
+	**/
+	public static function instance($className) {
+		if(Service::$ME == NULL)
+			$className::newInstance();
 
+		return Service::$ME;
+	}
+
+
+	/***************************************
+	 *    ABSTRACT METHODS FOR SUBCLASS    *
+	 ***************************************/
+
+	/**
+	 * Creates a new instance of the service object.
+	 * It's enough to just call
+	 * 		new ServiceName();
+	 * where ServiceName is the name of the sublcass.
+	**/
+	protected abstract static function newInstance();
+
+	/**
+	 * This is where the required parameters are specified with calls to
+	 * createParameter.
+	**/
+	protected abstract function specifyParameters();
+
+
+	/**
+	 * Composes the html, javascript and css for the view using the preloaded
+	 * parameters. These should be bundeled in a JSON string using makeViewJSON
+	 * and returned.
+	**/
 	public abstract function getView();
 
 
 
-	public static instance() {
-		if(Service::ME == NULL)
-			Service::newInstance();
+	/************************************
+	 *    METHODS USABLE IN SUBCLASS    *
+	 ************************************/
 
-		return Service::ME;
+	/**
+	 * Returns the current value of the parameter with the provided key.
+	**/
+	protected function readParameter($key) {
+		return $this->parameters[$key]["value"];
 	}
 
-	private static newInstance();
-}
+	/**
+	 * Creates a new parameter.
+	 * 		$key			- The key for the parameter.
+	 * 		$label 			- [Optional] The form field label for the parameter.
+	 * 		$defaultValue	- [Optional] The default value for the parameter if
+	 * 			nothing else is set.
+	**/
+	protected function createParameter($key, $label="", $defaultValue="") {
+		$this->parameters[$key]["label"] = $label;
+		$this->parameters[$key]["value"] = $defaultValue;
+	}
 
-if(isset($_POST["getView"])) {
-	Service::instance()->loadParameters($_POST["parameters"]);
-	echo Service::instance()->getView();
-}else if(isset($_POST["getParameters"])) {
-	echo Service::instance()->getParameters();
+	/**
+	 * Packs the provided HTML, CSS and JavaScript in a JSON string and returns
+	 * it for exporting.
+	 * 		$html	- A string containing the HTML to show.
+	 * 		$css	- [Optional] A string containing the extra CSS for the view.
+	 * 		$js		- [Optional] A string containing the extra JavaScript for
+	 * 					the view.
+	**/
+	protected function makeViewJSON($html, $css="", $js="") {
+		$data = array("html" => $html, "css" => $css, "js" => $js);
+		return json_encode($data);
+	}
 }
 
 ?>
