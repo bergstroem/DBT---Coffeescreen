@@ -27,13 +27,29 @@
 		$name = $_POST['name'];
 		unlink("../../channels/$name");
 	}
-	else if($p == 9){
-		if($handle = opendir("../../channels/")){
+	else if($p === "list"){
+		/*if($handle = opendir("../../channels/")){
 			$data = array();
 			while(false !== ($entry = readdir($handle))){
 				if(!strcmp(substr($entry, -5), ".json")){
 					$name = substr($entry, 0, -5);
 					$data[] = "$name";
+				}
+			}
+			$data = json_encode($data);
+			echo "$data";
+			closedir($handle);
+		}*/
+		
+		if($handle = opendir("../../channels/")){
+			$data = array();
+			while(false !== ($entry = readdir($handle))){
+				if(!strcmp(substr($entry, -5), ".json")){
+					$name = "../../channels/$entry";
+					$fh = fopen("$name", "r");
+					$jsondata = fread($fh, filesize($name));
+					fclose($fh);
+					$data[] = $jsondata;
 				}
 			}
 			$data = json_encode($data);

@@ -1,3 +1,88 @@
+var isPanicMode = false;
+
+
+function Channel(name) {
+	this.name = name;
+	this.priority = 0;
+	this.expireTime = -1;
+	this.displayTime; // The time every "slide" is shown
+	
+	this.mainContent = [];
+	this.subContent = [];
+	
+	this.getJson = function() {
+		return '{' + 
+				'"name"' + name + 
+				'","priority":' + priority +
+				'","expireTime":' + expireTime +
+				'","displayTime":' + displayTime +
+				'","maincontent":' + mainContent +
+				',"subcontent":' + subContent +
+				'}';
+	}
+	
+	this.parseAndSetMainContent = function(content) {
+		
+		var rssSources = "";
+		
+		//This is where all separate feeds are stored
+		var feeds = [];
+	
+		var startIndex = 0;
+		var stopIndex = 0;
+		//Go through main content to separate the feeds from each other.
+		while(stopIndex < content.length) {
+			startIndex = content.indexOf("{", stopIndex);
+			stopIndex = content.indexOf("}", startIndex) + 1;
+			if(startIndex == -1)
+				break;
+			feeds.push(content.substring(startIndex, stopIndex));
+		}
+		
+		//Identify feed types
+		for(var i = 0; i < feeds.length; i++) {
+			var feed = JSON.parse(feeds[i]);
+		
+			//We know what to do with this!
+			if(feed.type == "RSS") {
+				rssSources += feed.source + ";";
+			}
+			else {} // Handle other types
+		}	
+		
+		// Handle rss feeds
+		var rssResult = "";
+		var options = {
+		       host: 'localhost',   
+		       port: 80,   
+		       path: '/dbt/services/RSSFetcher.php?feeds=' + rssSources
+		  };
+		 var req = http.get(options, function(res) {  
+		 	res.setEncoding('utf8');
+			res.on('data', function(chunk) {  
+				 rssResult += chunk;
+				 
+			}).on('end', function() {
+				console.log(rssResult);
+				var rssItems = JSON.parse(rssResult);
+				
+				for(var i = 0; i < rssItems.length; i++) {
+					mainContent.push(new ContentItem(rssItems[i].title, rssItems[i].content, rssItems[i].date));
+				}
+				
+				//TODO: Other source types can be processed here
+			});   
+		 }).on('error', function(e) {  
+			  console.log("Got error: " + e.message);   
+		 });
+		
+	}
+	
+	this.parseAndSetSubContent = function(content) {
+		//Stub
+	}
+}
+
 function Screen(id, name, channel, connection) {
 	this.id = id;
 	this.name = name;
@@ -9,21 +94,31 @@ function Screen(id, name, channel, connection) {
 	}
 	
 	this.sendChannel = function() {
-		//TODO: Start reading from channels instead of templates
-		fs.readFile("../../templates/" + channel + ".json", 'utf8', function (err, data) {
-			if (err) {
-				console.log("Looking for default");
-				fs.readFile("../../templates/default_template.json", 'utf8', function (err, data) {
-					if(err) {
-						//Send no data
-						connection.send("No data available");
-					}
-					else prepareChannelFileForDelivery(connection, data);
+		if(isPanicMode) {
+			console.log("Panic mode. Only send panic channel");
+			fs.readFile("../../channels/panic.json", 'utf8', function(err, data) {
+				if(err) {
+					connection.send("No data available");
+				}
+				else prepareChannelFileForDelivery(connection, data);
+			});
+		}
+		else {
+			fs.readFile("../../channels/" + channel + ".json", 'utf8', function (err, data) {
+				if (err) {
+					console.log("Looking for default");
+					fs.readFile("../../channels/default_channel.json", 'utf8', function (err, data) {
+						if(err) {
+							//Send no data
+							connection.send("No data available");
+						}
+						else prepareChannelFileForDelivery(connection, data);
 				
-				});
-			}
-			else prepareChannelFileForDelivery(connection, data);
-		});
+					});
+				}
+				else prepareChannelFileForDelivery(connection, data);
+			});
+		}
 	}
 }
 
@@ -88,6 +183,10 @@ var server = http.createServer(function(request, response) {
     	if(query['screen'] != undefined){
     		
     		if(query['screen'] == '*'){
+				//Panic to all users, also users that connect later, 
+				//thus set panicMode to true.
+				isPanicMode = true;
+
     			console.log("Sending panic feeds to all screens");
 				var i;
 				for(i = 0; i < screens.length; i++)
@@ -109,6 +208,11 @@ var server = http.createServer(function(request, response) {
     	}
     	response.end("Panic sent to: " + query['screen']);
     }
+
+	else if(url_parts.pathname == "/unPanic" || url_parts.pathname == "/unPanic/") {
+		isPanicMode = false;
+		response.end("Set panic mode to false");
+	}
     
     //Set template
     else if(url_parts.pathname == "/set/") {
@@ -123,6 +227,10 @@ var server = http.createServer(function(request, response) {
     		response.end("Set template: " + query['channel'] + " to: " + query['screen']);
     	}
     }
+
+	else if(url_parts.pathname == "/isPanic/" || url_parts.pathname == "/isPanic") {
+		response.end("Is Panic: " + isPanicMode);
+	}
 });
 server.listen(8081, function() { });
 
@@ -159,14 +267,28 @@ wsServer.on('request', function(request) {
     });
 });
 
-function prepareChannelFileForDelivery(connection, template) {
-	var jsonObject = eval('(' + template + ')'); // TODO: Note to self, stop using eval!
+function prepareChannelFileForDelivery(connection, channel) {
+	var jsonObject = JSON.parse(channel);
 	var mainContent = jsonObject.maincontent;
 	var subContent = jsonObject.subcontent;
 	var name = jsonObject.name;
 	
-	var mainFeed = "";
-	var subFeed = "";
+	var channel = new Channel(name);
+	channel.parseAndSetMainContent(mainContent);
+	channel.parseAndSetSubContent(subContent);
+	
+	//TODO: change to e.g. channel.getJson();
+	var feed = 	'{' + 
+				'"name"' + channel.name + 
+				'","priority":' + channel.priority +
+				'","expireTime":' + channel.expireTime +
+				'","displayTime":' + channel.displayTime +
+				'","maincontent":' + channel.mainContent +
+				',"subcontent":' + channel.subContent +
+				'}';
+	connection.send(feed);
+	/*
+	var mainFeed = ""; var subFeed = "";
 	
 	var options = {
            host: 'localhost',   
@@ -200,24 +322,10 @@ function prepareChannelFileForDelivery(connection, template) {
 	}).on('error', function(e) {
 		  console.log("Got error: " + e.message);
 	});
-	});
+	});*/
 	
 }
 
 
-function fetchRSS(sources) {
-	var options = {
-           host: 'localhost',   
-           port: 80,   
-           path: '/dbt/services/RSSFetcher.php?feeds=' + sources
-      };
-	 var req = http.get(options, function(res) {  
-	 	res.setEncoding('utf8');
-		res.on('data', function(chunk) {  
-		     return chunk;   
-		});   
-	 }).on('error', function(e) {  
-		  console.log("Got error: " + e.message);   
-	 });
-}
+ 
 
