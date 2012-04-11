@@ -143,14 +143,14 @@ function listFeeds(){
 				editButton.type = "button";
 				editButton.id = jsonitem["name"] + ".json";
 				editButton.value = "Edit";
-				editButton.className = "editItemButton";
+				editButton.className = "editItemButton maincolor";
 				item.appendChild(editButton);
 				
 				var delButton = document.createElement("input");
 				delButton.type = "button";
 				delButton.id = jsonitem["name"] + ".json";
 				delButton.value = "Delete";
-				delButton.className = "deleteItemButton";
+				delButton.className = "deleteItemButton red";
 				item.appendChild(delButton);
 				
 				chanList.appendChild(item);

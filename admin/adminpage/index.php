@@ -10,9 +10,9 @@
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="screencontent" class="content">
-				<div id="screenheader" class="contentheader">
+				<div id="screenheader" class="contentheader maincolor">
 					Name:
-					<input type="button" id="panic:All" class="screenAllPanicButton" value="Panic All"/>
+					<input type="button" id="panic:All" class="screenAllPanicButton red" value="Panic All"/>
 				</div>
 			</div>
 		</div>
