@@ -3,11 +3,7 @@
 include_once("../Service.php");
 
 //Required for RSS
-<<<<<<< HEAD
-require_once('simplepie.inc');
-=======
 include_once('../simplepie.inc');
->>>>>>> f480e89073a69954e2e2aa1da11ebd8001f3baff
 
 //This is our custom service class
 class TestService extends Service {
@@ -58,10 +54,5 @@ $SERVICE_NAME = "TestService";
 
 //Finally load the AJAX API. No more code after this point, unless it is an
 //extension of the API!
-<<<<<<< HEAD
-require_once("../AjaxApi.php");
-?>
-=======
 include_once("../AjaxApi.php");
 ?>
->>>>>>> f480e89073a69954e2e2aa1da11ebd8001f3baff
