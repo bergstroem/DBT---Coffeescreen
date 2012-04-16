@@ -230,7 +230,7 @@ function parseContent(content, callback) {
 				result += chunk; 
 			}).on('end', function() {
 				
-				//console.log("Fetched " + result);
+				console.log("Fetched " + result);
 				
 				callback(null, result);
 				
