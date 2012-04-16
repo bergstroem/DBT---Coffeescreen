@@ -28,19 +28,6 @@
 		unlink("../../channels/$name");
 	}
 	else if($p === "list"){
-		/*if($handle = opendir("../../channels/")){
-			$data = array();
-			while(false !== ($entry = readdir($handle))){
-				if(!strcmp(substr($entry, -5), ".json")){
-					$name = substr($entry, 0, -5);
-					$data[] = "$name";
-				}
-			}
-			$data = json_encode($data);
-			echo "$data";
-			closedir($handle);
-		}*/
-		
 		if($handle = opendir("../../channels/")){
 			$data = array();
 			while(false !== ($entry = readdir($handle))){
