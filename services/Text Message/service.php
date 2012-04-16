@@ -31,5 +31,5 @@ $SERVICE_NAME = "TextMessage";
 
 //Finally load the AJAX API. No more code after this point, unless it is an
 //extension of the API!
-include_once("../AjaxApi.php");
+include_once("../Api.php");
 ?>

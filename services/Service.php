@@ -28,8 +28,9 @@ abstract class Service {
 	public function getParameters() {
 		$this->specifyParameters();
 
-		echo json_encode($this->parameters);
+		return json_encode($this->parameters);
 	}
+
 
 
 	/***************************************
