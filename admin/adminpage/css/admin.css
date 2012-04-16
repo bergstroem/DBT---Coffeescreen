@@ -1,6 +1,22 @@
-/* Text */
+﻿/* Text */
 p{
 	margin:0 0 0 10px;
+}
+
+p.note{
+	width:725px;
+	color:gray;
+	font-size:15px;
+	padding: 0 0 8px 0;
+}
+
+li{
+	margin:5px 0 0 -38px;
+	list-style:none;
+}
+
+fieldset{
+	margin: 0 10px 0 10px;
 }
 
 .linkspan{
@@ -67,8 +83,7 @@ p{
 	overflow-y:auto;
 }
 
-/* Template list */
-.templateheader{
+.contentheader{
 	background:#00AEEF;
 	color:white;
 	height:32px;
@@ -81,61 +96,8 @@ p{
 	font-size:20px;
 }
 
-.templatelist{
-	width:100%;
-	height:650px;
-	position:relative;
-	padding:0;
-	overflow-y:auto;
-}
-
-.templateitem{
-	height:32px;
-	border-top:2px solid #00AEEF;
-	border-bottom:2px solid #00AEEF;
-	position:relative;
-	padding:8px 0 0 10px;
-	margin:5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-size:20px;
-}
-
-.TInew{
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:875px;
-	text-align:center;
-	border:0;
-	padding:0;
-	margin: 5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-}
-
-.TIedit{
-	background:#00AEEF;
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:765px;
-	text-align:center;
-	border:0;
-	padding:0;
-	margin: 5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-}
-
-.TIdelete{
+/* Screens */
+.screenAllPanicButton{
 	background:red;
 	width:100px;
 	height:30px;
@@ -151,9 +113,187 @@ p{
 	margin: 5px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
+	font-size:15px;
 }
 
-/* Template stuff */
+.screenChannelSelect{
+	width:200px;
+	height:30px;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border:1px solid #00AEEF;
+	position:absolute;
+	top:0;
+	left:550px;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.screenSetButton{
+	background:#00AEEF;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:765px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.screenPanicButton{
+	background:red;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0px;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+/* Channel list */
+.channellist{
+	width:100%;
+	height:650px;
+	position:relative;
+	padding:0;
+	overflow-y:auto;
+}
+
+.channelitem{
+	min-height:32px;
+	border-top:2px solid #00AEEF;
+	border-bottom:2px solid #00AEEF;
+	position:relative;
+	padding:8px 0 0 10px;
+	margin:5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-size:20px;
+}
+
+.newItemButton{
+	background:#FFFFFF;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.newItemButton:hover{
+	background: rgba(155,155,155,0.5);
+	border:1px solid #000;
+}
+
+.editItemButton{
+	background:#00AEEF;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:765px;
+	text-align:center;
+	border:0;
+	padding:0;
+	margin: 15px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.editItemButton:hover{
+	background: rgba(0,174,239,0.5);
+	border:1px solid #000;
+}
+
+.deleteItemButton{
+	background:#FF0000;
+	width:100px;
+	height:30px;
+	border-radius:10px;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	position:absolute;
+	top:0;
+	left:875px;
+	text-align:center;
+	border:0px;
+	padding:0;
+	margin: 15px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:15px;
+}
+
+.deleteItemButton:hover{
+	background: rgba(255,0,0,0.5);
+	border:1px solid #000;
+}
+
+/* Channel stuff */
+
+.formTXB{
+	width:160px;
+	height:20px;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.formNB{
+	width:50px;
+	height:20px;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+	text-align:right;
+}
+
+.noteTXB{
+	width:550px;
+	height:100px;
+	resize:none;
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.formTypeSelect{
+	width:160px;
+	height:20px;
+	/*border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;*/
+	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
+}
 
 .namebox{
 	width:160px;
@@ -161,21 +301,6 @@ p{
 	position:relative;
 	float:left;
 	margin:0 0 0 10px;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
-.nameTXB{
-	width:160px;
-	height:20px;
-	border:1px solid #00AEEF;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
-.noteTXB{
-	width:250px;
-	height:100px;
-	resize:none;
-	border:1px solid #00AEEF;
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
@@ -189,7 +314,8 @@ p{
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
-.savetemplatebutton{
+.saveButton{
+	background:#00AEEF;
 	width:160px;
 	height:50px;
 	border-radius:10px;
@@ -199,6 +325,10 @@ p{
 	margin:30px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-size:17px;
+}
+
+.saveButton:hover{
+	background: rgba(0,174,239,0.5);
 }
 
 .maindrop{
@@ -228,47 +358,15 @@ p{
 
 .contentlist{
 	width:254px;
-	height:594px;
+	height:644px;
 	border-bottom:2px solid #00AEEF;
 	border-left:2px solid #00AEEF;
 	position:absolute;
 	top:0;
 	left:740px;
-	padding:50px 0 0 0;
+	padding:0;
 	overflow-y:auto;
 	overflow-x:hidden;
-}
-
-.contentspawner{
-	background:#00AEEF;
-	width:254px;
-	height:50px;
-	border-top-right-radius:10px;
-	-moz-border-top-right-radius:10px;
-	-webkit-border-top-right-radius:10px;
-	position:absolute;
-	top:0;
-}
-
-.contentTXB{
-	width:160px;
-	height:20px;
-	position:absolute;
-	margin:15px 0 0 10px;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
-.savebutton{
-	width:40px;
-	height:20px;
-	border-radius:5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border:0px;
-	position:absolute;
-	left:180px;
-	margin:15px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .contentitem{
@@ -282,6 +380,7 @@ p{
 	margin:10px 0 0 10px;
 	padding:10px 10px;
 	font-family:"Calibri", Calibri, sans-serif;
+	z-index:100;
 }
 
 .removebutton{

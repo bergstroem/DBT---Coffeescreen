@@ -2,6 +2,7 @@ var retries = 0;
 var currentInformation = null;
 var mainContentCounter = 0;
 var mainContentProgressTimeout = null;
+var mainContentSwitchingTimeout = null;
 
 var running = false;
 
@@ -12,6 +13,8 @@ function init() {
 }
 
 function switchMainInformation() {
+	//Här byts channel
+	console.debug("Switching...");
 	var title = currentInformation.maincontent.posts[mainContentCounter].title;
 	var date = currentInformation.maincontent.posts[mainContentCounter].date;
 	var content = currentInformation.maincontent.posts[mainContentCounter].content;
@@ -24,10 +27,16 @@ function switchMainInformation() {
 	var urls = new Array();
 	if(images.length > 0){
 		for(var i = 0; i < images.length; i++){
+			images[i].src = images[i].src.replace("%20", "").replace(" ", "")
 			urls.push(images[i].src);
 		}
 	}
-	preloadimages(urls).done(mainPostLoaded);
+	
+	if(urls.length > 0) {
+		preloadimages(urls).done(mainPostLoaded);
+	} else {
+		mainPostLoaded();
+	}
 	
 	if(++mainContentCounter >= currentInformation.maincontent.posts.length) {
 		mainContentCounter = 0;
@@ -39,7 +48,7 @@ function mainPostLoaded() {
 	var displayTime = 100;
 	displayTime *= document.getElementById("mainContent").offsetHeight;
 	console.debug("Will display for " + (displayTime/1000) + "s");
-	setTimeout(switchMainInformation, displayTime);
+	mainContentSwitchingTimeout = setTimeout(switchMainInformation, displayTime);
 	document.getElementById("pageWrapper").scrollTop = 0;
 	clearTimeout(mainContentProgressTimeout);
 	scrollMainContent(Math.ceil(displayTime/document.getElementById("pageWrapper").scrollHeight));
@@ -116,10 +125,16 @@ function connectToServer () {
 
     connection.onmessage = function (message) {
         // try to decode json (I assume that each messagse from server is json)
+        console.debug("Got message");
         try {
             var json = JSON.parse(message.data);
 			currentInformation = json;
-			if(!running){
+			mainContentCounter = 0;
+			
+			console.debug("Feed name: " + json.name);
+			
+			if(!running || json.name == "panic"){
+				clearTimeout(mainContentSwitchingTimeout);
 				switchMainInformation();
 				running = true;
 			}
