@@ -127,9 +127,10 @@ function listFeeds(){
 				var jsonitem = JSON.parse(jsonobj[i]);
 				var item = document.createElement("div");
 				item.id = jsonitem["name"];
-				item.className = "channelitem";
+				item.className = "listItem";
 				
 				var p1 = document.createElement("p");
+				p1.className = "name";
 				p1.appendChild(document.createTextNode(jsonitem["name"] + " - " + jsonitem["type"] +":" + jsonitem["source"]));
 				var p2 = document.createElement("p");
 				p2.className = "note";
@@ -139,19 +140,19 @@ function listFeeds(){
 				item.appendChild(p1);
 				item.appendChild(p2);
 				
-				var editButton = document.createElement("input");
-				editButton.type = "button";
-				editButton.id = jsonitem["name"] + ".json";
-				editButton.value = "Edit";
-				editButton.className = "editItemButton maincolor";
-				item.appendChild(editButton);
-				
 				var delButton = document.createElement("input");
 				delButton.type = "button";
 				delButton.id = jsonitem["name"] + ".json";
 				delButton.value = "Delete";
-				delButton.className = "deleteItemButton red";
-				item.appendChild(delButton);
+				delButton.className = "itemButton red";
+				p1.appendChild(delButton);
+				
+				var editButton = document.createElement("input");
+				editButton.type = "button";
+				editButton.id = jsonitem["name"] + ".json";
+				editButton.value = "Edit";
+				editButton.className = "itemButton maincolor";
+				p1.appendChild(editButton);
 				
 				chanList.appendChild(item);
 			}
@@ -163,16 +164,16 @@ function listFeeds(){
  * Handle clicks in adminfeed.php
 */
 $(document).ready(function(){
-	$('.newItemButton').click(function(e){
+	$('#newFeedButton').click(function(e){
 		window.location = "feed.php?p=1";
 	});
 	
 	$('.content').click(function(e){
-		if($(e.target).is('.editItemButton')){
-			window.location = "feed.php?p=2&name="+e.target.id;
-		}
-		if($(e.target).is('.deleteItemButton')){
-			deleteFeed(e.target.id);
+		if($(e.target).is('.itemButton')){
+			if(e.target.value == "Edit")
+				window.location = "feed.php?p=2&name="+e.target.id;
+			else
+				deleteFeed(e.target.id);
 		}
 	});
 });
@@ -184,7 +185,7 @@ $(document).ready(function(){
 */
 function deleteFeed(name){
 	var divname = name.substr(0, name.length-5);
-	var parentname = document.getElementById(name).parentNode.parentNode.getAttribute("id");
+	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",

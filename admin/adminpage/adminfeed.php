@@ -10,9 +10,7 @@
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="feedcontent" class="content">
-				<div id="feedheader" class="contentheader maincolor">
-					Name:
-					<input type="button" id="newFeedButton" class="newItemButton" value="New Feed"/>
+				<div id="feedheader" class="listHeader maincolor">Name:<input type="button" id="newFeedButton" class="itemButton" value="New Feed"/>
 				</div>
 			</div>
 		</div>
