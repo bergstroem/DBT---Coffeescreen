@@ -1,9 +1,9 @@
 <?
 //Include the base class for services.
-require_once("../Service.php");
+include_once("../Service.php");
 
 //Required for RSS
-require_once('../simplepie.inc');
+include_once('../simplepie.inc');
 
 //This is our custom service class
 class TestService extends Service {
@@ -54,5 +54,5 @@ $SERVICE_NAME = "TestService";
 
 //Finally load the AJAX API. No more code after this point, unless it is an
 //extension of the API!
-require_once("../AjaxApi.php");
+include_once("../AjaxApi.php");
 ?>
