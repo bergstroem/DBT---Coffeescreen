@@ -3,7 +3,7 @@
 require_once("../Service.php");
 
 //Required for RSS
-require_once('../simplepie.inc');
+require_once('simplepie.inc');
 
 //This is our custom service class
 class TestService extends Service {
