@@ -1,6 +1,6 @@
 <?
 //Include the base class for services.
-include_once("../Service.php");
+include_once("Service.php");
 
 class TextMessage extends Service {
 	/**
@@ -13,8 +13,7 @@ class TextMessage extends Service {
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled in a JSON string using makeViewJSON
-	 * and returned.
+	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getView() {
 		$text = $this->readParameter("text");
@@ -22,14 +21,11 @@ class TextMessage extends Service {
 		//Generate a HTML string
 		$html = "<p>$text</p>";
 
-		return $this->makeViewJSON($html);
+		return $this->bundleView(time(), $html);
 	}
 }
 
 //Give the AJAX API the name of this class
 $SERVICE_NAME = "TextMessage";
 
-//Finally load the AJAX API. No more code after this point, unless it is an
-//extension of the API!
-include_once("../Api.php");
 ?>

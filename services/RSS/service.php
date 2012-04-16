@@ -18,8 +18,7 @@ class TestService extends Service {
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled in a JSON string using makeViewJSON
-	 * and returned.
+	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getView() {
 		$feedSourcesArray = array($this->readParameter("url"));
@@ -43,12 +42,13 @@ class TestService extends Service {
 
 
 		//Generate a HTML string
-		$html = "<h1>".$posts[0]["title"]."</h1>".$posts[0]["content"];
+		$html = "<h1>".$posts[0]["title"]."</h1><p>".$posts[0]["date"]."</p>".$posts[0]["content"];
 
-		return $this->makeViewJSON($html);
+		return $this->bundleView(strtotime($posts[0]["date"]), $html);
 	}
 }
 
 //Give the AJAX API the name of this class
 $SERVICE_NAME = "TestService";
 
+?>

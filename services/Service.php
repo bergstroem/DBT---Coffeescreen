@@ -46,8 +46,7 @@ abstract class Service {
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled in a JSON string using makeViewJSON
-	 * and returned.
+	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public abstract function getView();
 
@@ -77,16 +76,16 @@ abstract class Service {
 	}
 
 	/**
-	 * Packs the provided HTML, CSS and JavaScript in a JSON string and returns
+	 * Packs the provided HTML, CSS and JavaScript in a hash map and returns
 	 * it for exporting.
+	 * 		$time	- The time of creation for the content.
 	 * 		$html	- A string containing the HTML to show.
 	 * 		$css	- [Optional] A string containing the extra CSS for the view.
 	 * 		$js		- [Optional] A string containing the extra JavaScript for
 	 * 					the view.
 	**/
-	protected function makeViewJSON($html, $css="", $js="") {
-		$data = array("html" => $html, "css" => $css, "js" => $js);
-		return json_encode($data);
+	protected function bundleView($time, $html, $css="", $js="") {
+		return array("date" => $time, "html" => $html, "css" => $css, "js" => $js);
 	}
 }
 
