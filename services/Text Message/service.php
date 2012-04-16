@@ -13,8 +13,7 @@ class TextMessage extends Service {
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled in a JSON string using makeViewJSON
-	 * and returned.
+	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getView() {
 		$text = $this->readParameter("text");
@@ -22,7 +21,7 @@ class TextMessage extends Service {
 		//Generate a HTML string
 		$html = "<p>$text</p>";
 
-		return $this->makeViewJSON($html);
+		return $this->bundleView(time(), $html);
 	}
 }
 
