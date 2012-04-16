@@ -52,3 +52,4 @@ class TestService extends Service {
 //Give the AJAX API the name of this class
 $SERVICE_NAME = "TestService";
 
+?>
