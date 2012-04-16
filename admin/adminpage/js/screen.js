@@ -79,7 +79,7 @@ function createScreen(name){
 	panicButton.id = "panic:" + name;
 	panicButton.type = "button";
 	panicButton.value = "Panic";
-	panicButton.className = "screenPanicButton";
+	panicButton.className = "screenPanicButton red";
 	
 	var select = document.createElement("select");
 	select.id = "select:" + name;
@@ -103,7 +103,7 @@ function createScreen(name){
 	set.id = "set:" + name;
 	set.type = "button";
 	set.value = "set";
-	set.className = "screenSetButton";
+	set.className = "screenSetButton maincolor";
 	
 	screenItem.appendChild(select);
 	screenItem.appendChild(set);

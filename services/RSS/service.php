@@ -1,21 +1,16 @@
 <?
 //Include the base class for services.
-require_once("../Service.php");
+include_once("../Service.php");
 
 //Required for RSS
+<<<<<<< HEAD
 require_once('simplepie.inc');
+=======
+include_once('../simplepie.inc');
+>>>>>>> f480e89073a69954e2e2aa1da11ebd8001f3baff
 
 //This is our custom service class
 class TestService extends Service {
-	/**
-	 * Creates a new instance of the service object.
-	 * It's enough to just call
-	 * 		new ServiceName();
-	 * where ServiceName is the name of the sublcass.
-	**/
-	protected static function newInstance() {
-		new TestService();
-	}
 
 	/**
 	 * This is where the required parameters are specified with calls to
@@ -63,5 +58,10 @@ $SERVICE_NAME = "TestService";
 
 //Finally load the AJAX API. No more code after this point, unless it is an
 //extension of the API!
+<<<<<<< HEAD
 require_once("../AjaxApi.php");
 ?>
+=======
+include_once("../AjaxApi.php");
+?>
+>>>>>>> f480e89073a69954e2e2aa1da11ebd8001f3baff

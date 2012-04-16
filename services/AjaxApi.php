@@ -15,8 +15,9 @@
  * 			Input syntax: {key1:value1, key2:value2, ...}
 **/
 if(isset($_GET["getView"])) {
-	$SERVICE_NAME::instance($SERVICE_NAME)->loadParameters($_GET["parameters"]);
-	echo $SERVICE_NAME::instance($SERVICE_NAME)->getView();
+	$service = new $SERVICE_NAME();
+	$service->loadParameters($_GET["parameters"]);
+	echo $service->getView();
 
 /**
  * getParameters
@@ -25,7 +26,8 @@ if(isset($_GET["getView"])) {
  * Output syntax: {key1:{"label":labelText, "value":defaultValue}, key2:...}
 **/
 }else if(isset($_GET["getParameters"])) {
-	echo $SERVICE_NAME::instance($SERVICE_NAME)->getParameters();
+	$service = new $SERVICE_NAME();
+	echo $service->getParameters();
 }
 
 ?>
