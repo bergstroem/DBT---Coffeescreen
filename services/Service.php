@@ -12,8 +12,8 @@ abstract class Service {
 	/**
 	 * Load parameters into the service from the given JSON string.
 	**/
-	public function loadParameters($json) {
-		$params = json_decode($json);
+	public function loadParameters($params) {
+		//$params = json_decode($json);
 		$this->parameters = array();
 		if($params != null) {
 			foreach ($params as $key => $value) {
@@ -28,8 +28,9 @@ abstract class Service {
 	public function getParameters() {
 		$this->specifyParameters();
 
-		echo json_encode($this->parameters);
+		return json_encode($this->parameters);
 	}
+
 
 
 	/***************************************
