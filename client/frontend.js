@@ -14,17 +14,20 @@ function init() {
 
 //Switch to next view
 function switchMainInformation() {
+	//Här byts channel
 	console.debug("Switching...");
 	//Extract article info
 	//TODO: Change it to the new system!
 	var title = currentInformation.maincontent.posts[mainContentCounter].title;
 	var date = currentInformation.maincontent.posts[mainContentCounter].date;
 	var content = currentInformation.maincontent.posts[mainContentCounter].content;
+	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
+	displaytime = parseFloat(displaytime);
 	document.getElementById("mainContent").innerHTML =
 			"<h1>" + title + "</h1>" +
 			"<p>" + date + "</p>" +
 			"<p>" + content + "</p>";
-	
+			
 	//Preload images
 	var images = document.getElementById("mainContent").getElementsByTagName("img");
 	var urls = new Array();
@@ -49,17 +52,25 @@ function switchMainInformation() {
 }
 
 //What to do when all the images are loaded in a view
-function mainPostLoaded() {
-	//Calculate time to display the view
-	var displayTime = 100;
-	displayTime *= document.getElementById("mainContent").offsetHeight;
-	console.debug("Will display for " + (displayTime/1000) + "s");
-
-	//Setup display and scroll timers
-	mainContentSwitchingTimeout = setTimeout(switchMainInformation, displayTime);
-	document.getElementById("pageWrapper").scrollTop = 0;
-	clearTimeout(mainContentProgressTimeout);
-	scrollMainContent(Math.ceil(displayTime/document.getElementById("pageWrapper").scrollHeight));
+function mainPostLoaded(displaytime) {
+	if(displaytime!=0){
+		//Calculate time to display the view
+		var displaytime = 100;
+		displaytime *= document.getElementById("mainContent").offsetHeight;
+		console.debug("Will display for " + (displayTime/1000) + "s");
+		//Setup display and scroll timers
+		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
+		document.getElementById("pageWrapper").scrollTop = 0;
+		clearTimeout(mainContentProgressTimeout);
+		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight));
+	}
+	else{
+		//Setup display and scroll timers
+		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
+		document.getElementById("pageWrapper").scrollTop = 0;
+		clearTimeout(mainContentProgressTimeout);
+		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight));
+	}
 }
 
 //One scrolling jump
