@@ -27,7 +27,7 @@ function createItem(name, target, filler, feeddata){
 		delbutton.setAttribute("type","button");
 		delbutton.setAttribute("name","rbutton");
 		delbutton.setAttribute("value","X");
-		delbutton.setAttribute("class","removebutton red");
+		delbutton.setAttribute("class","removebutton");
 		delbutton.setAttribute("onclick","removeItem(this)");
 		divTag.appendChild(delbutton);
 		
@@ -106,7 +106,6 @@ function saveChannel(){
 	}
 	else{
 		var note = document.getElementById("noteTXB").value;
-		var stat = document.getElementById("staticTXB").value;
 
 		var children = document.getElementById('maincontent').childNodes;
 		var length = children.length;
@@ -156,7 +155,7 @@ function saveChannel(){
 								$.ajax({
 									type: "POST",
 									url: "channelhandler.php",
-									data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&subcontent="+subContent,
+									data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
 									success: function(msg){
 										window.location = "adminchannel.php";
 									}
@@ -167,7 +166,7 @@ function saveChannel(){
 						$.ajax({
 							type: "POST",
 							url: "channelhandler.php",
-							data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&subcontent="+subContent,
+							data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
 							success: function(msg){
 								window.location = "adminchannel.php";
 							}
@@ -179,7 +178,7 @@ function saveChannel(){
 			$.ajax({
 				type: "POST",
 				url: "channelhandler.php",
-				data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&subcontent="+subContent,
+				data: "p=1&name="+name+"&note="+note+"&maincontent="+mainContent+"&subcontent="+subContent,
 				success: function(msg){
 					window.location = "adminchannel.php";
 				}
@@ -282,6 +281,7 @@ function addEL(){
 */
 function listChannels(){
 	var chanList = document.getElementById("adminchannelcontent");
+	
 	$.ajax({
 		type: "POST",
 		url: "channelhandler.php",
@@ -308,14 +308,14 @@ function listChannels(){
 				editButton.type = "button";
 				editButton.id = jsonitem["name"] + ".json";
 				editButton.value = "Edit";
-				editButton.className = "editItemButton maincolor";
+				editButton.className = "editItemButton";
 				item.appendChild(editButton);
 				
 				var delButton = document.createElement("input");
 				delButton.type = "button";
 				delButton.id = jsonitem["name"] + ".json";
 				delButton.value = "Delete";
-				delButton.className = "deleteItemButton red";
+				delButton.className = "deleteItemButton";
 				item.appendChild(delButton);
 				
 				chanList.appendChild(item);

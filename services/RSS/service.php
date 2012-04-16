@@ -7,15 +7,6 @@ require_once('../simplepie.inc');
 
 //This is our custom service class
 class TestService extends Service {
-	/**
-	 * Creates a new instance of the service object.
-	 * It's enough to just call
-	 * 		new ServiceName();
-	 * where ServiceName is the name of the sublcass.
-	**/
-	protected static function newInstance() {
-		new TestService();
-	}
 
 	/**
 	 * This is where the required parameters are specified with calls to

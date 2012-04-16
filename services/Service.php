@@ -3,10 +3,10 @@
 abstract class Service {
 	private static $ME = null;
 
-	private $parameters = array();
+	private $parameters;
 
 	public function __construct() {
-		Service::$ME = $this;
+		$parameters = array();
 	}
 
 	/**
@@ -31,28 +31,10 @@ abstract class Service {
 		echo json_encode($this->parameters);
 	}
 
-	/**
-	 * Returns an instance of the service class
-	**/
-	public static function instance($className) {
-		if(Service::$ME == NULL)
-			$className::newInstance();
-
-		return Service::$ME;
-	}
-
 
 	/***************************************
 	 *    ABSTRACT METHODS FOR SUBCLASS    *
 	 ***************************************/
-
-	/**
-	 * Creates a new instance of the service object.
-	 * It's enough to just call
-	 * 		new ServiceName();
-	 * where ServiceName is the name of the sublcass.
-	**/
-	protected abstract static function newInstance();
 
 	/**
 	 * This is where the required parameters are specified with calls to
