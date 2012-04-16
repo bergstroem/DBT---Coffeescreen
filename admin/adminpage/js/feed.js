@@ -36,9 +36,9 @@ function saveFeed(){
 				url: "feedhandler.php",
 				data: "p=list",
 				success: function(msg){
-					var jsonobj = JSON.parse(msg);
+					var jsonobj = jQuery.parseJSON(msg);
 					for(var i = 0; i < jsonobj.length; i++){
-						var jsonitem = JSON.parse(jsonobj[i]);
+						var jsonitem = jQuery.parseJSON(jsonobj[i]);
 						if(jsonitem["name"] == name){
 							var conflict = true;
 							if(confirm('This will replace an existing feed. Continue?'))
@@ -84,7 +84,7 @@ function editFeed(name){
 		url: "feedhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
-			var jsonobj = JSON.parse(msg);
+			var jsonobj = jQuery.parseJSON(msg);
 			document.getElementById("name").value = jsonobj["name"];
 			document.getElementById("source").value = jsonobj["source"];
 			document.getElementById("typeSelect").value = jsonobj["type"];
@@ -122,16 +122,16 @@ function listFeeds(){
 		url: "feedhandler.php",
 		data: "p=list",
 		success: function(msg){
-			var jsonobj = JSON.parse(msg);
+			var jsonobj = jQuery.parseJSON(msg);
 			for(var i = 0; i < jsonobj.length; i++){
-				var jsonitem = JSON.parse(jsonobj[i]);
+				var jsonitem = jQuery.parseJSON(jsonobj[i]);
 				var item = document.createElement("div");
 				item.id = jsonitem["name"];
 				item.className = "listItem";
 				
 				var p1 = document.createElement("p");
 				p1.className = "name";
-				p1.appendChild(document.createTextNode(jsonitem["name"] + " - " + jsonitem["type"] +":" + jsonitem["source"]));
+				p1.appendChild(document.createTextNode(jsonitem["name"] + " - " + jsonitem["type"] +": " + jsonitem["source"]));
 				var p2 = document.createElement("p");
 				p2.className = "note";
 				var note = (jsonitem["note"].length > 300) ? jsonitem["note"].substr(0,300) + "...": jsonitem["note"];

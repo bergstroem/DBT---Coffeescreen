@@ -94,9 +94,9 @@ function createScreen(name){
 		url: "channelhandler.php",
 		data: "p=list",
 		success: function(msg){
-			var jsonobj = JSON.parse(msg);
+			var jsonobj = jQuery.parseJSON(msg);
 			for(var i = 0; i < jsonobj.length; i++){
-				var jsonitem = JSON.parse(jsonobj[i]);
+				var jsonitem = jQuery.parseJSON(jsonobj[i]);
 				var item = document.createElement("option");
 				item.value = jsonitem["name"];
 				item.appendChild(document.createTextNode(jsonitem["name"]));
@@ -111,7 +111,7 @@ function createScreen(name){
 	var set = document.createElement("input");
 	set.id = "set:" + name;
 	set.type = "button";
-	set.value = "set";
+	set.value = "Set";
 	set.className = "itemButton maincolor";
 	
 	screenItem.appendChild(pname);
