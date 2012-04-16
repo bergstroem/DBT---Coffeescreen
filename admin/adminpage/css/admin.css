@@ -1,13 +1,19 @@
 ﻿/* Text */
-p{
+/*p{
 	margin:0 0 0 10px;
+}*/
+
+p.name{
+	width:100%;
+	margin: 0;
+	font-size:1em;
 }
 
 p.note{
 	width:725px;
 	color:gray;
-	font-size:15px;
-	padding: 0 0 8px 0;
+	margin:0;
+	font-size:0.75em;
 }
 
 li{
@@ -91,36 +97,51 @@ fieldset{
 	overflow-y:auto;
 }
 
-.contentheader{
+/* List stuff */
+.listHeader{
 	color:white;
-	height:32px;
+	height:30px;
 	position:relative;
 	left:0;
-	padding:8px 0 0 10px;
-	margin:5px 0 0 0;
+	padding: 5px 0 5px 10px;
+	margin: 2px 0 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
+	font-size:1.5em;
+}
+
+.listItem{
+	min-height:30px;
+	border-top:2px solid #00AEEF;
+	border-bottom:2px solid #00AEEF;
+	position:relative;
+	padding: 15px 0 15px 10px;
+	margin:5px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
 	font-size:20px;
 }
 
-/* Screens */
-.screenAllPanicButton{
-	background:red;
+.itemButton{
 	width:100px;
 	height:30px;
 	border-radius:10px;
 	-webkit-border-radius:10px;
 	-moz-border-radius:10px;
-	position:absolute;
+	position:relative;
+	float:right;
 	top:0;
-	left:875px;
 	text-align:center;
-	border:0px;
-	padding:0;
-	margin: 5px 0 0 0;
+	border: 0;
+	padding: 0;
+	margin: 0 10px 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
 	font-size:15px;
+}
+
+.itemButton:hover{
+	background: rgba(155,155,155,0.5);
+	border:1px solid #000;
 }
 
 .screenChannelSelect{
@@ -130,155 +151,11 @@ fieldset{
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border:1px solid #00AEEF;
-	position:absolute;
-	top:0;
-	left:550px;
-	margin: 5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
-.screenSetButton{
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:765px;
-	text-align:center;
-	border:0;
-	padding:0;
-	margin: 5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:15px;
-}
-
-.screenPanicButton{
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:875px;
-	text-align:center;
-	border:0px;
-	padding:0;
-	margin: 5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:15px;
-}
-
-/* Channel list */
-.channellist{
-	width:100%;
-	height:650px;
 	position:relative;
-	padding:0;
-	overflow-y:auto;
-}
-
-.channelitem{
-	min-height:32px;
-	border-top:2px solid #00AEEF;
-	border-bottom:2px solid #00AEEF;
-	position:relative;
-	padding:8px 0 0 10px;
-	margin:5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-size:20px;
-}
-
-.newItemButton{
-	background:#FFFFFF;
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
+	float:right;
 	top:0;
-	left:875px;
-	text-align:center;
-	border:0;
-	padding:0;
-	margin: 5px 0 0 0;
+	margin: 0 10px 0 0;
 	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:15px;
-}
-
-.newItemButton:hover{
-	background: rgba(155,155,155,0.5);
-	border:1px solid #000;
-}
-
-.editItemButton{
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:765px;
-	text-align:center;
-	border:0;
-	padding:0;
-	margin: 15px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:15px;
-}
-
-.editItemButton:hover{
-	background: rgba(0,174,239,0.5);
-	border:1px solid #000;
-}
-
-.deleteItemButton{
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:875px;
-	text-align:center;
-	border:0px;
-	padding:0;
-	margin: 15px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:15px;
-}
-
-.screenAllPanicButton{
-	width:100px;
-	height:30px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	position:absolute;
-	top:0;
-	left:875px;
-	text-align:center;
-	border:0px;
-	padding:0;
-	margin: 5px 0 0 0;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-	font-size:15px;
-}
-
-.deleteItemButton:hover{
-	background: rgba(255,0,0,0.5);
-	border:1px solid #000;
 }
 
 /* Channel stuff */

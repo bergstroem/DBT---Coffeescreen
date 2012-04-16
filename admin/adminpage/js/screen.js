@@ -62,6 +62,8 @@ function listScreens(){
 			}
 		}
 	});
+	
+	createScreen("temp");
 }
 
 /*
@@ -72,41 +74,49 @@ function listScreens(){
 function createScreen(name){
 	var screenItem = document.createElement("div");
 	screenItem.id = "screen:" + name;
-	screenItem.className = "channelitem";
-	screenItem.appendChild(document.createTextNode(name));
+	screenItem.className = "listItem";
+	var pname = document.createElement("p");
+	pname.className = "name"
+	pname.appendChild(document.createTextNode(name));
 	
 	var panicButton = document.createElement("input");
 	panicButton.id = "panic:" + name;
 	panicButton.type = "button";
 	panicButton.value = "Panic";
-	panicButton.className = "screenPanicButton red";
+	panicButton.className = "itemButton red";
 	
 	var select = document.createElement("select");
 	select.id = "select:" + name;
 	select.className = "screenChannelSelect";
+	
 	$.ajax({
 		type: "POST",
-		url: "getchannels.php",
-		data: "dir=channels",
+		url: "channelhandler.php",
+		data: "p=list",
 		success: function(msg){
-			var arr = msg.substr(2, msg.length-4).split('\",\"');
-			for(var i = 0; i < arr.length; i++){
-				var temp = document.createElement("option");
-				temp.value = arr[i];
-				temp.appendChild(document.createTextNode(arr[i]));
-				select.appendChild(temp);
+			var jsonobj = JSON.parse(msg);
+			for(var i = 0; i < jsonobj.length; i++){
+				var jsonitem = JSON.parse(jsonobj[i]);
+				var item = document.createElement("option");
+				item.value = jsonitem["name"];
+				item.appendChild(document.createTextNode(jsonitem["name"]));
+				
+				select.appendChild(item);
 			}
 		}
 	});
+	
+	
 	
 	var set = document.createElement("input");
 	set.id = "set:" + name;
 	set.type = "button";
 	set.value = "set";
-	set.className = "screenSetButton maincolor";
+	set.className = "itemButton maincolor";
 	
-	screenItem.appendChild(select);
-	screenItem.appendChild(set);
-	screenItem.appendChild(panicButton);
+	screenItem.appendChild(pname);
+	pname.appendChild(panicButton);
+	pname.appendChild(set);
+	pname.appendChild(select);
 	document.getElementById("screencontent").appendChild(screenItem);
 }
