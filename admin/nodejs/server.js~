@@ -1,6 +1,5 @@
 var isPanicMode = false;
 
-
 function Screen(id, name, channel, connection) {
 	this.id = id;
 	this.name = name;
@@ -186,18 +185,6 @@ wsServer.on('request', function(request) {
     });
 });
 
-
-function ContentItem(title, content, date, type, note, priority, expireTime, displayTime) {
-	this.title = title;
-	this.content = content;
-	this.date = date;
-	this.type = type;
-	this.note = note;
-	this.priority = priority;
-	this.expireTime = expireTime;
-	this.displayTime = displayTime;
-}
-
 function Channel(name, note, mainContent, subContent) {
 	this.name = name;
 	this.note = note;
@@ -205,9 +192,6 @@ function Channel(name, note, mainContent, subContent) {
 	this.subContent = subContent;
 	
 	this.sendJson = function(connection) {
-	
-		console.log("Done!");
-	
 		async.parallel([
 		    function(callback){
 				parseContent(mainContent, callback);
@@ -216,38 +200,25 @@ function Channel(name, note, mainContent, subContent) {
 				parseContent(subContent, callback);
 		    },
 		],
-		// optional callback
+		//Callback after both above functions are done.
 		function(err, results){
-		    // the results array will equal ['one','two'] even though
-		    // the second function had a shorter timeout.
-		    console.log("Parsed: " + results);
+		    //console.log("Parsed: " + results);
+		    var mainFeed = results[0];
+		    var subFeed = results[1];
+		    
+		    var feed = '{'
+			+ '"name":"' + name + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
+		    connection.send(feed);
 		});
-
 	}
 }
 
 function parseContent(content, callback) {
-		console.log("Testar: " + encodeURI(content));
-		var sources = []; //This is where the sources are temp. stored before doing http get
-		var resultItems = [];
-		//For some reason JSON.parse doesnt want to parse the feeds together.
-		var startIndex = 0;
-		var stopIndex = 0;
-		//Go through main content to separate the feeds from each other.
-		while(stopIndex < content.length) {
-			startIndex = content.indexOf("{", stopIndex);
-			stopIndex = content.indexOf("}", startIndex) + 1;
-			if(startIndex == -1)
-				break;
-			
-			var source = JSON.parse(content.substring(startIndex, stopIndex));
-			sources.push(source);
-		}
 		
 		var options = {
 			   host: 'localhost',
 			   port: 80,   
-			   path: '/dbt/services/FeedFetcher.php?sources=' + encodeURI(sources)
+			   path: '/dbt/services/FeedFetcher.php?sources=' + encodeURI(content)
 		};
 		
 		var result = "";
@@ -257,10 +228,9 @@ function parseContent(content, callback) {
 		 	
 			res.on('data', function(chunk) {
 				result += chunk; 
-				console.log("Chunk  " + chunk);
 			}).on('end', function() {
 				
-				console.log("Fetched " + result);
+				//console.log("Fetched " + result);
 				
 				callback(null, result);
 				
@@ -271,10 +241,6 @@ function parseContent(content, callback) {
 			
 		
 }
-
-function getSource(source, callback) {
-	
-}	
 
 function prepareChannelFileForDelivery(connection, channel) {
 	var jsonObject = JSON.parse(channel);
@@ -287,47 +253,6 @@ function prepareChannelFileForDelivery(connection, channel) {
 	var channel = new Channel(name, note, mainContent, subContent);
 	
 	var feed = channel.sendJson(connection);
-	
-	//console.log(feed);
-	//connection.send(feed);
-	
-	
-	/*
-	var mainFeed = ""; var subFeed = "";
-	
-	var options = {
-           host: 'localhost',   
-           port: 80,   
-           path: '/dbt/services/RSSFetcher.php?feeds=' + mainContent
-      };
-	var req = http.get(options, function(res) {  
-	 	res.setEncoding('utf8');
-		res.on('data', function(chunk) {  
-		    mainFeed += chunk;
-		    
-		    
-			}).on('end', function() {
-				var options2 = {
-			   		host: 'localhost',   
-			   		port: 80,   
-			   		path: '/dbt/services/RSSFetcher.php?feeds=' + subContent
-		  		};
-				var req2 = http.get(options2, function(res2) {  
-				 	res2.setEncoding('utf8');
-					res2.on('data', function(chunk) {
-						subFeed += chunk;
-				
-						}).on('end', function() {
-							var feed = '{' + '"name":"' + name + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
-							connection.send(feed);
-					}).on('error', function(e) {
-						  console.log("Got error: " + e.message);
-					});  
-				}); 
-	}).on('error', function(e) {
-		  console.log("Got error: " + e.message);
-	});
-	});*/
 	
 }
 
