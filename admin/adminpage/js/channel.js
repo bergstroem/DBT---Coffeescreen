@@ -147,9 +147,9 @@ function saveChannel(){
 				url: "channelhandler.php",
 				data: "p=list",
 				success: function(msg){
-					var jsonobj = JSON.parse(msg);
+					var jsonobj = jQuery.parseJSON(msg);
 					for(var i = 0; i < jsonobj.length; i++){
-						var jsonitem = JSON.parse(jsonobj[i]);
+						var jsonitem = jQuery.parseJSON(jsonobj[i]);
 						if(jsonitem["name"] == name){
 							var conflict = true;
 							if(confirm('This will replace an existing channel. Continue?'))
@@ -199,7 +199,8 @@ function editChannel(name){
 		url: "channelhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
-			var jsonobj = JSON.parse(msg);
+			var jsonobj = jQuery.parseJSON(msg);
+			console.log(jsonobj);
 			document.getElementById("nameTXB").value = jsonobj["name"];
 			document.getElementById("noteTXB").value = jsonobj["note"];
 			
@@ -207,7 +208,7 @@ function editChannel(name){
 			arr[0] += "}";
 			if(arr.length > 1){
 				for(var i = 0; i < arr.length; i++){
-					var jsonitem = JSON.parse(arr[i]);
+					var jsonitem = jQuery.parseJSON(arr[i]);
 					var data = jsonToString(jsonitem);
 					createItem(jsonitem["name"], "maincontent", true, jsonToString(jsonitem))
 				}
@@ -216,7 +217,7 @@ function editChannel(name){
 			arr[0] += "}";
 			if(arr.length > 1){
 				for(var i = 0; i < arr.length; i++){
-					var jsonitem = JSON.parse(arr[i]);
+					var jsonitem = jQuery.parseJSON(arr[i]);
 					createItem(jsonitem["name"], "subcontent", true, jsonToString(jsonitem))
 				}
 			}
@@ -287,9 +288,9 @@ function listChannels(){
 		url: "channelhandler.php",
 		data: "p=list",
 		success: function(msg){
-			var jsonobj = JSON.parse(msg);
+			var jsonobj = jQuery.parseJSON(msg);
 			for(var i = 0; i < jsonobj.length; i++){
-				var jsonitem = JSON.parse(jsonobj[i]);
+				var jsonitem = jQuery.parseJSON(jsonobj[i]);
 				var item = document.createElement("div");
 				item.id = jsonitem["name"];
 				item.className = "listItem";
@@ -332,9 +333,9 @@ function getFeeds(){
 		url: "feedhandler.php",
 		data: "p=list",
 		success: function(msg){
-			var jsonobj = JSON.parse(msg);
+			var jsonobj = jQuery.parseJSON(msg);
 			for(var i = 0; i < jsonobj.length; i++){
-				var jsonitem = JSON.parse(jsonobj[i])
+				var jsonitem = jQuery.parseJSON(jsonobj[i])
 				var data = jsonToString(jsonitem);
 				createItem(jsonitem["name"], "contentlist", true, data);
 			}
