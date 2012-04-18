@@ -1,9 +1,4 @@
 <?
-// This file should not be called directly. It have to be required in a
-// subclass file for Service.php
-
-
-
 /**
  * getParameters
  * Prints a JSON string with all the required parameters, containing key, label
