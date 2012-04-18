@@ -17,16 +17,10 @@ function switchMainInformation() {
 	//Här byts channel
 	console.debug("Switching...");
 	//Extract article info
-	//TODO: Change it to the new system!
-	var title = currentInformation.maincontent.posts[mainContentCounter].title;
-	var date = currentInformation.maincontent.posts[mainContentCounter].date;
-	var content = currentInformation.maincontent.posts[mainContentCounter].content;
+	var content = currentInformation.maincontent.posts[mainContentCounter].html;
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
 	displaytime = parseFloat(displaytime);
-	document.getElementById("mainContent").innerHTML =
-			"<h1>" + title + "</h1>" +
-			"<p>" + date + "</p>" +
-			"<p>" + content + "</p>";
+	document.getElementById("mainContent").innerHTML = content;
 			
 	//Preload images
 	var images = document.getElementById("mainContent").getElementsByTagName("img");
