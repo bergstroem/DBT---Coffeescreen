@@ -26,6 +26,7 @@
 		} else {
 			//Set values
 			$result[count($result)-1]["displaytime"] = $item->displaytime;
+			$result[count($result)-1]["priority"] = $item->priority;
 		}
 	}
 	
