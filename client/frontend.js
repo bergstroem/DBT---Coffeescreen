@@ -51,7 +51,7 @@ function mainPostLoaded(displaytime) {
 		//Calculate time to display the view
 		var displaytime = 100;
 		displaytime *= document.getElementById("mainContent").offsetHeight;
-		console.debug("Will display for " + (displayTime/1000) + "s");
+		console.debug("Will display for " + (displaytime/1000) + "s");
 		//Setup display and scroll timers
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
@@ -59,6 +59,7 @@ function mainPostLoaded(displaytime) {
 		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight));
 	}
 	else{
+		console.debug("Will display for " + (displaytime/1000) + "s");
 		//Setup display and scroll timers
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
