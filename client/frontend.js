@@ -17,16 +17,10 @@ function switchMainInformation() {
 	//Här byts channel
 	console.debug("Switching...");
 	//Extract article info
-	//TODO: Change it to the new system!
-	var title = currentInformation.maincontent.posts[mainContentCounter].title;
-	var date = currentInformation.maincontent.posts[mainContentCounter].date;
-	var content = currentInformation.maincontent.posts[mainContentCounter].content;
+	var content = currentInformation.maincontent.posts[mainContentCounter].html;
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
 	displaytime = parseFloat(displaytime);
-	document.getElementById("mainContent").innerHTML =
-			"<h1>" + title + "</h1>" +
-			"<p>" + date + "</p>" +
-			"<p>" + content + "</p>";
+	document.getElementById("mainContent").innerHTML = content;
 			
 	//Preload images
 	var images = document.getElementById("mainContent").getElementsByTagName("img");
@@ -57,7 +51,7 @@ function mainPostLoaded(displaytime) {
 		//Calculate time to display the view
 		var displaytime = 100;
 		displaytime *= document.getElementById("mainContent").offsetHeight;
-		console.debug("Will display for " + (displayTime/1000) + "s");
+		console.debug("Will display for " + (displaytime/1000) + "s");
 		//Setup display and scroll timers
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
@@ -65,6 +59,7 @@ function mainPostLoaded(displaytime) {
 		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight));
 	}
 	else{
+		console.debug("Will display for " + (displaytime/1000) + "s");
 		//Setup display and scroll timers
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
