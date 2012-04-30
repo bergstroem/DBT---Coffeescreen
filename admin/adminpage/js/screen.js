@@ -5,41 +5,42 @@
 */
 $(document).ready(function(){
 	$('.content').click(function(e){
-		if($(e.target).is('.screenAllPanicButton')){
-			$.ajax({
-				type: "POST",
-				url: "http://" + host + ":8081/panic/?screen=*",
-				data: "",
-				success: function(msg){
-					console.log(msg);
-				}
-			});
-		}
+		if($(e.target).is('.itemButton')){
+			if(e.target.value == "Panic all"){
+				$.ajax({
+					type: "POST",
+					url: "http://" + host + ":8081/panic/?screen=*",
+					data: "",
+					success: function(msg){
+						console.log(msg);
+					}
+				});
+			}
+			else if(e.target.value == "Set"){
+				var name = e.target.id.substr(e.target.id.indexOf(":")+1);
+				var select = document.getElementById("select:"+name);
+				
+				$.ajax({
+					type: "POST",
+					url: "http://" + host + ":8081/set/?screen="+name+"&channel="+select.value,
+					data: "",
+					success: function(msg){
+						console.log(msg);
+					}
+				});
+			}
+			else{
+				var name = e.target.id.substr(e.target.id.indexOf(":")+1);
 			
-		if($(e.target).is('.screenPanicButton')){
-			var name = e.target.id.substr(e.target.id.indexOf(":")+1);
-			
-			$.ajax({
-				type: "POST",
-				url: "http://" + host + ":8081/panic/?screen="+name,
-				data: "",
-				success: function(msg){
-					console.log(msg);
-				}
-			});
-		}
-		if($(e.target).is('.screenSetButton')){
-			var name = e.target.id.substr(e.target.id.indexOf(":")+1);
-			var select = document.getElementById("select:"+name);
-			
-			$.ajax({
-				type: "POST",
-				url: "http://" + host + ":8081/set/?screen="+name+"&channel="+select.value,
-				data: "",
-				success: function(msg){
-					console.log(msg);
-				}
-			});
+				$.ajax({
+					type: "POST",
+					url: "http://" + host + ":8081/panic/?screen="+name,
+					data: "",
+					success: function(msg){
+						console.log(msg);
+					}
+				});
+			}
 		}
 	});
 });
@@ -49,6 +50,33 @@ $(document).ready(function(){
  * Will connect to the node server and get all the connected screens and display them.
 */
 function listScreens(){
+	var table = document.createElement("table");
+	table.id = "listContent";
+	document.getElementById("screencontent").appendChild(table);
+	var tr = document.createElement("tr");
+	tr.className = "listHeader";
+	
+	var td = document.createElement("td");
+	td.className = "itemName";
+	td.appendChild(document.createTextNode("Name"));
+	tr.appendChild(td);
+	
+	var td = document.createElement("td");
+	td.className = "itemType";
+	td.appendChild(document.createTextNode("Channel"));
+	tr.appendChild(td);
+	
+	td = document.createElement("td");
+	var button = document.createElement("input");
+	button.type = "button";
+	button.value = "Panic all";
+	button.id = "panic:All";
+	button.className = "itemButton red";
+	
+	td.appendChild(button);
+	tr.appendChild(td);
+	table.appendChild(tr);
+
 	$.ajax({
 		type: "POST",
 		url: "http://" + host + ":8081/listscreens",
@@ -72,23 +100,51 @@ function listScreens(){
  * name: Name of the screen that will be displayed.
 */
 function createScreen(name){
-	var screenItem = document.createElement("div");
-	screenItem.id = "screen:" + name;
-	screenItem.className = "listItem";
-	var pname = document.createElement("p");
-	pname.className = "name"
-	pname.appendChild(document.createTextNode(name));
+	table = document.getElementById("listContent");
 	
-	var panicButton = document.createElement("input");
-	panicButton.id = "panic:" + name;
-	panicButton.type = "button";
-	panicButton.value = "Panic";
-	panicButton.className = "itemButton red";
+	var tr = document.createElement("tr");
+	tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listitem" : "listitem grey";
+	
+	var td = document.createElement("td");
+	td.className = "itemName";
+	td.id = "screen" + name;
+	td.appendChild(document.createTextNode(name));
+	tr.appendChild(td);
+	
+	td = document.createElement("td");
+	td.className = "itemType";
 	
 	var select = document.createElement("select");
 	select.id = "select:" + name;
 	select.className = "screenChannelSelect";
 	
+	td.appendChild(select);
+	tr.appendChild(td);
+	
+	td = document.createElement("td");
+	var button = document.createElement("input");
+	button.type = "button";
+	button.id = "panic:" + name;
+	button.className = "itemButton red";
+	button.value = "Panic";
+	td.appendChild(button);
+	
+	button = document.createElement("input");
+	button.type = "button";
+	button.id = "set:" + name;
+	button.className = "itemButton maincolor";
+	button.value = "Set";
+	td.appendChild(button);
+	
+	tr.appendChild(td);
+	
+	var set = document.createElement("input");
+	set.id = "set:" + name;
+	set.type = "button";
+	set.value = "Set";
+	set.className = "itemButton maincolor";
+	
+	table.appendChild(tr);
 	$.ajax({
 		type: "POST",
 		url: "channelhandler.php",
@@ -105,18 +161,4 @@ function createScreen(name){
 			}
 		}
 	});
-	
-	
-	
-	var set = document.createElement("input");
-	set.id = "set:" + name;
-	set.type = "button";
-	set.value = "Set";
-	set.className = "itemButton maincolor";
-	
-	screenItem.appendChild(pname);
-	pname.appendChild(panicButton);
-	pname.appendChild(set);
-	pname.appendChild(select);
-	document.getElementById("screencontent").appendChild(screenItem);
 }

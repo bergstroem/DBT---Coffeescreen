@@ -248,13 +248,11 @@ function deleteChannel(name){
  * Handle clicks in adminchannel.php
 */
 $(document).ready(function(){
-	$('#newChannelButton').click(function(e){
-		window.location = "channel.php?p=1";
-	});
-	
 	$('.content').click(function(e){
 		if($(e.target).is('.itemButton')){
-			if(e.target.value == "Edit")
+			if(e.target.value == "Add")
+				window.location = "channel.php?p=1";
+			else if(e.target.value == "Edit")
 				window.location = "channel.php?p=2&name="+e.target.id;
 			else
 				deleteChannel(e.target.id);
@@ -282,7 +280,32 @@ function addEL(){
  * Used for listing all the existing channels and displaying them.
 */
 function listChannels(){
-	var chanList = document.getElementById("adminchannelcontent");
+	var table = document.createElement("table");
+	table.id = "listContent";
+	document.getElementById("adminchannelcontent").appendChild(table);
+	var tr = document.createElement("tr");
+	tr.className = "listHeader";
+	
+	var td = document.createElement("td");
+	td.className = "itemName";
+	td.appendChild(document.createTextNode("Name"));
+	tr.appendChild(td);
+	
+	td = document.createElement("td");
+	td.appendChild(document.createTextNode("Description"));
+	tr.appendChild(td);
+	
+	td = document.createElement("td");
+	var button = document.createElement("input");
+	button.type = "button";
+	button.value = "Add";
+	button.id = "newChannelButton";
+	button.className = "itemButton maincolor";
+	
+	td.appendChild(button);
+	tr.appendChild(td);
+	table.appendChild(tr);
+	
 	$.ajax({
 		type: "POST",
 		url: "channelhandler.php",
@@ -291,37 +314,40 @@ function listChannels(){
 			var jsonobj = jQuery.parseJSON(msg);
 			for(var i = 0; i < jsonobj.length; i++){
 				var jsonitem = jQuery.parseJSON(jsonobj[i]);
-				var item = document.createElement("div");
-				item.id = jsonitem["name"];
-				item.className = "listItem";
 				
-				var p1 = document.createElement("p");
-				p1.className = "name";
-				p1.appendChild(document.createTextNode(jsonitem["name"]));
-				var p2 = document.createElement("p");
-				p2.className = "note";
-				var note = (jsonitem["note"].length > 300) ? jsonitem["note"].substr(0,300) + "...": jsonitem["note"];
-				p2.appendChild(document.createTextNode("Note: " + note));
+				tr = document.createElement("tr");
+				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listitem" : "listitem grey";
 				
-				item.appendChild(p1);
+				td = document.createElement("td");
+				td.className = "itemName";
+				td.id = jsonitem["name"];
+				td.appendChild(document.createTextNode(jsonitem["name"]));
+				tr.appendChild(td);
 				
-				var delButton = document.createElement("input");
-				delButton.type = "button";
-				delButton.id = jsonitem["name"] + ".json";
-				delButton.value = "Delete";
-				delButton.className = "itemButton red";
-				p1.appendChild(delButton);
+				td = document.createElement("td");
+				td.className = "itemDescription";
+				var note = (jsonitem["note"].length > 200) ? jsonitem["note"].substr(0,200) + "...": jsonitem["note"];
+				td.appendChild(document.createTextNode(note));
+				tr.appendChild(td);
 				
-				var editButton = document.createElement("input");
-				editButton.type = "button";
-				editButton.id = jsonitem["name"] + ".json";
-				editButton.value = "Edit";
-				editButton.className = "itemButton maincolor";
-				p1.appendChild(editButton);
+				td = document.createElement("td");
+				button = document.createElement("input");
+				button.type = "button";
+				button.id = jsonitem["name"] + ".json";
+				button.value = "Delete";
+				button.className = "itemButton red";
+				td.appendChild(button);
 				
-				item.appendChild(p2);
+				button = document.createElement("input");
+				button.type = "button";
+				button.id = jsonitem["name"] + ".json";
+				button.value = "Edit";
+				button.className = "itemButton maincolor";
+				td.appendChild(button);
 				
-				chanList.appendChild(item);
+				tr.appendChild(td);
+				
+				table.appendChild(tr);
 			}
 		}
 	});

@@ -40,6 +40,10 @@ fieldset{
 	background: #FF0000;
 }
 
+.grey{
+	background: #DCDCDC;
+}
+
 /* Menu */
 
 .menubar{
@@ -48,77 +52,105 @@ fieldset{
 	border-radius:15px;
 	-webkit-border-radius:15px;
 	-moz-border-radius:15px;
+	-o-border-radius:15px;
 	position:absolute;
 	top:0;
 	left:0;
 }
 
 .menuitem{
-	background:white;
 	width:150px;
 	height:25px;
 	border-radius:10px;
 	-webkit-border-radius:10px;
 	-moz-border-radius:10px;
+	-o-border-radius:10px;
 	position:relative;
-	float:left;
+	float:right;
 	margin:5px 0 0 20px;
 	padding:5px 0 0 0;
-	text-align:center;
-	font-family:"Calibri", Calibri, sans-serif;
-	font-weight:bold;
-}
-
-/* Main */
-
-.background{
-	width:1000px;
-	height:700px;
-	position:relative;
-	top:2px;
-	margin-left:auto;
-	margin-right:auto;
-}
-
-.content{
-	width:996px;
-	height:646px;
-	border-radius:15px;
-	-webkit-border-radius:15px;
-	-moz-border-radius:15px;
-	border:2px solid #00AEEF;
-	position:absolute;
-	top:50px;
-	padding:10px 0 0 0;
-	overflow-y:auto;
-}
-
-/* List stuff */
-.listHeader{
 	color:white;
-	height:30px;
-	position:relative;
-	left:0;
-	padding: 5px 0 5px 10px;
-	margin: 2px 0 0 0;
+	text-align:center;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
 	font-size:1.5em;
 }
 
-.listItem{
-	min-height:30px;
-	border-top:2px solid #00AEEF;
-	border-bottom:2px solid #00AEEF;
+/* Main */
+
+body{
+	background: linear-gradient(top, #000000 0%,#45484d 100%);
+	background: -webkit-linear-gradient(top, #000000 0%,#45484d 100%);
+	background: -moz-linear-gradient(top, #000000 0%,#45484d 100%);
+	background: -o-linear-gradient(top, #000000 0%,#45484d 100%);
+}
+
+#background{
+	width:1000px;
+	min-height:700px;
 	position:relative;
-	padding: 15px 0 15px 10px;
-	margin:5px 0 0 0;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.content{
+	background:white;
+	width:996px;
+	min-height:90%;
+	border-top-left-radius:25px;
+	border-top-right-radius:25px;
+	-webkit-border-top-left-radius:25px;
+	-webkit-border-top-right-radius:25px;
+	-moz-border-top-left-radius:25px;
+	-moz-border-top-right-radius:25px;
+	-o-border-top-left-radius:25px;
+	-o-border-top-right-radius:25px;
+	padding:10px 0 0 0;
+	margin: 50px 0 0 0;
+	overflow-y:auto;
+}
+
+/* List stuff */
+.listHeader{
+	height:30px;
+	position:relative;
+	padding: 5px 0 5px 10px;
+	margin: 0;
+	color:black;
+	font-family:"Calibri", Calibri, sans-serif;
+	font-weight:bold;
+	font-size:1.5em;
+}
+
+#listContent{
+	width:100%;
+	margin: 10px 0 0 0;
+	border-collapse:collapse;
+	border-spacing:0;
+}
+
+.itemName{
+	padding: 0 20px 0 10px;
+}
+
+.itemType{
+	padding: 0 20px 0 0;
+}
+
+.itemDescription{
+	padding: 0 20px 0 0;
+	max-width:500px;
+	color: #767676;
+}
+
+.listItem{
+	width:100%;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-size:20px;
 }
 
 .itemButton{
-	width:100px;
+	width:80px;
 	height:30px;
 	border-radius:10px;
 	-webkit-border-radius:10px;
@@ -129,7 +161,8 @@ fieldset{
 	text-align:center;
 	border: 0;
 	padding: 0;
-	margin: 0 10px 0 0;
+	margin: 5px 10px 5px 0;
+	color:white;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
 	font-size:15px;
@@ -146,11 +179,7 @@ fieldset{
 	border-radius:5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
-	border:1px solid #00AEEF;
-	position:relative;
-	float:right;
-	top:0;
-	margin: 0 10px 0 0;
+	border:0;
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
@@ -196,33 +225,14 @@ fieldset{
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
-.namebox{
-	width:160px;
-	height:20px;
-	position:relative;
-	float:left;
-	margin:0 0 0 10px;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
-.notebox{
-	width:250px;
-	height:100px;
-	resize:none;
-	position:relative;
-	float:left;
-	margin:0 0 0 10px;
-	font-family:"Calibri", Calibri, sans-serif;
-}
-
 .saveButton{
-	width:160px;
-	height:50px;
+	width:120px;
+	height:40px;
 	border-radius:10px;
 	-webkit-border-radius:10px;
 	-moz-border-radius:10px;
 	border:1px solid #00AEEF;
-	margin:30px 0 0 0;
+	margin:30px 0 0 5px;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-size:17px;
 }
@@ -231,40 +241,46 @@ fieldset{
 	background: rgba(0,174,239,0.5);
 }
 
-.maindrop{
+#namebox{
+	width:735px;
+	height:245px;
+	position:relative;
+	float:left;
+	border-top:2px solid #00AEEF;
+	padding: 5px 0 0 5px;
+	margin: 20px 0 0 0;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+#maincontent{
 	width:740px;
 	height:308px;
 	border-top:2px solid #00AEEF;
-	position:absolute;
-	top:140px;
-	left:0;
+	position:relative;
+	float:left;
 	overflow-y:auto;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
 }
 
-.subdrop{
+#subcontent{
 	width:740px;
 	height:192px;
 	border-top:2px solid #00AEEF;
-	border-bottom:2px solid #00AEEF;
-	position:absolute;
-	top:450px;
-	left:0;
+	position:relative;
+	float:left;
 	overflow-y:auto;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
 }
 
-.contentlist{
+#contentlist{
 	width:254px;
-	height:644px;
-	border-bottom:2px solid #00AEEF;
+	min-height:91%;
 	border-left:2px solid #00AEEF;
-	position:absolute;
-	top:0;
-	left:740px;
-	padding:0;
+	border-top:2px solid #00AEEF;
+	position:relative;
+	float:right;
 	overflow-y:auto;
 	overflow-x:hidden;
 }
@@ -275,6 +291,7 @@ fieldset{
 	border-radius:10px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;
+	-o-border-radius:10px;
 	border:2px solid #00AEEF;
 	position:relative;
 	margin:10px 0 0 10px;
@@ -289,19 +306,9 @@ fieldset{
 	border-radius:5px;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
+	-0-border-radius:5px;
 	position:absolute;
 	margin:0;
 	left:198px;
 	border:0px;
-}
-
-.spawnbutton{
-	background:transparent;
-	width:10px;
-	height:10px;
-	border:0px;
-	position:absolute;
-	top:0;
-	left:0;
-	z-index:9999;
 }

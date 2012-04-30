@@ -10,8 +10,6 @@
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="adminchannelcontent" class="content">
-				<div id="channelheader" class="listHeader maincolor">Name:<input type="button" id="newChannelButton" class="itemButton" value="New Channel"/>
-				</div>
 			</div>
 		</div>
 	</body>

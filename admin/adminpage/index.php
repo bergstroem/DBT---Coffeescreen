@@ -10,8 +10,6 @@
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="screencontent" class="content">
-				<div id="screenheader" class="listHeader maincolor">Name:<input type="button" id="panic:All" class="itemButton red" value="Panic All"/>
-				</div>
 			</div>
 		</div>
 	</body>
