@@ -115,7 +115,37 @@ function getFeedTypes(){
 }
 
 function listFeeds(){
-	var chanList = document.getElementById("feedcontent");
+	var table = document.createElement("table");
+	table.id = "listContent";
+	document.getElementById("feedcontent").appendChild(table);
+	var tr = document.createElement("tr");
+	tr.className = "listHeader";
+	
+	var td = document.createElement("td");
+	td.className = "itemName";
+	td.appendChild(document.createTextNode("Name"));
+	tr.appendChild(td);
+	
+	td = document.createElement("td");
+	td.className = "itemType";
+	td.appendChild(document.createTextNode("Type"));
+	tr.appendChild(td);
+	
+	td = document.createElement("td");
+	td.appendChild(document.createTextNode("Description"));
+	tr.appendChild(td);
+	
+	td = document.createElement("td");
+	var button = document.createElement("input");
+	button.type = "button";
+	button.value = "Add";
+	button.id = "newChannelButton";
+	button.className = "itemButton maincolor";
+	
+	td.appendChild(button);
+	tr.appendChild(td);
+	table.appendChild(tr);
+	
 	
 	$.ajax({
 		type: "POST",
@@ -125,36 +155,45 @@ function listFeeds(){
 			var jsonobj = jQuery.parseJSON(msg);
 			for(var i = 0; i < jsonobj.length; i++){
 				var jsonitem = jQuery.parseJSON(jsonobj[i]);
-				var item = document.createElement("div");
-				item.id = jsonitem["name"];
-				item.className = "listItem";
 				
-				var p1 = document.createElement("p");
-				p1.className = "name";
-				p1.appendChild(document.createTextNode(jsonitem["name"] + " - " + jsonitem["type"] +": " + jsonitem["source"]));
-				var p2 = document.createElement("p");
-				p2.className = "note";
-				var note = (jsonitem["note"].length > 300) ? jsonitem["note"].substr(0,300) + "...": jsonitem["note"];
-				p2.appendChild(document.createTextNode("Note: " + note));
+				tr = document.createElement("tr");
+				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listitem" : "listitem grey";
 				
-				item.appendChild(p1);
-				item.appendChild(p2);
+				td = document.createElement("td");
+				td.className = "itemName";
+				td.id = jsonitem["name"];
+				td.appendChild(document.createTextNode(jsonitem["name"]));
+				tr.appendChild(td);
 				
-				var delButton = document.createElement("input");
-				delButton.type = "button";
-				delButton.id = jsonitem["name"] + ".json";
-				delButton.value = "Delete";
-				delButton.className = "itemButton red";
-				p1.appendChild(delButton);
+				td = document.createElement("td");
+				td.className = "itemType";
+				td.appendChild(document.createTextNode(jsonitem["type"]));
+				tr.appendChild(td);
 				
-				var editButton = document.createElement("input");
-				editButton.type = "button";
-				editButton.id = jsonitem["name"] + ".json";
-				editButton.value = "Edit";
-				editButton.className = "itemButton maincolor";
-				p1.appendChild(editButton);
+				td = document.createElement("td");
+				td.className = "itemDescription";
+				var note = (jsonitem["note"].length > 200) ? jsonitem["note"].substr(0,200) + "...": jsonitem["note"];
+				td.appendChild(document.createTextNode(note));
+				tr.appendChild(td);
 				
-				chanList.appendChild(item);
+				td = document.createElement("td");
+				button = document.createElement("input");
+				button.type = "button";
+				button.id = jsonitem["name"] + ".json";
+				button.value = "Delete";
+				button.className = "itemButton red";
+				td.appendChild(button);
+				
+				button = document.createElement("input");
+				button.type = "button";
+				button.id = jsonitem["name"] + ".json";
+				button.value = "Edit";
+				button.className = "itemButton maincolor";
+				td.appendChild(button);
+				
+				tr.appendChild(td);
+				
+				table.appendChild(tr);
 			}
 		}
 	});
@@ -164,13 +203,11 @@ function listFeeds(){
  * Handle clicks in adminfeed.php
 */
 $(document).ready(function(){
-	$('#newFeedButton').click(function(e){
-		window.location = "feed.php?p=1";
-	});
-	
 	$('.content').click(function(e){
 		if($(e.target).is('.itemButton')){
-			if(e.target.value == "Edit")
+			if(e.target.value == "Add")
+				window.location = "feed.php?p=1";
+			else if(e.target.value == "Edit")
 				window.location = "feed.php?p=2&name="+e.target.id;
 			else
 				deleteFeed(e.target.id);
