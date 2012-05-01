@@ -78,7 +78,13 @@ fieldset{
 
 /* Main */
 
+html{
+	min-height:100%;
+}
+
 body{
+	min-height:100%;
+	background: black;
 	background: linear-gradient(top, #000000 0%,#45484d 100%);
 	background: -webkit-linear-gradient(top, #000000 0%,#45484d 100%);
 	background: -moz-linear-gradient(top, #000000 0%,#45484d 100%);
@@ -87,7 +93,6 @@ body{
 
 #background{
 	width:1000px;
-	min-height:700px;
 	position:relative;
 	margin-left:auto;
 	margin-right:auto;
@@ -95,8 +100,8 @@ body{
 
 .content{
 	background:white;
-	width:996px;
-	min-height:90%;
+	width:100%;
+	min-height:700px;
 	border-top-left-radius:25px;
 	border-top-right-radius:25px;
 	-webkit-border-top-left-radius:25px;
@@ -218,9 +223,6 @@ body{
 .formTypeSelect{
 	width:160px;
 	height:20px;
-	/*border-radius:5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;*/
 	border:1px solid #00AEEF;
 	font-family:"Calibri", Calibri, sans-serif;
 }
@@ -242,7 +244,7 @@ body{
 }
 
 #namebox{
-	width:735px;
+	width:739px;
 	height:245px;
 	position:relative;
 	float:left;
@@ -253,7 +255,7 @@ body{
 }
 
 #maincontent{
-	width:740px;
+	width:744px;
 	height:308px;
 	border-top:2px solid #00AEEF;
 	position:relative;
@@ -264,7 +266,7 @@ body{
 }
 
 #subcontent{
-	width:740px;
+	width:744px;
 	height:192px;
 	border-top:2px solid #00AEEF;
 	position:relative;
@@ -281,6 +283,7 @@ body{
 	border-top:2px solid #00AEEF;
 	position:relative;
 	float:right;
+	padding:0 0 10px 0;
 	overflow-y:auto;
 	overflow-x:hidden;
 }
