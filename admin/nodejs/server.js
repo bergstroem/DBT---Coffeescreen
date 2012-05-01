@@ -1,9 +1,16 @@
+var WebSocketServer = require('websocket').server;
+
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
+var ch = require('./channel.js');
+
 var isPanicMode = false;
 
 function Screen(id, name, channel, connection) {
 	this.id = id;
 	this.name = name;
-	this.channel = channel;
+	this.channel = ch.channel;
 	this.connection = connection;
 	
 	this.setChannel = function(newChannel) {
@@ -17,7 +24,7 @@ function Screen(id, name, channel, connection) {
 				if(err) {
 					connection.send("No data available");
 				}
-				else prepareChannelFileForDelivery(connection, data);
+				else ch.prepareChannelFileForDelivery(connection, data);
 			});
 		}
 		else {
@@ -29,11 +36,11 @@ function Screen(id, name, channel, connection) {
 							//Send no data
 							connection.send("No data available");
 						}
-						else prepareChannelFileForDelivery(connection, data);
+						else ch.prepareChannelFileForDelivery(connection, data);
 				
 					});
 				}
-				else prepareChannelFileForDelivery(connection, data);
+				else ch.prepareChannelFileForDelivery(connection, data);
 			});
 		}
 	}
@@ -69,11 +76,7 @@ function setScreenName(connection, name) {
 	}
 }
 
-var WebSocketServer = require('websocket').server;
-var async = require('async');
-var http = require('http');
-var url = require('url');
-var fs = require('fs');
+
 
 var server = http.createServer(function(request, response) {
     response.writeHead(200, {'Content-Type': 'text/plain', 'Access-Control-Allow-Origin' : '*'});
@@ -184,77 +187,6 @@ wsServer.on('request', function(request) {
         removeConnection(connection);
     });
 });
-
-function Channel(name, note, mainContent, subContent) {
-	this.name = name;
-	this.note = note;
-	this.mainContent = mainContent;
-	this.subContent = subContent;
-	
-	this.sendJson = function(connection) {
-		async.parallel([
-		    function(callback){
-				parseContent(mainContent, callback);
-		    },
-		    function(callback){
-				parseContent(subContent, callback);
-		    },
-		],
-		//Callback after both above functions are done.
-		function(err, results){
-		    //console.log("Parsed: " + results);
-		    var mainFeed = results[0];
-		    var subFeed = results[1];
-		    
-		    var feed = '{'
-			+ '"name":"' + name + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
-		    connection.send(feed);
-		});
-	}
-}
-
-function parseContent(content, callback) {
-		
-		var options = {
-			   host: 'localhost',
-			   port: 80,   
-			   path: '/dbt/services/FeedFetcher.php?sources=' + encodeURI(content)
-		};
-		
-		var result = "";
-		
-		var req = http.get(options, function(res) {  
-		 	res.setEncoding('utf8');
-		 	
-			res.on('data', function(chunk) {
-				result += chunk; 
-			}).on('end', function() {
-				
-				console.log("Fetched " + result);
-				
-				callback(null, result);
-				
-			});   
-		}).on('error', function(e) {  
-			console.log("Got error: " + e.message);   
-		});
-			
-		
-}
-
-function prepareChannelFileForDelivery(connection, channel) {
-	var jsonObject = JSON.parse(channel);
-	
-	var name = jsonObject.name;
-	var note = jsonObject.note;
-	var mainContent = jsonObject.maincontent;
-	var subContent = jsonObject.subcontent;
-	
-	var channel = new Channel(name, note, mainContent, subContent);
-	
-	var feed = channel.sendJson(connection);
-	
-}
 
 
  

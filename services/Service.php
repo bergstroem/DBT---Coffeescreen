@@ -35,7 +35,7 @@ abstract class Service {
 	 * Returns a list of preformated views for showing in the client.
 	**/
 	public function getViewList() {
-		$this->getView();
+		$this->getViews();
 
 		return $this->views;
 	}
