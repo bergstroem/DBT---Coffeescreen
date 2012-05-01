@@ -1,8 +1,6 @@
 <?
 
 abstract class Service {
-	private static $ME = null;
-
 	private $parameters;
 	private $views;
 
@@ -33,6 +31,9 @@ abstract class Service {
 		return json_encode($this->parameters);
 	}
 
+	/**
+	 * Returns a list of preformated views for showing in the client.
+	**/
 	public function getViewList() {
 		$this->getView();
 
