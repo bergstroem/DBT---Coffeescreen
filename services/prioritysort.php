@@ -40,12 +40,57 @@
 	}
 	
 	function duplicate($list){
-		$numbOne = count($list) - array_search(1, $list);
-		for($i = 0; $i < array_search(1,$list); $i++){
-			for($n = 0; $n < $list[$i]-1; $n++){
-				array_splice($list,array_search(1,$list)+$numbOne/$list[$i]+$n*$list[$i]+$i,0,$list[$i]);
+		$numbOne = count($list) - prioritySearch(1, $list);
+		for($i = 0; $i < prioritySearch(1,$list); $i++){
+			for($n = 0; $n < $list[$i]["priority"]-1; $n++){
+				//array_splice($list,prioritySearch(1,$list)+$numbOne/$list[$i]["priority"]+$n*$list[$i]["priority"]+$i,0,$list[$i]);
+				array_insert($list, $list[$i], prioritySearch(1,$list)+$numbOne/$list[$i]["priority"]+$n*$list[$i]["priority"]+$i);
 			}
 		}
 		return $list;
 	}
+	
+	function prioritySearch($value, $list) {
+	
+		for($i = 0; $i < count($list); $i++) {
+			if($list[$i]["priority"] == $value) {
+				return $i;
+			}
+		}
+		return -1;
+	}
+	
+	function array_insert(&$array,$element,$position=null) {
+	if (count($array) == 0) {
+		$array[] = $element;
+	}
+	elseif (is_numeric($position) && $position < 0) {
+		if((count($array)+position) < 0) {
+	  		$array = array_insert($array,$element,0);
+		}
+		else {
+	  		$array[count($array)+$position] = $element;
+		}	
+	}
+	elseif (is_numeric($position) && isset($array[$position])) {
+		$part1 = array_slice($array,0,$position,true);
+		$part2 = array_slice($array,$position,null,true);
+		$array = array_merge($part1,array($position=>$element),$part2);
+		foreach($array as $key=>$item) {
+		  if (is_null($item)) {
+			unset($array[$key]);
+		  }
+		}
+	}
+	elseif (is_null($position)) {
+		$array[] = $element;
+	}
+	elseif (!isset($array[$position])) {
+		$array[$position] = $element;
+	}
+	
+	$array = array_merge($array);
+	return $array;
+	}
+
 ?>

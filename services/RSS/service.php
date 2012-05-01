@@ -31,7 +31,7 @@ class RSS extends Service {
 		$posts = array();
 		
 		for ($i = 0; $i < min($feed->get_item_quantity(), 3); $i++){
-			$item = $feed->get_item();
+			$item = $feed->get_item($i);
 
 			$title = $item->get_title();
 			$date = $item->get_date();

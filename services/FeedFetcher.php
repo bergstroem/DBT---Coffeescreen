@@ -40,7 +40,7 @@
 		$result = null;
 	}
 	else {
-		$result = merge_sort($result);
+		$result = duplicate(merge_sort($result));
 	}
 	
 	echo '{"posts": ' . json_encode($result) . "}";
