@@ -247,7 +247,7 @@ body{
 	width:739px;
 	height:245px;
 	position:relative;
-	float:left;
+	/*float:left;*/
 	border-top:2px solid #00AEEF;
 	padding: 5px 0 0 5px;
 	margin: 20px 0 0 0;
@@ -256,10 +256,10 @@ body{
 
 #maincontent{
 	width:744px;
-	height:308px;
+	height:70%;
 	border-top:2px solid #00AEEF;
 	position:relative;
-	float:left;
+	/*float:left;*/
 	overflow-y:auto;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
@@ -270,7 +270,7 @@ body{
 	height:192px;
 	border-top:2px solid #00AEEF;
 	position:relative;
-	float:left;
+	/*float:left;*/
 	overflow-y:auto;
 	font-family:"Calibri", Calibri, sans-serif;
 	font-weight:bold;
@@ -282,7 +282,7 @@ body{
 	border-left:2px solid #00AEEF;
 	border-top:2px solid #00AEEF;
 	position:relative;
-	float:right;
+	/*float:right;*/
 	padding:0 0 10px 0;
 	overflow-y:auto;
 	overflow-x:hidden;
@@ -314,4 +314,15 @@ body{
 	margin:0;
 	left:198px;
 	border:0px;
+}
+
+#leftColumn{
+	float:left;
+	width:744px;
+}
+
+#rightColumn{
+	float:left;
+	width:200px;
+	margin:20px 0 0 0;
 }
