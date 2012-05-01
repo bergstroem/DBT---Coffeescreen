@@ -48,7 +48,7 @@ function parseContent(content, callback) {
 				
 				console.log("Fetched " + result);
 				
-				callback(null, result);
+				callback(null, result.substr(result.indexOf('{')));
 				
 			});   
 		}).on('error', function(e) {  
