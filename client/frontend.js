@@ -153,7 +153,8 @@ function connectToServer () {
         console.debug("Got message");
         try {
         	//Extract data from JSON string
-            var json = JSON.parse(message.data);
+        	var data = message.data.replace(/\0xEF\0xBB\0xBF\0x7B\g/,' ');
+            var json = JSON.parse(data);
 			currentInformation = json;
 			mainContentCounter = 0;
 			
@@ -166,7 +167,8 @@ function connectToServer () {
 				running = true;
 			}
         } catch (e) {
-            console.log('This doesn\'t look like a valid JSON: ', message.data);
+        	console.log(e.message);
+            console.log('This doesn\'t look like a valid JSON: ', message.data.replace(/\0x20|\0x0A|\0xEF|\0xBB|\0xBF|\0x7B\g/,' '));
             return;
         }
     };

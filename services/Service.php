@@ -1,12 +1,12 @@
 <?
 
 abstract class Service {
-	private static $ME = null;
-
 	private $parameters;
+	private $views;
 
 	public function __construct() {
 		$parameters = array();
+		$views = array();
 	}
 
 	/**
@@ -31,6 +31,14 @@ abstract class Service {
 		return json_encode($this->parameters);
 	}
 
+	/**
+	 * Returns a list of preformated views for showing in the client.
+	**/
+	public function getViewList() {
+		$this->getViews();
+
+		return $this->views;
+	}
 
 
 	/***************************************
@@ -48,7 +56,7 @@ abstract class Service {
 	 * Composes the html, javascript and css for the view using the preloaded
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
-	public abstract function getView();
+	protected abstract function getViews();
 
 
 
@@ -76,8 +84,7 @@ abstract class Service {
 	}
 
 	/**
-	 * Packs the provided HTML, CSS and JavaScript in a hash map and returns
-	 * it for exporting.
+	 * Packs the provided HTML, CSS and JavaScript into the list of views.
 	 * 		$time	- The time of creation for the content.
 	 * 		$html	- A string containing the HTML to show.
 	 * 		$css	- [Optional] A string containing the extra CSS for the view.
@@ -85,7 +92,7 @@ abstract class Service {
 	 * 					the view.
 	**/
 	protected function bundleView($time, $html, $css="", $js="") {
-		return array("date" => $time, "html" => $html, "css" => $css, "js" => $js);
+		$this->views[] = array("date" => $time, "html" => $html, "css" => $css, "js" => $js);
 	}
 }
 

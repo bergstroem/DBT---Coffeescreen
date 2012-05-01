@@ -9,26 +9,32 @@
 	$result = array();
 	
 	foreach ($sources->posts as $item) {
-		$service = new $SERVICE_NAME();
+		
+		$servicename = $item->type;
+		$service = new $servicename();
 		
 		$url = array();
 		$url["url"] = $item->source;
 		$service->loadParameters($url);
-		$result[] = $service->getView();
 		
-		//Check if the post has past its expire time
-		$now = time();
-		$expireTime = $result[count($result)-1]["date"] + ($item->expiretime * 60 * 60);
+		$itemList = $service->getViewList();
 		
-		if ($expireTime > $now) {
-			//Expired post. Remove!
-			unset($result[count($result)-1]);
-		} else {
-			//Set values
-			$result[count($result)-1]["displaytime"] = $item->displaytime;
-			$result[count($result)-1]["priority"] = $item->priority;
-		}
+		foreach($itemList as $key => $resultItem) {
+			//Check if the post has past its expire time
+			$now = time();
+			
+			$expireTime = $resultItem["date"] + ($item->expiretime * 60 * 60);
+			if ($expireTime < $now) {
+				//Set values
+				$resultItem["displaytime"] = $item->displaytime;
+				$resultItem["priority"] = $item->priority;
+				$result[] = $resultItem;
+			}
+    	}
+    		
+    	
 	}
+	
 	
 	if(count($result) < 1) {
 		$result = null;
