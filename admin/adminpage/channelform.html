@@ -1,47 +1,43 @@
-﻿<!DOCTYPE html>
-
-<html>
-	<head>
-	</head>
-	<body>
-		<div id="namebox">
-			<table>
-				<tr>
-					<td>
-						<label for=nameTXB>Name</label>
-					</td>
-					<td>
-						<input type="text" name="name" id="nameTXB" class="formTXB"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for=staticTXB>Static information</label>
-					</td>
-					<td>
-						<input type="text" name="static" id="staticTXB" class="lformTXB"/>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<label for=noteTXB>Note</label>
-					</td>
-					<td>
-						<textarea name="note" id="noteTXB" class="noteTXB"></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<input type="button" name="savechannelbutton" value="Save channel" class="saveButton maincolor" onclick="saveChannel()">
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div id="maincontent"></div>
-		<div id="subcontent"></div>
-		<div id="contentlist"></div>
-		<script>
-			addEL();
-		</script>
-	</body>
-</html>
+﻿<div id="leftColumn">
+	<div id="namebox">
+		<table>
+			<tr>
+				<td>
+					<label for=nameTXB>Name</label>
+				</td>
+				<td>
+					<input type="text" name="name" id="nameTXB" class="formTXB"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for=staticTXB>Static information</label>
+				</td>
+				<td>
+					<input type="text" name="static" id="staticTXB" class="lformTXB"/>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<label for=noteTXB>Note</label>
+				</td>
+				<td>
+					<textarea name="note" id="noteTXB" class="noteTXB"></textarea>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="button" name="savechannelbutton" value="Save channel" class="saveButton maincolor" onclick="saveChannel()">
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="maincontent"></div>
+	<div id="subcontent"></div>
+</div>
+<div id="rightColumn">
+	<div id="contentlist"></div>
+</div>
+<script>
+	addEL();
+</script>

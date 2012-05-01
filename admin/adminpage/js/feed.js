@@ -157,11 +157,11 @@ function listFeeds(){
 				var jsonitem = jQuery.parseJSON(jsonobj[i]);
 				
 				tr = document.createElement("tr");
+				tr.id = jsonitem["name"];
 				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listitem" : "listitem grey";
 				
 				td = document.createElement("td");
 				td.className = "itemName";
-				td.id = jsonitem["name"];
 				td.appendChild(document.createTextNode(jsonitem["name"]));
 				tr.appendChild(td);
 				

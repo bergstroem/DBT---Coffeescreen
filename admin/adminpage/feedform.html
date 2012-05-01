@@ -1,48 +1,40 @@
-﻿<!DOCTYPE html>
-
-<html>
-	<head>
-	</head>
-	<body>
-		<fieldset>
-			<legend>Required</legend>
-			<ol>
-				<li>
-					<label for=nameTXB>Name</label>
-					<input type="text" name="name" id="name" class="formTXB"/>
-				</li>
-				<li>
-					<label for=sourceTXB>Source</label>
-					<input type="text" name="source" id="source" class="formTXB"/>
-				</li>
-				<li>
-					<label for=typeSelect>Type</label>
-					<select id="typeSelect" class="formTypeSelect">
-					</select>
-				</li>
-			</ol>
-		</fieldset>
-		<fieldset>
-			<legend>Customization</legend>
-			<ol>
-				<li>
-					<label for=priority>Priority</label>
-					<input type="number" name="priority" id="priority" class="formNB" value=1 min=1 />
-				</li>
-				<li>
-					<label for=displayTime>Displaytime (s)</label>
-					<input type="number" name="displayTime" id="displayTime" class="formNB" value=10 min=1 />
-				</li>
-				<li>
-					<label for=expireTime>ExpireTime (h)</label>
-					<input type="number" name="expireTime" id="expireTime" class="formNB" value=0 min=0 />
-				</li>
-				<li>
-					<label for=noteTXB>Note</label>
-					<textarea name="note" id="note" class="noteTXB"></textarea>
-				</li>
-			</ol>
-		</fieldset>
-		<input type="button" name="savebutton" value="Save feed" class="saveButton maincolor" onclick="saveFeed()">
-	</body>
-</html>
+﻿<fieldset>
+	<legend>Required</legend>
+	<ol>
+		<li>
+			<label for=nameTXB>Name</label>
+			<input type="text" name="name" id="name" class="formTXB"/>
+		</li>
+		<li>
+			<label for=sourceTXB>Source</label>
+			<input type="text" name="source" id="source" class="formTXB"/>
+		</li>
+		<li>
+			<label for=typeSelect>Type</label>
+			<select id="typeSelect" class="formTypeSelect">
+			</select>
+		</li>
+	</ol>
+</fieldset>
+<fieldset>
+	<legend>Customization</legend>
+	<ol>
+		<li>
+			<label for=priority>Priority</label>
+			<input type="number" name="priority" id="priority" class="formNB" value=1 min=1 />
+		</li>
+		<li>
+			<label for=displayTime>Displaytime (s)</label>
+			<input type="number" name="displayTime" id="displayTime" class="formNB" value=10 min=1 />
+		</li>
+		<li>
+			<label for=expireTime>ExpireTime (h)</label>
+			<input type="number" name="expireTime" id="expireTime" class="formNB" value=0 min=0 />
+		</li>
+		<li>
+			<label for=noteTXB>Note</label>
+			<textarea name="note" id="note" class="noteTXB"></textarea>
+		</li>
+	</ol>
+</fieldset>
+<input type="button" name="savebutton" value="Save feed" class="saveButton maincolor" onclick="saveFeed()">
