@@ -14,7 +14,7 @@ function init() {
 
 //Switch to next view
 function switchMainInformation() {
-	//Här byts channel
+	//HÃ¤r byts channel
 	console.debug("Switching...");
 	//Extract article info
 	var content = currentInformation.maincontent.posts[mainContentCounter].html;
@@ -153,7 +153,8 @@ function connectToServer () {
         console.debug("Got message");
         try {
         	//Extract data from JSON string
-        	var data = message.data.replace(/\0xEF\0xBB\0xBF\0x7B\g/,' ');
+        	var data = JSON.escape(message.data);
+
             var json = JSON.parse(data);
 			currentInformation = json;
 			mainContentCounter = 0;
@@ -168,7 +169,7 @@ function connectToServer () {
 			}
         } catch (e) {
         	console.log(e.message);
-            console.log('This doesn\'t look like a valid JSON: ', message.data.replace(/\0x20|\0x0A|\0xEF|\0xBB|\0xBF|\0x7B\g/,' '));
+            console.log('This doesn\'t look like a valid JSON: ', message.data);
             return;
         }
     };
