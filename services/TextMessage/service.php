@@ -15,17 +15,14 @@ class TextMessage extends Service {
 	 * Composes the html, javascript and css for the view using the preloaded
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
-	public function getView() {
+	public function getViews() {
 		$text = $this->readParameter("text");
 		
 		//Generate a HTML string
 		$html = "<p>$text</p>";
 
-		return $this->bundleView(time(), $html);
+		$this->bundleView(time(), $html);
 	}
 }
-
-//Give the AJAX API the name of this class
-$SERVICE_NAME = "TextMessage";
 
 ?>

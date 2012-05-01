@@ -6,7 +6,7 @@ include_once("Service.php");
 include_once('simplepie.inc');
 
 //This is our custom service class
-class TestService extends Service {
+class RSS extends Service {
 
 	/**
 	 * This is where the required parameters are specified with calls to
@@ -20,7 +20,7 @@ class TestService extends Service {
 	 * Composes the html, javascript and css for the view using the preloaded
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
-	public function getView() {
+	public function getViews() {
 		$feedSourcesArray = array($this->readParameter("url"));
 		
 		$feed = new SimplePie();
@@ -30,25 +30,19 @@ class TestService extends Service {
 		
 		$posts = array();
 		
-		foreach ($feed->get_items() as $item):
+		for ($i = 0; $i < min(sixeof($feed->get_items()), 3); $i++){
+			$item = $feed->get_items()[$i];
+
 			$title = $item->get_title();
 			$date = $item->get_date();
 			$content = $item->get_content();
 
-			$posts[] = array('title' => $title, 'date' => $date,
-							 'content' => $content);
-			
-		endforeach;
+			//Generate a HTML string
+			$html = "<h1>".$title."</h1><p>".$date."</p>".$content;
 
-
-		//Generate a HTML string
-		$html = "<h1>".$posts[0]["title"]."</h1><p>".$posts[0]["date"]."</p>".$posts[0]["content"];
-
-		return $this->bundleView(strtotime($posts[0]["date"]), $html);
+			$this->bundleView(strtotime($date), $html);
+		}
 	}
 }
-
-//Give the AJAX API the name of this class
-$SERVICE_NAME = "TestService";
 
 ?>
