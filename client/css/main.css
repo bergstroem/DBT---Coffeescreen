@@ -11,6 +11,10 @@ body {
 	color: white;
 }
 
+h1 {
+	font-size: 1.5em;
+}
+
 #screen { /*Simulating small screen and will be removed*/
 	position: relative;
 	width: 640px;
