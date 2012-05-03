@@ -115,6 +115,7 @@ function adjustPostWidth() {
 		
 		//If the image isnt too small or too big, scale it.
 		if(childImages[i].clientWidth > main.clientWidth/1.5 && childImages[i].clientWidth < main.clientWidth*1.5) {
+			console.log("Scaling image from: " + childImages[i].clientWidth + ", to: " + (main.clientWidth - 100));
 			adjusted = true;
 			childImages[i].style.width = main.clientWidth - 100 + "px"; // -100 to get some margin
 			main.style.width = childImages[i].clientWidth + "px";
@@ -124,7 +125,7 @@ function adjustPostWidth() {
 		//If too wide, try scaling on height
 	}
 	if(!adjusted) {
-		console.log("doing it");
+		console.log("Scaling content");
 		document.getElementById('mainContent').style.width = window.innerWidth - 100 + "px";
 	}
 	
