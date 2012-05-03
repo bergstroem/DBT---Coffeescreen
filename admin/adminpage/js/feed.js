@@ -85,15 +85,24 @@ function saveFeed(){
 	}
 }
 
-function editFeed(name){
+function editFeed(full, name){
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
-			for(val in jsonobj){
-				document.getElementsByName(val)[0].value = jsonobj[val];
+			document.getElementsByName("type")[0].value = jsonobj["type"];
+			var keys = Object.keys(jsonobj);
+			
+			if(full){
+				for(var i = 0; i < keys.length; i++){
+					var key = keys[i];
+					document.getElementsByName(key)[0].value = jsonobj[key];
+				}
+			}
+			else{
+				getTypeParameters(name);
 			}
 		}
 	});
@@ -113,7 +122,12 @@ function getFeedTypes(name){
 				temp.appendChild(document.createTextNode(arr[i]));
 				select.appendChild(temp);
 			}
-			getTypeParameters(name);
+			if(name){
+				editFeed(false,name);
+			}
+			else{
+				getTypeParameters();
+			}
 		}
 	});
 }
@@ -183,12 +197,13 @@ $(document).ready(function(){
 				window.location = "feed.php?p=1";
 			else if(e.target.value == "Edit")
 				window.location = "feed.php?p=2&name="+e.target.id;
-			else
+			else if(e.target.value == "Delete"){
 				deleteFeed(e.target.id);
+			}
 		}
 	});
 	
-	$('#type').change(function(e){
+	$('#type').bind('change', function(e){
 		getTypeParameters();
 	});
 });
@@ -218,7 +233,7 @@ function deleteFeed(name){
  * Number = 2; (input number)
  * Boolean = 3; (input checkbox)
  */
-function getTypeParameters(name){
+function getTypeParameters(fname){
 	var table = document.getElementById("required").getElementsByTagName("tbody")[0];
 	var select = document.getElementById("type").value;
 	
@@ -285,8 +300,8 @@ function getTypeParameters(name){
 				
 				table.appendChild(tr);
 			}
-			if(name){
-				editFeed(name);
+			if(fname){
+				editFeed(true, fname);
 			}
 		}
 	});
