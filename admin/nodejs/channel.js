@@ -1,35 +1,47 @@
+
+
+/*
+
+	Class and functions to handle channels.
+
+*/
+
 var async = require('async');
 var http = require('http');
 
+//Representation of a channel
 function Channel(name, note, mainContent, subContent) {
 	this.name = name;
 	this.note = note;
 	this.mainContent = mainContent;
 	this.subContent = subContent;
 	
+	//Parses and sends itself in json-format to the specified connection.
 	this.sendJson = function(connection) {
+		//Get main and sub content at the same time
 		async.parallel([
 		    function(callback){
-				parseContent(mainContent, callback);
+				fetchContent(mainContent, callback);
 		    },
 		    function(callback){
-				parseContent(subContent, callback);
+				fetchContent(subContent, callback);
 		    },
 		],
 		//Callback after both above functions are done.
 		function(err, results){
-		    //console.log("Parsed: " + results);
 		    var mainFeed = results[0];
 		    var subFeed = results[1];
 		    
 		    var feed = '{'
 			+ '"name":"' + name + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
+			
 		    connection.send(feed);
 		});
 	}
 }
 
-function parseContent(content, callback) {
+//
+function fetchContent(content, callback) {
 		
 		var options = {
 			   host: 'localhost',

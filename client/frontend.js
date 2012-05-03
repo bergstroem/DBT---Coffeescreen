@@ -53,6 +53,9 @@ function switchMainInformation() {
 
 //What to do when all the images are loaded in a view
 function mainPostLoaded(displaytime) {
+	
+	adjustPostWidth();
+
 	if(displaytime!=0){
 		//Calculate time to display the view
 		var displaytime = 100;
@@ -85,7 +88,6 @@ function mainPostLoaded(displaytime) {
 function scrollMainContent(stepTime) {
 	totalElapsedTime = (new Date().getTime() - startTime);
 	
-	console.log(totalElapsedTime/totalTime*window.innerWidth);
 	document.getElementById('progressBar').style.width = totalElapsedTime/totalTime * window.innerWidth + "px";
 	
 	
@@ -94,6 +96,37 @@ function scrollMainContent(stepTime) {
 			document.getElementById("pageWrapper").scrollHeight) {
 		mainContentProgressTimeout = setTimeout(scrollMainContent, stepTime, stepTime);
 	}
+}
+
+function adjustPostWidth() {
+	//Get mainContent and its child images
+	var main = document.getElementById('mainContent');
+	var childImages = document.getElementById('mainContent').getElementsByTagName('img');
+	
+	//First, if any image is larger than the parent divs width/1.5, than scale it up
+	//and set the width of the parent to the new width
+	var adjusted = false;	
+	for (var i = 0; i < childImages.length; i++) {
+		
+		//If the image isnt too small, scale it up.
+		if(childImages[i].clientWidth > main.clientWidth/1.8) {
+			adjusted = true;
+			childImages[i].style.width = main.clientWidth - 100 + "px"; // -100 to get some margin
+			main.style.width = childImages[i].clientWidth + "px";
+			break;
+		}
+		
+		//If the image is too wide, but not wider than 10%, scale down
+		if(childImages[i].clientWidth > main.clientWidth*1.10) {
+			adjusted = true;
+			childImages[i].style.width = main.clientWidth - 100 + "px";
+		}
+	}
+	if(!adjusted) {
+		console.log("doing it");
+		document.getElementById('mainContent').style.width = window.innerWidth - 100 + "px";
+	}
+	
 }
 
 //Image preloading magic!
