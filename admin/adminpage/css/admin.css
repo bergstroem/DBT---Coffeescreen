@@ -305,6 +305,7 @@ body{
 }
 
 #rightColumn{
+	min-height:800px;
 	height:100%;
 	background: #EBEBEB;
 	float:left;
