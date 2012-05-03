@@ -1,4 +1,5 @@
-<?
+<?php
+error_reporting(0);
 /**
  * getParameters
  * Prints a JSON string with all the required parameters, containing key, label
@@ -17,7 +18,7 @@ if(isset($_GET["getParameters"]) && isset($_GET["service"])) {
 	
 	if(file_exists($directory)){
 		include_once("$directory/service.php");
-		
+
 		$service = new $directory();
 		echo $service->getParameters();
 	}

@@ -1,5 +1,0 @@
-//Not used!
-function Content() {
-	this.name;
-	this.type;
-}
