@@ -27,9 +27,7 @@ function switchMainInformation() {
 	
 	document.getElementById("mainContent").innerHTML = content;
 	
-	//Adjust width of the post.											
-	adjustPostWidth();
-			
+	
 	//Preload images
 	var images = document.getElementById("mainContent").getElementsByTagName("img");
 	var urls = new Array();
@@ -55,6 +53,9 @@ function switchMainInformation() {
 
 //What to do when all the images are loaded in a view
 function mainPostLoaded() {
+	//Adjust width of the post.											
+	adjustPostWidth();
+			
 	//Temp. moved here
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
 	displaytime = parseFloat(displaytime)*1000; // Fixed: Seems like the code 
@@ -73,7 +74,7 @@ function mainPostLoaded() {
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
 		clearTimeout(mainContentProgressTimeout);
-		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight));
+		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*3);
 	}
 	else{
 		//Setup progress bra variables
@@ -84,7 +85,7 @@ function mainPostLoaded() {
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
 		clearTimeout(mainContentProgressTimeout);
-		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight));
+		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*3);
 	}
 }
 
