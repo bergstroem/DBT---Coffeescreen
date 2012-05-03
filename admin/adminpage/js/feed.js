@@ -18,7 +18,7 @@ function saveFeed(){
 	}
 	else{
 		var type = document.getElementById("type").value;
-		var note = document.getElementById("note").value;
+		var note = document.getElementById("description").value;
 		var priority = document.getElementById("priority").value;
 		var displaytime = document.getElementById("displayTime").value;
 		var expiretime = document.getElementById("expireTime").value;
@@ -127,7 +127,6 @@ function listFeeds(){
 		data: "p=list",
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
-			console.log(msg);
 			for(var i = 0; i < jsonobj.length; i++){
 				var jsonitem = jQuery.parseJSON(jsonobj[i]);
 				
@@ -287,7 +286,6 @@ function getTypeParameters(name){
 				table.appendChild(tr);
 			}
 			if(name){
-				console.log(name);
 				editFeed(name);
 			}
 		}
