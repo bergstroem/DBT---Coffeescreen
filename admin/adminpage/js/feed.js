@@ -58,8 +58,7 @@ function saveFeed(){
 									url: "feedhandler.php",
 									data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 									success: function(msg){
-										console.log(msg);
-										//window.location = "adminfeed.php";
+										window.location = "adminfeed.php";
 									}
 								});
 						}
@@ -70,8 +69,7 @@ function saveFeed(){
 							url: "feedhandler.php",
 							data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 							success: function(msg){
-							console.log(msg);
-								//window.location = "adminfeed.php";
+								window.location = "adminfeed.php";
 							}
 						});
 					}
@@ -83,8 +81,7 @@ function saveFeed(){
 				url: "feedhandler.php",
 				data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 				success: function(msg){
-				console.log(msg);
-					//window.location = "adminfeed.php";
+					window.location = "adminfeed.php";
 				}
 			});
 		}
