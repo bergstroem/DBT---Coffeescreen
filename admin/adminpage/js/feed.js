@@ -4,15 +4,12 @@
 */
 function saveFeed(){
 	var name = document.getElementById("name").value;
-	var type = document.getElementById("typeSelect").value;
 	
 	var table = document.getElementById("required");
 	var poststr = "&custom=";
 	for(var i = table.getElementsByTagName("tr").length-1; i >= 4; i--){
 		poststr += table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].name + "|";
-		//console.log(table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].name);
 		poststr += table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].value + ",";
-		//console.log(table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].value);
 	}
 	poststr = poststr.substr(0, poststr.length-2);
 	
@@ -20,7 +17,7 @@ function saveFeed(){
 		alert("Please enter the required fields");
 	}
 	else{
-		var type = document.getElementById("typeSelect").value;
+		var type = document.getElementById("type").value;
 		var note = document.getElementById("note").value;
 		var priority = document.getElementById("priority").value;
 		var displaytime = document.getElementById("displayTime").value;
@@ -89,25 +86,21 @@ function saveFeed(){
 }
 
 function editFeed(name){
-	getFeedTypes();
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
 		data: "p=2&name="+name,
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
-			document.getElementById("name").value = jsonobj["name"];
-			document.getElementById("typeSelect").value = jsonobj["type"];
-			document.getElementById("note").value = jsonobj["note"];
-			document.getElementById("priority").value = jsonobj["priority"];
-			document.getElementById("displayTime").value = jsonobj["displaytime"];
-			document.getElementById("expireTime").value = jsonobj["expiretime"];
+			for(val in jsonobj){
+				document.getElementsByName(val)[0].value = jsonobj[val];
+			}
 		}
 	});
 }
 
-function getFeedTypes(){
-	var select = document.getElementById("typeSelect");
+function getFeedTypes(name){
+	var select = document.getElementById("type");
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
@@ -120,6 +113,7 @@ function getFeedTypes(){
 				temp.appendChild(document.createTextNode(arr[i]));
 				select.appendChild(temp);
 			}
+			getTypeParameters(name);
 		}
 	});
 }
@@ -195,7 +189,7 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('#typeSelect').change(function(e){
+	$('#type').change(function(e){
 		getTypeParameters();
 	});
 });
@@ -225,9 +219,9 @@ function deleteFeed(name){
  * Number = 2; (input number)
  * Boolean = 3; (input checkbox)
  */
-function getTypeParameters(){
-	var table = document.getElementById("required");
-	var select = document.getElementById("typeSelect").value;
+function getTypeParameters(name){
+	var table = document.getElementById("required").getElementsByTagName("tbody")[0];
+	var select = document.getElementById("type").value;
 	
 	if(table.getElementsByTagName("tr").length > 4){
 		for(var i = table.getElementsByTagName("tr").length-1; i >= 4; i--){
@@ -291,6 +285,10 @@ function getTypeParameters(){
 				tr.appendChild(td);
 				
 				table.appendChild(tr);
+			}
+			if(name){
+				console.log(name);
+				editFeed(name);
 			}
 		}
 	});

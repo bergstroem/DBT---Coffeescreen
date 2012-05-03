@@ -200,7 +200,6 @@ function editChannel(name){
 		data: "p=2&name="+name,
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
-			console.log(jsonobj);
 			document.getElementById("nameTXB").value = jsonobj["name"];
 			document.getElementById("noteTXB").value = jsonobj["note"];
 			
@@ -213,6 +212,7 @@ function editChannel(name){
 					createItem(jsonitem["name"], "maincontent", true, jsonToString(jsonitem))
 				}
 			}
+			/*
 			var arr = jsonobj["subcontent"].substr(0, jsonobj["subcontent"].length).split('},');
 			arr[0] += "}";
 			if(arr.length > 1){
@@ -220,7 +220,7 @@ function editChannel(name){
 					var jsonitem = jQuery.parseJSON(arr[i]);
 					createItem(jsonitem["name"], "subcontent", true, jsonToString(jsonitem))
 				}
-			}
+			}*/
 			getFeeds();
 		}
 	});
@@ -234,8 +234,6 @@ function editChannel(name){
 function deleteChannel(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
-	console.log(parentname);
-	
 	
 	$.ajax({
 		type: "POST",
