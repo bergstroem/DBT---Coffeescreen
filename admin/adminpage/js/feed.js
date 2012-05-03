@@ -4,8 +4,19 @@
 */
 function saveFeed(){
 	var name = document.getElementById("name").value;
-	var source = document.getElementById("source").value;
-	if(name == "" || source == ""){
+	var type = document.getElementById("typeSelect").value;
+	
+	var table = document.getElementById("required");
+	var poststr = "&custom=";
+	for(var i = table.getElementsByTagName("tr").length-1; i >= 4; i--){
+		poststr += table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].name + "|";
+		//console.log(table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].name);
+		poststr += table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].value + ",";
+		//console.log(table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].value);
+	}
+	poststr = poststr.substr(0, poststr.length-2);
+	
+	if(name == ""){
 		alert("Please enter the required fields");
 	}
 	else{
@@ -45,9 +56,10 @@ function saveFeed(){
 								$.ajax({
 									type: "POST",
 									url: "feedhandler.php",
-									data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+									data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 									success: function(msg){
-										window.location = "adminfeed.php";
+										console.log(msg);
+										//window.location = "adminfeed.php";
 									}
 								});
 						}
@@ -56,9 +68,10 @@ function saveFeed(){
 						$.ajax({
 							type: "POST",
 							url: "feedhandler.php",
-							data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+							data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 							success: function(msg){
-								window.location = "adminfeed.php";
+							console.log(msg);
+								//window.location = "adminfeed.php";
 							}
 						});
 					}
@@ -68,9 +81,10 @@ function saveFeed(){
 			$.ajax({
 				type: "POST",
 				url: "feedhandler.php",
-				data: "p=1&name="+name+"&source="+source+"&type="+type+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+				data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
 				success: function(msg){
-					window.location = "adminfeed.php";
+				console.log(msg);
+					//window.location = "adminfeed.php";
 				}
 			});
 		}
@@ -207,6 +221,13 @@ function deleteFeed(name){
 	});
 }
 
+/**
+ * Parametertypes:
+ * ShortText = 0; (input text)
+ * LongText = 1; (text area)
+ * Number = 2; (input number)
+ * Boolean = 3; (input checkbox)
+ */
 function getTypeParameters(){
 	var table = document.getElementById("required");
 	var select = document.getElementById("typeSelect").value;
@@ -231,10 +252,44 @@ function getTypeParameters(){
 				var td = document.createElement("td");
 				td.appendChild(document.createTextNode(item["label"]));
 				tr.appendChild(td);
+				
 				var td = document.createElement("td");
-				var input = document.createElement("input");
-				input.className = "formTXB";
-				input.value = item["value"];
+				var type = parseInt(item["type"]);
+				var input = null;
+				switch(type)
+				{
+					case 0:
+					//ShortText = 0; (input text)
+						input = document.createElement("input");
+						input.name = row;
+						input.className = "formTXB";
+						input.value = item["value"];
+						break;
+					case 1:
+					//LongText = 1; (text area)
+						input = document.createElement("textarea");
+						input.name = row;
+						input.className = "noteTXB";
+						input.appendChild(document.createTextNode(item["value"]));
+						break;
+					case 2:
+					//Number = 2; (input number)
+						input = document.createElement("input");
+						input.name = row;
+						input.type = "number";
+						input.className = "formNB";
+						input.value = item["value"];
+						break;
+					case 3:
+					//Boolean = 3; (input checkbox)
+						input = document.createElement("input");
+						input.name = row;
+						input.type = "checkbox";
+						input.value = item["value"];
+						break;
+					default:
+					  break;
+				}
 				td.appendChild(input);
 				tr.appendChild(td);
 				
