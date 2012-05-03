@@ -204,8 +204,11 @@ function editChannel(name){
 			document.getElementById("noteTXB").value = jsonobj["note"];
 			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
-			arr[0] += "}";
+			
 			if(arr.length > 1){
+				for(var i = 0; i < arr.length-1; i++){
+					arr[i] += "}";
+				}
 				for(var i = 0; i < arr.length; i++){
 					var jsonitem = jQuery.parseJSON(arr[i]);
 					var data = jsonToString(jsonitem);
