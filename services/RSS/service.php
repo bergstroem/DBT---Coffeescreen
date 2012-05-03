@@ -13,7 +13,7 @@ class RSS extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("url", "RSS Url", Type::ShortText, "http://");
+		$this->createParameter("url", "RSS Url", Type::ShortText, "");
 		$this->createParameter("quantity", "Quantity", Type::Number, 3);
 	}
 

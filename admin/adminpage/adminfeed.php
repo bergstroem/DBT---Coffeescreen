@@ -17,7 +17,7 @@
 						<td class="itemName">Name</td>
 						<td class="itemType">Type</td>
 						<td>Description</td>
-						<td><input type="button" id="newFeedButton" class="itemButton maincolor" value="Add"/></td>
+						<td><input type="button" id="newFeedButton" class="itemButton cyanbutton" value="Add"/></td>
 					</tr>
 				</table>
 			</div>

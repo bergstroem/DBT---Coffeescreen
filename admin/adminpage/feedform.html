@@ -1,7 +1,7 @@
 ﻿<table id="required" class="formtable">
 	<tr class="listHeader">
 		<td>Create a feed</td>
-		<td><input type="button" name="savebutton" value="Save feed" class="saveButton maincolor" onclick="saveFeed()"></td>
+		<td><input type="button" name="savebutton" value="Save" class="itemButton cyanbutton" onclick="saveFeed()"></td>
 	</tr>
 	<tr class="listHeader">
 		<td>Required</td>
@@ -12,7 +12,7 @@
 	</tr>
 	<tr class="listItem">
 		<td><label for=typeSelect>Type</label></td>
-		<td><select id="typeSelect" class="formTypeSelect"></td>
+		<td><select name="type" id="type" class="formTypeSelect"></td>
 	</tr>
 </table>
 <table id="additional" class="formtable">
@@ -25,14 +25,14 @@
 	</tr>
 	<tr class="listItem">
 		<td><label for=displayTime>Displaytime (s)</label></td>
-		<td><input type="number" name="displayTime" id="displayTime" class="formNB" value=10 min=1 /></td>
+		<td><input type="number" name="displaytime" id="displayTime" class="formNB" value=0 min=1 /></td>
 	</tr>
 	<tr class="listItem">
 		<td><label for=expireTime>ExpireTime (h)</label></td>
-		<td><input type="number" name="expireTime" id="expireTime" class="formNB" value=0 min=0 /></td>
+		<td><input type="number" name="expiretime" id="expireTime" class="formNB" value=0 min=0 /></td>
 	</tr>
 	<tr class="listItem">
-		<td><label for=noteTXB>Note</label></td>
-		<td><textarea name="note" id="note" class="noteTXB"></textarea></td>
+		<td><label for=noteTXB>Description</label></td>
+		<td><textarea name="note" id="description" class="noteTXB"></textarea></td>
 	</tr>
 </table>

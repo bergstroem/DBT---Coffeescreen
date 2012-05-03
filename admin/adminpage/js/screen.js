@@ -99,24 +99,18 @@ function createScreen(name){
 	var button = document.createElement("input");
 	button.type = "button";
 	button.id = "panic:" + name;
-	button.className = "itemButton red";
+	button.className = "itemButton redbutton";
 	button.value = "Panic";
 	td.appendChild(button);
 	
 	button = document.createElement("input");
 	button.type = "button";
 	button.id = "set:" + name;
-	button.className = "itemButton maincolor";
+	button.className = "itemButton cyanbutton";
 	button.value = "Set";
 	td.appendChild(button);
 	
 	tr.appendChild(td);
-	
-	var set = document.createElement("input");
-	set.id = "set:" + name;
-	set.type = "button";
-	set.value = "Set";
-	set.className = "itemButton maincolor";
 	
 	table.appendChild(tr);
 	$.ajax({

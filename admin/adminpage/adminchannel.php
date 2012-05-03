@@ -16,7 +16,7 @@
 					<tr class="listHeader">
 						<td class="itemName">Name</td>
 						<td>Description</td>
-						<td><input type="button" id="newChannelButton" class="itemButton maincolor" value="Add"/></td>
+						<td><input type="button" id="newChannelButton" class="itemButton cyanbutton" value="Add"/></td>
 					</tr>
 				</table>
 			</div>
