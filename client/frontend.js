@@ -195,12 +195,20 @@ function connectToServer () {
 		
 		//Read screen name from URL
         var name = getQueryVariable('name');
+        var channel = getQueryVariable('channel');
+        
         if(typeof name == "undefined")
         	name = "default";
-        console.log("Name: " + name);
+        else {
+        	if(typeof channel == "undefined")
+        		channel = name;
+        }
+        
+        
+        console.log("Name: " + name + ", Channel: " + channel);
         
         //Send a connection message to the server
-		connection.send('Connect: ' + name);
+		connection.send('Connect: ' + name + ";" + channel);
     };
 
     //When something goes wrong

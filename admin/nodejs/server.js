@@ -10,7 +10,7 @@ var isPanicMode = false;
 function Screen(id, name, channel, connection) {
 	this.id = id;
 	this.name = name;
-	this.channel = ch.channel;
+	this.channel = channel;
 	this.connection = connection;
 	
 	this.setChannel = function(newChannel) {
@@ -88,7 +88,7 @@ var server = http.createServer(function(request, response) {
     	var connectedScreens = "";
     
 		for(i = 0; i < screens.length; i++) {
-			connectedScreens += screens[i].name + ";";
+			connectedScreens += screens[i].name + "," + screens[i].channel + ";";
 		}
 		
 		connectedScreens = connectedScreens.substring(0, connectedScreens.length-1);
@@ -172,8 +172,10 @@ wsServer.on('request', function(request) {
             // process WebSocket message
 			if(message.utf8Data.substring(0, 7) == "Connect")
 			{
-				var name = message.utf8Data.substring(9, message.utf8Data.length);
-				var screen = new Screen(1, name, name, connection);
+				var data = message.utf8Data.substring(9, message.utf8Data.length);
+				var name = data.split(";")[0];
+				var channel = data.split(";")[1];
+				var screen = new Screen(1, name, channel, connection);
 				screens.push(screen);
 				console.log("Screen " + screen.name + " connected.");
 				

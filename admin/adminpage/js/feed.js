@@ -11,7 +11,7 @@ function saveFeed(){
 		poststr += table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].name + "|";
 		poststr += table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].value + ",";
 	}
-	poststr = poststr.substr(0, poststr.length-2);
+	poststr = poststr.substr(0, poststr.length-1);
 	
 	if(name == ""){
 		alert("Please enter the required fields");
