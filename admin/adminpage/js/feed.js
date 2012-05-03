@@ -100,7 +100,6 @@ function editFeed(name){
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
 			document.getElementById("name").value = jsonobj["name"];
-			document.getElementById("source").value = jsonobj["source"];
 			document.getElementById("typeSelect").value = jsonobj["type"];
 			document.getElementById("note").value = jsonobj["note"];
 			document.getElementById("priority").value = jsonobj["priority"];
@@ -137,6 +136,7 @@ function listFeeds(){
 		data: "p=list",
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
+			console.log(msg);
 			for(var i = 0; i < jsonobj.length; i++){
 				var jsonitem = jQuery.parseJSON(jsonobj[i]);
 				

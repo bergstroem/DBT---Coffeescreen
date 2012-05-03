@@ -309,11 +309,6 @@ body{
 	height:100%;
 	background: #EBEBEB;
 	float:left;
-<<<<<<< HEAD
-	width:200px;
-	margin:20px 0 0 0;
-}
-=======
 	border-top-right-radius: 25px;
 	-webkit-border-top-right-radius: 25px;
 	-moz-border-top-right-radius: 25px;
@@ -327,4 +322,3 @@ body{
 	top:-19px;
 	margin-bottom:-19px;
 }
->>>>>>> 0ae208fadc2d6141e42bd397754e7e43a8343bd8
