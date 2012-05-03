@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL & ~E_DEPRECATED);
+error_reporting(0);
 /**
  * getParameters
  * Prints a JSON string with all the required parameters, containing key, label
