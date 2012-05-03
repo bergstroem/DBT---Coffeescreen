@@ -8,7 +8,7 @@
 		<script type="text/javascript" src="js/feed.js"></script>
 		<meta charset="UTF-8"/>
 	</head>
-	<body>
+	<body onload="getTypeParameters()">
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="feedcontent" class="content">

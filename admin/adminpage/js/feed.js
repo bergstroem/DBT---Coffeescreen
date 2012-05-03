@@ -208,26 +208,38 @@ function deleteFeed(name){
 }
 
 function getTypeParameters(){
+	var table = document.getElementById("required");
+	var select = document.getElementById("typeSelect").value;
+	
+	if(table.getElementsByTagName("tr").length > 4){
+		for(var i = table.getElementsByTagName("tr").length-1; i >= 4; i--){
+			table.removeChild(table.getElementsByTagName("tr")[i]);
+		}
+	}
+	
 	$.ajax({
 		type: "GET",
 		url: "../../services/Api.php",
-		data: "getParameters&service=RSS",
+		data: "getParameters&service="+select,
 		success: function(msg){
-			console.log(msg);
+			var jsonobj = jQuery.parseJSON(msg);
+			for(row in jsonobj){
+				item = jsonobj[row];
+				var tr = document.createElement("tr");
+				tr.className = "listItem";
+				
+				var td = document.createElement("td");
+				td.appendChild(document.createTextNode(item["label"]));
+				tr.appendChild(td);
+				var td = document.createElement("td");
+				var input = document.createElement("input");
+				input.className = "formTXB";
+				input.value = item["value"];
+				td.appendChild(input);
+				tr.appendChild(td);
+				
+				table.appendChild(tr);
+			}
 		}
 	});
 }
-
-/*
-function powerUsage(){
-	var tmp = document.getElementById("temp");
-	$.ajax({
-		type: "POST",
-		url: "powerusage.php",
-		data: "",
-		success: function(msg){
-			tmp.innerHTML = "Current powerusage: " + msg.substr(0,4) + " kW";
-		}
-	});
-	setTimeout("powerUsage()",5000);
-}*/
