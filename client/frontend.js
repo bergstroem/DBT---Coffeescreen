@@ -33,7 +33,9 @@ function switchMainInformation() {
 	var urls = new Array();
 	if(images.length > 0){
 		for(var i = 0; i < images.length; i++){
-			images[i].src = images[i].src.replace("%20", "").replace(" ", "")
+			images[i].src = images[i].src.replace("%20", "").replace(" ", "");
+			images[i].style.display = "block";
+			images[i].style.margin = "0 auto";
 			urls.push(images[i].src);
 		}
 	}
@@ -119,8 +121,6 @@ function adjustPostWidth() {
 	for (var i = 0; i < childImages.length; i++) {
 		
 		//If the image isnt too small or too big, scale it.
-		childImages[i].style.display = "block";
-		childImages[i].style.margin = "0 auto";
 		
 		console.log(main.clientWidth/1.5 + " " + childImages[i].clientWidth + " " + main.clientWidth*1.5);
 		if(childImages[i].clientWidth > main.clientWidth/1.5 && childImages[i].clientWidth < main.clientWidth*1.5) {
