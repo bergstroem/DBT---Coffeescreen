@@ -12,7 +12,7 @@
 		$c = explode(",",$custom);
 		
 		$data = array();
-		$data['namn'] = $name;
+		$data['name'] = $name;
 		$data['type'] = $type;
 		
 		foreach($c as $item){
