@@ -2,14 +2,29 @@
 	$p = $_POST['p'];
 	if($p == 1){
 		$name = $_POST['name'];
-		$source = $_POST['source'];
 		$type = $_POST['type'];
+		$custom = $_POST['custom'];
 		$note = $_POST['note'];
 		$priority = $_POST['priority'];
 		$displaytime = $_POST['displaytime'];
 		$expiretime = $_POST['expiretime'];
-
-		$data = array('name' => $name, 'source' => $source, 'type' => $type, 'note' => $note, 'priority' => $priority, 'displaytime' => $displaytime, 'expiretime' => $expiretime);
+		
+		$c = explode(",",$custom);
+		
+		$data = array();
+		$data['namn'] = $name;
+		$data['type'] = $type;
+		
+		foreach($c as $item){
+			$split = explode("|",$item);
+			$data[$split[0]] = $split[1];
+		}
+		
+		$data['note'] = $note;
+		$data['priority'] = $priority;
+		$data['displaytime'] = $displaytime;
+		$data['expiretime'] = $expiretime;
+		
 		$jsondata = json_encode($data);
 		echo $jsondata;
 		
