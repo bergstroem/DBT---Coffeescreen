@@ -50,6 +50,7 @@ function switchMainInformation() {
 	if(++mainContentCounter >= currentInformation.maincontent.posts.length) {
 		mainContentCounter = 0;
 		//request new information
+		console.log("Refreshing...");
 		connection.send('Refresh');
 	}
 }
