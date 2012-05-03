@@ -204,8 +204,7 @@ function editChannel(name){
 			document.getElementById("noteTXB").value = jsonobj["note"];
 			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
-			
-			if(arr.length > 1){
+			if(arr.length > 0){
 				for(var i = 0; i < arr.length-1; i++){
 					arr[i] += "}";
 				}
