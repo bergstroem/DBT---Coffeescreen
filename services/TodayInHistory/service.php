@@ -14,6 +14,7 @@ class TodayInHistory extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
+		$this->createParameter("latest", "Only latest event", Type::Boolean);
 	}
 
 	/**
@@ -24,6 +25,8 @@ class TodayInHistory extends Service {
 		$day = date("j");
 		$month = date("F");
 
+		$onlyLatest = $this->readParameter("latest");
+
 		//Load the wikipedia data and pick out the event list
 		$html = file_get_html("http://en.wikipedia.org/wiki/".$month."_".$day);
 		$events = $html->find("div[id=mw-content-text] ul", 1)->find("li");
@@ -31,7 +34,10 @@ class TodayInHistory extends Service {
 		//Select a random event and display it
 		$content = "<h1>Today in History</h1>";
 
-		$content .= "<p>".$events[rand(0, count($events)-1)]->plaintext."</p>";
+		if($onlyLatest)
+			$content .= "<p>".$events[count($events)-1]->plaintext."</p>";
+		else
+			$content .= "<p>".$events[rand(0, count($events)-1)]->plaintext."</p>";
 
 		$content .= "<p style=\"font-size: 80%;\">";
 		$content .= "Source: http://en.wikipedia.org/wiki/".$month."_".$day;
