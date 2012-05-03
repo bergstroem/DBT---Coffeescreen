@@ -24,9 +24,11 @@ function switchMainInformation() {
 	console.log("Switching...");
 	//Extract article info
 	var content = currentInformation.maincontent.posts[mainContentCounter].html;
-	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
-	displaytime = parseFloat(displaytime);
+	
 	document.getElementById("mainContent").innerHTML = content;
+	
+	//Adjust width of the post.											
+	adjustPostWidth();
 			
 	//Preload images
 	var images = document.getElementById("mainContent").getElementsByTagName("img");
@@ -52,11 +54,13 @@ function switchMainInformation() {
 }
 
 //What to do when all the images are loaded in a view
-function mainPostLoaded(displaytime) {
-	
-	adjustPostWidth();
-
-	if(displaytime!=0){
+function mainPostLoaded() {
+	//Temp. moved here
+	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
+	displaytime = parseFloat(displaytime)*1000; // Fixed: Seems like the code 
+												//wants milliseconds. But 
+												//displaytime is given in seconds
+	if(displaytime==0){
 		//Calculate time to display the view
 		var displaytime = 100;
 		displaytime *= document.getElementById("mainContent").offsetHeight;
@@ -88,17 +92,18 @@ function mainPostLoaded(displaytime) {
 function scrollMainContent(stepTime) {
 	totalElapsedTime = (new Date().getTime() - startTime);
 	
+	//Update progress bar
 	document.getElementById('progressBar').style.width = totalElapsedTime/totalTime * window.innerWidth + "px";
-	
 	
 	document.getElementById("pageWrapper").scrollTop += 1;
 	if(document.getElementById("pageWrapper").scrollTop <
-			document.getElementById("pageWrapper").scrollHeight) {
+			(document.getElementById("pageWrapper").scrollHeight)) {
 		mainContentProgressTimeout = setTimeout(scrollMainContent, stepTime, stepTime);
 	}
 }
 
 function adjustPostWidth() {
+	document.getElementById('mainContent').style.width = "";
 	//Get mainContent and its child images
 	var main = document.getElementById('mainContent');
 	var childImages = document.getElementById('mainContent').getElementsByTagName('img');
@@ -108,19 +113,15 @@ function adjustPostWidth() {
 	var adjusted = false;	
 	for (var i = 0; i < childImages.length; i++) {
 		
-		//If the image isnt too small, scale it up.
-		if(childImages[i].clientWidth > main.clientWidth/1.8) {
+		//If the image isnt too small or too big, scale it.
+		if(childImages[i].clientWidth > main.clientWidth/1.5 && childImages[i].clientWidth < main.clientWidth*1.5) {
 			adjusted = true;
 			childImages[i].style.width = main.clientWidth - 100 + "px"; // -100 to get some margin
 			main.style.width = childImages[i].clientWidth + "px";
 			break;
 		}
 		
-		//If the image is too wide, but not wider than 10%, scale down
-		if(childImages[i].clientWidth > main.clientWidth*1.10) {
-			adjusted = true;
-			childImages[i].style.width = main.clientWidth - 100 + "px";
-		}
+		//If too wide, try scaling on height
 	}
 	if(!adjusted) {
 		console.log("doing it");
