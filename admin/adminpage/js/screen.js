@@ -50,33 +50,7 @@ $(document).ready(function(){
  * Will connect to the node server and get all the connected screens and display them.
 */
 function listScreens(){
-	var table = document.createElement("table");
-	table.id = "listContent";
-	document.getElementById("screencontent").appendChild(table);
-	var tr = document.createElement("tr");
-	tr.className = "listHeader";
-	
-	var td = document.createElement("td");
-	td.className = "itemName";
-	td.appendChild(document.createTextNode("Name"));
-	tr.appendChild(td);
-	
-	var td = document.createElement("td");
-	td.className = "itemType";
-	td.appendChild(document.createTextNode("Channel"));
-	tr.appendChild(td);
-	
-	td = document.createElement("td");
-	var button = document.createElement("input");
-	button.type = "button";
-	button.value = "Panic all";
-	button.id = "panic:All";
-	button.className = "itemButton red";
-	
-	td.appendChild(button);
-	tr.appendChild(td);
-	table.appendChild(tr);
-
+	var table = document.getElementById("listContent");
 	$.ajax({
 		type: "POST",
 		url: "http://" + host + ":8081/listscreens",
@@ -103,7 +77,7 @@ function createScreen(name){
 	table = document.getElementById("listContent");
 	
 	var tr = document.createElement("tr");
-	tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listitem" : "listitem grey";
+	tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listItem" : "listItem grey";
 	
 	var td = document.createElement("td");
 	td.className = "itemName";

@@ -1,7 +1,0 @@
-//Not used!
-function ContentItem() {
-	this.title;
-	this.date;
-	this.content;
-	//More?
-}

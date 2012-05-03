@@ -1,4 +1,4 @@
-<?
+<?php
 //Include the base class for services.
 include_once("Service.php");
 

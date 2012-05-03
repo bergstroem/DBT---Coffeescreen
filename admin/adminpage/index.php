@@ -1,4 +1,6 @@
-﻿<html>
+﻿<!DOCTYPE html>
+
+<html>
 	<head>
 		<title>Screens</title>
 		<link rel="stylesheet" type="text/css" href="css/admin.css"/>
@@ -10,7 +12,14 @@
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="screencontent" class="content">
+				<table id="listContent">
+					<tr class="listHeader">
+						<td class="itemName">Name</td>
+						<td class="itemType">Channel</td>
+						<td><input type="button" id="panic:All" class="itemButton red" value="Panic all"/></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</body>
-</html>
+</html>	

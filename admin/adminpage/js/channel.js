@@ -26,7 +26,7 @@ function createItem(name, target, filler, feeddata){
 		var delbutton = document.createElement("input");
 		delbutton.setAttribute("type","button");
 		delbutton.setAttribute("name","rbutton");
-		delbutton.setAttribute("value","X");
+		delbutton.setAttribute("value","Delete");
 		delbutton.setAttribute("class","removebutton red");
 		delbutton.setAttribute("onclick","removeItem(this)");
 		divTag.appendChild(delbutton);
@@ -283,31 +283,7 @@ function addEL(){
  * Used for listing all the existing channels and displaying them.
 */
 function listChannels(){
-	var table = document.createElement("table");
-	table.id = "listContent";
-	document.getElementById("adminchannelcontent").appendChild(table);
-	var tr = document.createElement("tr");
-	tr.className = "listHeader";
-	
-	var td = document.createElement("td");
-	td.className = "itemName";
-	td.appendChild(document.createTextNode("Name"));
-	tr.appendChild(td);
-	
-	td = document.createElement("td");
-	td.appendChild(document.createTextNode("Description"));
-	tr.appendChild(td);
-	
-	td = document.createElement("td");
-	var button = document.createElement("input");
-	button.type = "button";
-	button.value = "Add";
-	button.id = "newChannelButton";
-	button.className = "itemButton maincolor";
-	
-	td.appendChild(button);
-	tr.appendChild(td);
-	table.appendChild(tr);
+	var table = document.getElementById("listContent");
 	
 	$.ajax({
 		type: "POST",
@@ -318,11 +294,11 @@ function listChannels(){
 			for(var i = 0; i < jsonobj.length; i++){
 				var jsonitem = jQuery.parseJSON(jsonobj[i]);
 				
-				tr = document.createElement("tr");
+				var tr = document.createElement("tr");
 				tr.id = jsonitem["name"];
-				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listitem" : "listitem grey";
+				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listItem" : "listItem grey";
 				
-				td = document.createElement("td");
+				var td = document.createElement("td");
 				td.className = "itemName";
 				td.appendChild(document.createTextNode(jsonitem["name"]));
 				tr.appendChild(td);
