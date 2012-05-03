@@ -1,4 +1,6 @@
-﻿<html>
+﻿<!DOCTYPE html>
+
+<html>
 	<head>
 		<title>Channel</title>
 		<link rel="stylesheet" type="text/css" href="css/admin.css"/>

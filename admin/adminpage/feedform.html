@@ -1,40 +1,42 @@
-﻿<fieldset>
-	<legend>Required</legend>
-	<ol>
-		<li>
-			<label for=nameTXB>Name</label>
-			<input type="text" name="name" id="name" class="formTXB"/>
-		</li>
-		<li>
-			<label for=sourceTXB>Source</label>
-			<input type="text" name="source" id="source" class="formTXB"/>
-		</li>
-		<li>
-			<label for=typeSelect>Type</label>
-			<select id="typeSelect" class="formTypeSelect">
-			</select>
-		</li>
-	</ol>
-</fieldset>
-<fieldset>
-	<legend>Customization</legend>
-	<ol>
-		<li>
-			<label for=priority>Priority</label>
-			<input type="number" name="priority" id="priority" class="formNB" value=1 min=1 />
-		</li>
-		<li>
-			<label for=displayTime>Displaytime (s)</label>
-			<input type="number" name="displayTime" id="displayTime" class="formNB" value=10 min=1 />
-		</li>
-		<li>
-			<label for=expireTime>ExpireTime (h)</label>
-			<input type="number" name="expireTime" id="expireTime" class="formNB" value=0 min=0 />
-		</li>
-		<li>
-			<label for=noteTXB>Note</label>
-			<textarea name="note" id="note" class="noteTXB"></textarea>
-		</li>
-	</ol>
-</fieldset>
-<input type="button" name="savebutton" value="Save feed" class="saveButton maincolor" onclick="saveFeed()">
+﻿<table id="required" class="formtable">
+	<tr class="listHeader">
+		<td>Create a feed</td>
+		<td><input type="button" name="savebutton" value="Save feed" class="saveButton maincolor" onclick="saveFeed()"></td>
+	</tr>
+	<tr class="listHeader">
+		<td>Required</td>
+	</tr>
+	<tr class="listItem">
+		<td><label for=nameTXB>Name</label></td>
+		<td><input type="text" name="name" id="name" class="formTXB"/></td>
+	</tr>
+	<tr class="listItem">
+		<td><label for=typeSelect>Type</label></td>
+		<td><select id="typeSelect" class="formTypeSelect"></td>
+	</tr>
+	<tr class="listItem">
+		<td><label for=sourceTXB>Source</label></td>
+		<td><input type="text" name="source" id="source" class="formTXB"/></td>
+	</tr>
+	<tr class="listHeader">
+</table>
+<table id="additional" class="formtable">
+		<td>Additional</td>
+	</tr>
+	<tr class="listItem">
+		<td><label for=priority>Priority</label></td>
+		<td><input type="number" name="priority" id="priority" class="formNB" value=1 min=1 /></td>
+	</tr>
+	<tr class="listItem">
+		<td><label for=displayTime>Displaytime (s)</label></td>
+		<td><input type="number" name="displayTime" id="displayTime" class="formNB" value=10 min=1 /></td>
+	</tr>
+	<tr class="listItem">
+		<td><label for=expireTime>ExpireTime (h)</label></td>
+		<td><input type="number" name="expireTime" id="expireTime" class="formNB" value=0 min=0 /></td>
+	</tr>
+	<tr class="listItem">
+		<td><label for=noteTXB>Note</label></td>
+		<td><textarea name="note" id="note" class="noteTXB"></textarea></td>
+	</tr>
+</table>

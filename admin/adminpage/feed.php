@@ -1,4 +1,6 @@
-﻿<html>
+﻿<!DOCTYPE html>
+
+<html>
 	<head>
 		<title>Feeds</title>
 		<link rel="stylesheet" type="text/css" href="css/admin.css"/>

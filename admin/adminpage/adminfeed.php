@@ -1,4 +1,6 @@
-﻿<html>
+﻿<!DOCTYPE html>
+
+<html>
 	<head>
 		<title>Feeds</title>
 		<link rel="stylesheet" type="text/css" href="css/admin.css"/>
@@ -10,6 +12,14 @@
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="feedcontent" class="content">
+				<table id="listContent">
+					<tr class="listHeader">
+						<td class="itemName">Name</td>
+						<td class="itemType">Type</td>
+						<td>Description</td>
+						<td><input type="button" id="newFeedButton" class="itemButton maincolor" value="Add"/></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</body>

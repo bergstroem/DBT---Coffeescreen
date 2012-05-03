@@ -1,7 +1,11 @@
 ﻿<div id="leftColumn">
 	<div id="namebox">
-		<table>
-			<tr>
+		<table class="formtable">
+			<tr class="listHeader">
+				<td>Create a channel</td>
+				<td><input type="button" name="savechannelbutton" value="Save channel" class="saveButton maincolor" onclick="saveChannel()"></td>
+			</tr>
+			<tr class="listItem">
 				<td>
 					<label for=nameTXB>Name</label>
 				</td>
@@ -9,25 +13,20 @@
 					<input type="text" name="name" id="nameTXB" class="formTXB"/>
 				</td>
 			</tr>
-			<tr>
+			<tr class="listItem">
 				<td>
 					<label for=staticTXB>Static information</label>
 				</td>
 				<td>
-					<input type="text" name="static" id="staticTXB" class="lformTXB"/>
+					<input type="text" name="static" id="staticTXB" class="formTXB"/>
 				</td>
 			</tr>
-			<tr>
+			<tr class="listItem">
 				<td>
 					<label for=noteTXB>Note</label>
 				</td>
 				<td>
 					<textarea name="note" id="noteTXB" class="noteTXB"></textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="button" name="savechannelbutton" value="Save channel" class="saveButton maincolor" onclick="saveChannel()">
 				</td>
 			</tr>
 		</table>
@@ -36,7 +35,7 @@
 	<div id="subcontent"></div>
 </div>
 <div id="rightColumn">
-	<div id="contentlist"></div>
+	<div id="contentlist"><p class="feedlist">Feedlist</p></div>
 </div>
 <script>
 	addEL();

@@ -115,37 +115,7 @@ function getFeedTypes(){
 }
 
 function listFeeds(){
-	var table = document.createElement("table");
-	table.id = "listContent";
-	document.getElementById("feedcontent").appendChild(table);
-	var tr = document.createElement("tr");
-	tr.className = "listHeader";
-	
-	var td = document.createElement("td");
-	td.className = "itemName";
-	td.appendChild(document.createTextNode("Name"));
-	tr.appendChild(td);
-	
-	td = document.createElement("td");
-	td.className = "itemType";
-	td.appendChild(document.createTextNode("Type"));
-	tr.appendChild(td);
-	
-	td = document.createElement("td");
-	td.appendChild(document.createTextNode("Description"));
-	tr.appendChild(td);
-	
-	td = document.createElement("td");
-	var button = document.createElement("input");
-	button.type = "button";
-	button.value = "Add";
-	button.id = "newChannelButton";
-	button.className = "itemButton maincolor";
-	
-	td.appendChild(button);
-	tr.appendChild(td);
-	table.appendChild(tr);
-	
+	var table = document.getElementById("listContent");
 	
 	$.ajax({
 		type: "POST",
@@ -156,11 +126,11 @@ function listFeeds(){
 			for(var i = 0; i < jsonobj.length; i++){
 				var jsonitem = jQuery.parseJSON(jsonobj[i]);
 				
-				tr = document.createElement("tr");
+				var tr = document.createElement("tr");
 				tr.id = jsonitem["name"];
-				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listitem" : "listitem grey";
+				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listItem" : "listItem grey";
 				
-				td = document.createElement("td");
+				var td = document.createElement("td");
 				td.className = "itemName";
 				td.appendChild(document.createTextNode(jsonitem["name"]));
 				tr.appendChild(td);
@@ -213,6 +183,10 @@ $(document).ready(function(){
 				deleteFeed(e.target.id);
 		}
 	});
+	
+	$('#typeSelect').change(function(e){
+		getTypeParameters();
+	});
 });
 
 /*
@@ -229,6 +203,17 @@ function deleteFeed(name){
 		data: "p=3&name="+name,
 		success: function(msg){
 			document.getElementById(parentname).removeChild(document.getElementById(divname));
+		}
+	});
+}
+
+function getTypeParameters(){
+	$.ajax({
+		type: "GET",
+		url: "../../services/Api.php",
+		data: "getParameters&service=RSS",
+		success: function(msg){
+			console.log(msg);
 		}
 	});
 }
