@@ -181,6 +181,15 @@ wsServer.on('request', function(request) {
 				
 				screen.sendChannel();
 			}
+			
+			if(message.utf8Data.substring(0, 7) == "Refresh")
+			{
+				var data = message.utf8Data.substring(9, message.utf8Data.length);
+				
+				var screen = getScreen(connection);
+				
+				screen.sendChannel();
+			}
         }
     });
 
