@@ -10,12 +10,15 @@
  * Query example: Api.php?getParameters&service=RSS
  * Output syntax: {key1:{"label":labelText, "value":defaultValue}, key2:...}
 **/
-if(isset($_GET["getParameters"]) && isset($_GET["service"])) {
-	$directory = $_GET["service"];
 
+if(isset($_GET["getParameters"]) && isset($_GET["service"])) {
+	
+	$directory = $_GET["service"];
+	
 	if(file_exists($directory)){
 		include_once("$directory/service.php");
-		$service = new $SERVICE_NAME();
+		
+		$service = new $directory();
 		echo $service->getParameters();
 	}
 }
