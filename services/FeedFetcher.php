@@ -13,9 +13,7 @@
 		$servicename = $item->type;
 		$service = new $servicename();
 		
-		$url = array();
-		$url["url"] = $item->source;
-		$service->loadParameters($url);
+		$service->loadParameters($item);
 		
 		$itemList = $service->getViewList();
 		

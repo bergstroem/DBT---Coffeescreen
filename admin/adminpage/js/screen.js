@@ -64,16 +64,17 @@ function listScreens(){
 			}
 		}
 	});
-	
-	createScreen("temp");
 }
 
 /*
- * createScreen(name)
+ * createScreen(info)
  * Used for creating a screen, used by listScreens().
- * name: Name of the screen that will be displayed.
+ * info: Name of the screen that will be displayed and current channel (comma separated).
 */
-function createScreen(name){
+function createScreen(info){
+	console.log(info.split(","));
+	var name = info.split(",")[0];
+	var currentChannel = info.split(",")[1];
 	table = document.getElementById("listContent");
 	
 	var tr = document.createElement("tr");
@@ -126,6 +127,14 @@ function createScreen(name){
 				item.appendChild(document.createTextNode(jsonitem["name"]));
 				
 				select.appendChild(item);
+			}
+			//Select the current channel
+			var options = select.options;
+			for(var i = 0; i < options.length; i++) {
+				console.log(options[i].value + " " + currentChannel);
+				if(options[i].value == currentChannel) {
+					select.selectedIndex = i;
+				}
 			}
 		}
 	});
