@@ -76,7 +76,7 @@ function mainPostLoaded() {
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
 		clearTimeout(mainContentProgressTimeout);
-		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*3);
+		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*2);
 	}
 	else{
 		//Setup progress bra variables
@@ -87,7 +87,7 @@ function mainPostLoaded() {
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
 		clearTimeout(mainContentProgressTimeout);
-		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*3);
+		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*2);
 	}
 }
 

@@ -31,7 +31,7 @@ function Screen(id, name, channel, connection) {
 			fs.readFile("../../channels/" + channel + ".json", 'utf8', function (err, data) {
 				if (err) {
 					console.log("Looking for default");
-					fs.readFile("../../channels/default_channel.json", 'utf8', function (err, data) {
+					fs.readFile("../../channels/default.json", 'utf8', function (err, data) {
 						if(err) {
 							//Send no data
 							connection.send("No data available");
@@ -133,6 +133,7 @@ var server = http.createServer(function(request, response) {
 	else if(url_parts.pathname == "/unPanic" || url_parts.pathname == "/unPanic/") {
 		isPanicMode = false;
 		response.end("Set panic mode to false");
+		console.log("Set panic mode to false");
 	}
     
     //Set template
@@ -150,7 +151,7 @@ var server = http.createServer(function(request, response) {
     }
 
 	else if(url_parts.pathname == "/isPanic/" || url_parts.pathname == "/isPanic") {
-		response.end("Is Panic: " + isPanicMode);
+		response.end(isPanicMode.toString());
 	}
 });
 server.listen(8081, function() { });
@@ -183,9 +184,7 @@ wsServer.on('request', function(request) {
 			}
 			
 			if(message.utf8Data.substring(0, 7) == "Refresh")
-			{
-				var data = message.utf8Data.substring(9, message.utf8Data.length);
-				
+			{				
 				var screen = getScreen(connection);
 				
 				screen.sendChannel();
