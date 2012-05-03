@@ -61,7 +61,7 @@ body {
 
 #contentArea {
 	position: relative;
-	margin: 20px 0;
+	margin: 35px 0;
 	padding: 10px 20px;
 }
 
@@ -71,7 +71,6 @@ body {
 
 #progressBar {
 	height: 2px;
-	width: 200px;
 	position: fixed;
 	bottom: 55px;
 	background: #00aeef;

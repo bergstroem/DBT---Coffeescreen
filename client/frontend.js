@@ -6,6 +6,12 @@ var mainContentSwitchingTimeout = null;
 
 var running = false;
 
+//Progress bar
+var progress = 0;
+var totalElapsedTime = 0;
+var totalTime = 0;
+var startTime = 0;
+
 window.onload = init;
 
 function init() {
@@ -51,7 +57,11 @@ function mainPostLoaded(displaytime) {
 		//Calculate time to display the view
 		var displaytime = 100;
 		displaytime *= document.getElementById("mainContent").offsetHeight;
+		
 		console.log("Will display for " + (displaytime/1000) + "s");
+		//Setup progress bar variables
+		totalTime = displaytime;
+		startTime = new Date().getTime();
 		//Setup display and scroll timers
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
 		document.getElementById("pageWrapper").scrollTop = 0;
@@ -59,6 +69,9 @@ function mainPostLoaded(displaytime) {
 		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight));
 	}
 	else{
+		//Setup progress bra variables
+		totalTime = displaytime;
+		startTime = new Date().getTime();
 		console.log("Will display for " + (displaytime/1000) + "s");
 		//Setup display and scroll timers
 		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
@@ -70,6 +83,12 @@ function mainPostLoaded(displaytime) {
 
 //One scrolling jump
 function scrollMainContent(stepTime) {
+	totalElapsedTime = (new Date().getTime() - startTime);
+	
+	console.log(totalElapsedTime/totalTime*window.innerWidth);
+	document.getElementById('progressBar').style.width = totalElapsedTime/totalTime * window.innerWidth + "px";
+	
+	
 	document.getElementById("pageWrapper").scrollTop += 1;
 	if(document.getElementById("pageWrapper").scrollTop <
 			document.getElementById("pageWrapper").scrollHeight) {
