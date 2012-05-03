@@ -312,14 +312,14 @@ function listChannels(){
 				button.type = "button";
 				button.id = jsonitem["name"] + ".json";
 				button.value = "Delete";
-				button.className = "itemButton red";
+				button.className = "itemButton redbutton";
 				td.appendChild(button);
 				
 				button = document.createElement("input");
 				button.type = "button";
 				button.id = jsonitem["name"] + ".json";
 				button.value = "Edit";
-				button.className = "itemButton maincolor";
+				button.className = "itemButton cyanbutton";
 				td.appendChild(button);
 				
 				tr.appendChild(td);
