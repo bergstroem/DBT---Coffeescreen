@@ -13,7 +13,8 @@ class RSS extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("url", "RSS Url", "http://");
+		$this->createParameter("url", "RSS Url", Type::ShortText, "http://");
+		$this->createParameter("quantity", "Quantity", Type::Number, 3);
 	}
 
 	/**
@@ -22,6 +23,7 @@ class RSS extends Service {
 	**/
 	public function getViews() {
 		$feedSourcesArray = array($this->readParameter("url"));
+		$quantity = max(array($this->readParameter("quantity")), 0);
 		
 		$feed = new SimplePie();
 		$feed->set_feed_url($feedSourcesArray);
@@ -30,7 +32,7 @@ class RSS extends Service {
 		
 		$posts = array();
 		
-		for ($i = 0; $i < min($feed->get_item_quantity(), 3); $i++){
+		for ($i = 0; $i < min($feed->get_item_quantity(), $quantity); $i++){
 			$item = $feed->get_item($i);
 
 			$title = $item->get_title();
