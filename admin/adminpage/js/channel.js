@@ -258,7 +258,7 @@ $(document).ready(function(){
 				window.location = "channel.php?p=1";
 			else if(e.target.value == "Edit")
 				window.location = "channel.php?p=2&name="+e.target.id;
-			else
+			else if(e.target.value == "Delete")
 				deleteChannel(e.target.id);
 		}
 	});
