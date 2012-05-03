@@ -96,8 +96,12 @@ function scrollMainContent(stepTime) {
 	document.getElementById('progressBar').style.width = totalElapsedTime/totalTime * window.innerWidth + "px";
 	
 	document.getElementById("pageWrapper").scrollTop += 1;
-	if(document.getElementById("pageWrapper").scrollTop <
-			(document.getElementById("pageWrapper").scrollHeight)) {
+	document.getElementById("pageWrapper").scrollLeft += 1;
+	
+	if	(document.getElementById("pageWrapper").scrollTop <
+		(document.getElementById("pageWrapper").scrollHeight) &&
+		(document.getElementById("pageWrapper").scrollLeft) <
+		(document.getElementById("pageWrapper").scrollWidth)) {
 		mainContentProgressTimeout = setTimeout(scrollMainContent, stepTime, stepTime);
 	}
 }
@@ -110,10 +114,14 @@ function adjustPostWidth() {
 	
 	//First, if any image is larger than the parent divs width/1.5, than scale it up
 	//and set the width of the parent to the new width
-	var adjusted = false;	
+	var adjusted = false;
 	for (var i = 0; i < childImages.length; i++) {
 		
 		//If the image isnt too small or too big, scale it.
+		childImages[i].style.display = "block";
+		childImages[i].style.margin = "0 auto";
+		
+		console.log(main.clientWidth/1.5 + " " + childImages[i].clientWidth + " " + main.clientWidth*1.5);
 		if(childImages[i].clientWidth > main.clientWidth/1.5 && childImages[i].clientWidth < main.clientWidth*1.5) {
 			console.log("Scaling image from: " + childImages[i].clientWidth + ", to: " + (main.clientWidth - 100));
 			adjusted = true;
@@ -122,7 +130,13 @@ function adjustPostWidth() {
 			break;
 		}
 		
-		//If too wide, try scaling on height
+		//If too high, try scaling on height
+		if(!adjusted) {
+			if(childImages[i].clientHeight > main.clientHeight && childImages[i].clientHeight < main.clientHeight*1.5) {
+				childImages[i].style.height = main.clientHeight - 100 + "px"; // -100 to get some margin
+				adjusted = true;
+			}
+		}
 	}
 	if(!adjusted) {
 		console.log("Scaling content");
