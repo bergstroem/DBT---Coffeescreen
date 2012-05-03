@@ -49,7 +49,9 @@ function switchMainInformation() {
 	//Ask for new info when the cycle is done
 	if(++mainContentCounter >= currentInformation.maincontent.posts.length) {
 		mainContentCounter = 0;
-		//TODO: request new information
+		//request new information
+		console.log("Refreshing...");
+		connection.send('Refresh');
 	}
 }
 
