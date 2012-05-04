@@ -4,12 +4,35 @@
  * Handles click events in index.php
 */
 $(document).ready(function(){
+	$.ajax({
+		type: "POST",
+		url: "http://" + host + ":8081/isPanic",
+		data: "",
+		success: function(msg){
+			if(msg == "true") {
+				document.getElementById('panic:All').value = "Unpanic all";
+			}
+		}
+	});
+
 	$('.content').click(function(e){
 		if($(e.target).is('.itemButton')){
 			if(e.target.value == "Panic all"){
+				e.target.value = "Unpanic all";
 				$.ajax({
 					type: "POST",
 					url: "http://" + host + ":8081/panic/?screen=*",
+					data: "",
+					success: function(msg){
+						console.log(msg);
+					}
+				});
+			}
+			else if(e.target.value == "Unpanic all"){
+				e.target.value = "Panic all";
+				$.ajax({
+					type: "POST",
+					url: "http://" + host + ":8081/unPanic",
 					data: "",
 					success: function(msg){
 						console.log(msg);
