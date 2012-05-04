@@ -23,7 +23,7 @@
 			$now = time();
 			
 			$expireTime = $resultItem["date"] + ($item->expiretime * 60 * 60);
-			if ($expireTime < $now) {
+			if ($expireTime <= $now || $item->expiretime <= 0) {
 				//Set values
 				$resultItem["displaytime"] = $item->displaytime;
 				$resultItem["priority"] = $item->priority;
