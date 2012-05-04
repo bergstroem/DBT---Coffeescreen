@@ -1,4 +1,5 @@
 <?php
+	require('TodayInHistory/service.php');
 	require('RSS/service.php');
 	require('prioritysort.php');
 	
