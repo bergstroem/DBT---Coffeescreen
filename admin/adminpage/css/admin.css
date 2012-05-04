@@ -180,8 +180,7 @@ body{
 }
 
 .formtable{
-	margin-left:auto;
-	margin-right:auto;
+	margin: 0 auto 0 auto;
 }
 
 .formTXB{
@@ -245,14 +244,14 @@ body{
 
 #maincontent{
 	width:700px;
-	height:500px;
+	min-height:500px;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
 	position:relative;
-	margin-left:auto;
-	margin-right:auto;
-	overflow-y:auto;
+	margin: 0 auto 25px auto;
+	padding-bottom: 10px;
 	font-weight:bold;
+	overflow-y:hidden;
 }
 
 #subcontent{
@@ -280,7 +279,7 @@ body{
 
 .contentitem{
 	background: #FFFFFF;
-	width:206px;
+	width:195px;
 	border-radius:10px;
 	-moz-border-radius:10px;
 	-webkit-border-radius:10px;

@@ -7,7 +7,7 @@ function saveFeed(){
 	
 	var table = document.getElementById("required");
 	var poststr = "&custom=";
-	for(var i = table.getElementsByTagName("tr").length-1; i >= 4; i--){
+	for(var i = table.getElementsByTagName("tr").length-1; i >= 5; i--){
 		poststr += table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].name + "|";
 		poststr += table.getElementsByTagName("tr")[i].getElementsByTagName("td")[1].childNodes[0].value + ",";
 	}
@@ -237,11 +237,16 @@ function getTypeParameters(fname){
 	var table = document.getElementById("required").getElementsByTagName("tbody")[0];
 	var select = document.getElementById("type").value;
 	
-	if(table.getElementsByTagName("tr").length > 4){
-		for(var i = table.getElementsByTagName("tr").length-1; i >= 4; i--){
+	if(table.getElementsByTagName("tr").length > 5){
+		for(var i = table.getElementsByTagName("tr").length-1; i >= 5; i--){
 			table.removeChild(table.getElementsByTagName("tr")[i]);
 		}
 	}
+	
+	
+	jQuery(function($){
+		$("#name").Watermark("test");
+	});
 	
 	$.ajax({
 		type: "GET",
