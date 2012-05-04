@@ -42,7 +42,6 @@ function Channel(name, note, mainContent, subContent) {
 
 //
 function fetchContent(content, callback) {
-		
 		var options = {
 			   host: 'localhost',
 			   port: 80,   
