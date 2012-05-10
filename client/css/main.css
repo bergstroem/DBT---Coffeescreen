@@ -79,14 +79,12 @@ h1 {
 	height: 2px;
 	position: absolute;
 	top: -3px;
-	left: -10px; /* Because padding */
 	background: #00aeef;
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;
+	left: 0px;
 }
 
 #bottomBar {
+
 	background: black;
 	padding: 10px;
 	font-size: 18px;
