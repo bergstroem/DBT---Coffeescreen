@@ -5,6 +5,14 @@ p.feedlist{
 	font-size:1.5em;
 }
 
+.tooltip{
+	color: #999;
+	font-size: 0.75em;
+	margin:0 0 0 5px;
+	padding:0;
+	float:left;
+}
+
 a{
 	color:white;
 	text-decoration:none;
@@ -120,6 +128,10 @@ body{
 	font-size:1.5em;
 }
 
+.listHeadName{
+	min-width:155px;
+}
+
 #listContent{
 	width:100%;
 	margin: 10px 0 25px 0;
@@ -180,7 +192,7 @@ body{
 }
 
 .formtable{
-	margin: 0 auto 0 auto;
+	margin:0 auto 0 auto;
 }
 
 .formTXB{
@@ -188,12 +200,14 @@ body{
 	height:20px;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .lformTXB{
 	width:550px;
 	height:20px;
 	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .formNB{
@@ -201,6 +215,12 @@ body{
 	height:20px;
 	border:1px solid #C7C7C7;
 	text-align:right;
+	float:left;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.formCB{
+	float:left;
 }
 
 .noteTXB{
@@ -209,12 +229,15 @@ body{
 	resize:none;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .formTypeSelect{
 	width:160px;
 	height:20px;
 	border:1px solid #C7C7C7;
+	float:left;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .saveButton{
@@ -247,6 +270,7 @@ body{
 	min-height:500px;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
+	background-image: url("../images/dropFeedsHere.png");
 	position:relative;
 	margin: 0 auto 25px auto;
 	padding-bottom: 10px;

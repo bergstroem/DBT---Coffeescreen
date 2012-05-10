@@ -61,6 +61,10 @@ function removeItem(element){
 	var name = element.parentNode.getAttribute("id");
 	var parentname = element.parentNode.parentNode.getAttribute("id");
 	document.getElementById("contentlist").appendChild(document.getElementById(name));
+	var maincont = document.getElementById("maincontent");
+	if(maincont.childNodes.length == 0){
+		maincont.style.backgroundImage = "url(images/dropFeedsHere.png)";
+	}
 }
 
 /*
@@ -100,13 +104,13 @@ function feedExists(name){
  * Used for saving a channel, will use the information in the form.
 */
 function saveChannel(){
-	var name = document.getElementById("nameTXB").value;
+	var name = document.getElementById("name").value;
 	if(name == ""){
 		alert("Please enter a name");
 	}
 	else{
-		var note = document.getElementById("noteTXB").value;
-		var stat = document.getElementById("staticTXB").value;
+		var note = document.getElementById("description").value;
+		var stat = document.getElementById("static").value;
 
 		var children = document.getElementById('maincontent').childNodes;
 		var length = children.length;
@@ -333,6 +337,11 @@ function listChannels(){
 }
 
 function getFeeds(){
+	
+	$('#name').watermark('Descriptive title for this channel');
+	$('#static').watermark('Static information at the bottom of the client display');
+	$('#description').watermark('A short description of this channel');
+	
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",

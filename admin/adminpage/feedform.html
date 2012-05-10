@@ -1,10 +1,10 @@
 ﻿<table id="required" class="formtable">
 	<tr class="listHeader">
-		<td>Create a feed</td>
+		<td class="listHeadName">Create a feed</td>
 		<td><input type="button" name="savebutton" value="Save" class="itemButton cyanbutton" onclick="saveFeed()"></td>
 	</tr>
 	<tr class="listHeader">
-		<td>Required</td>
+		<td class="listHeadName">Required</td>
 	</tr>
 	<tr class="listItem">
 		<td><label for=nameTXB>Name</label></td>
@@ -12,7 +12,7 @@
 	</tr>
 	<tr class="listItem">
 		<td><label for=typeSelect>Type</label></td>
-		<td><select name="type" id="type" class="formTypeSelect"></td>
+		<td><select name="type" id="type" class="formTypeSelect"></select><div class="tooltip">Choose which type of plugin the feed will use</div></td>
 	</tr>
 	<tr class="listHeader">
 		<td>Plugin Specific</td>
@@ -20,19 +20,19 @@
 </table>
 <table id="additional" class="formtable">
 	<tr class="listHeader">
-		<td>Additional</td>
+		<td class="listHeadName">Additional</td>
 	</tr>
 	<tr class="listItem">
 		<td><label for=priority>Priority</label></td>
-		<td><input type="number" name="priority" id="priority" class="formNB" value=1 min=1 /></td>
+		<td><input type="number" name="priority" id="priority" class="formNB" value=1 min=1 /><div class="tooltip">Higher value will show this feed more often (Default 1)</div></td>
 	</tr>
 	<tr class="listItem">
 		<td><label for=displayTime>Displaytime (s)</label></td>
-		<td><input type="number" name="displaytime" id="displayTime" class="formNB" value=0 min=1 /></td>
+		<td><input type="number" name="displaytime" id="displayTime" class="formNB" value=0 min=1 /><div class="tooltip">Set how long the feed will be displayed (Default 0 is dynamic time)</div></td>
 	</tr>
 	<tr class="listItem">
 		<td><label for=expireTime>ExpireTime (h)</label></td>
-		<td><input type="number" name="expiretime" id="expireTime" class="formNB" value=0 min=0 /></td>
+		<td><input type="number" name="expiretime" id="expireTime" class="formNB" value=0 min=0 /><div class="tooltip">Set how time cf the feedsource (Default 0 unlimited)</div></td>
 	</tr>
 	<tr class="listItem">
 		<td><label for=noteTXB>Description</label></td>

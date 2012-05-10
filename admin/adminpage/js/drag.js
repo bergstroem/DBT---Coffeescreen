@@ -26,6 +26,7 @@ function handleDrop(e){
 			this.style.opacity = '1';
 			var data = e.dataTransfer.getData("Text");
 			e.target.appendChild(document.getElementById(data));
+			e.target.style.backgroundImage = "url('')";
 			e.preventDefault();
 		}
 	}

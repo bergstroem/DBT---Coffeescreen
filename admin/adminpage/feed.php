@@ -6,7 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="css/admin.css"/>
 		<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
 		<script type="text/javascript" src="js/feed.js"></script>
-		<script type="text/javascript src="js/jquery.watermarkinput.js"></script>
+		<script type="text/javascript" src="js/jquery.watermark.js"></script>
 		<meta charset="UTF-8"/>
 	</head>
 	<body>
