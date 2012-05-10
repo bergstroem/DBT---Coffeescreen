@@ -126,7 +126,6 @@ function getFeedTypes(name){
 				editFeed(false,name);
 			}
 			else{
-				console.log(name);
 				getTypeParameters();
 			}
 		}
@@ -244,6 +243,9 @@ function getTypeParameters(fname){
 		}
 	}
 	
+	$('#name').watermark('Descriptive title for this feed');
+	$('#description').watermark('Short description of this feed');
+	
 	$.ajax({
 		type: "GET",
 		url: "../../services/Api.php",
@@ -270,6 +272,7 @@ function getTypeParameters(fname){
 						input.name = row;
 						input.className = "formTXB";
 						input.value = item["value"];
+						
 						break;
 					case 1:
 					//LongText = 1; (text area)
