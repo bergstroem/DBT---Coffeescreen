@@ -78,8 +78,9 @@ abstract class Service {
 	 * 		$defaultValue	- [Optional] The default value for the parameter if
 	 * 			nothing else is set.
 	**/
-	protected function createParameter($key, $label="", $type=Type::ShortText, $defaultValue="") {
+	protected function createParameter($key, $label, $tooltip, $type=Type::ShortText, $defaultValue="") {
 		$this->parameters[$key]["label"] = $label;
+		$this->parameters[$key]["tooltip"] = $tooltip;
 		$this->parameters[$key]["type"] = $type;
 		$this->parameters[$key]["value"] = $defaultValue;
 	}
