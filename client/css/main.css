@@ -5,11 +5,14 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-	
 	height: 100%;
 	font-family:"Droid Sans", "Calibri";
 	color: white;
 	background: black;
+}
+a{
+	color::white;
+	text-decoration:none;
 }
 
 h1 {
@@ -98,7 +101,12 @@ h1 {
 .bottomBarSection {
 	width: 50%;
 	color: white;
-	font-weight: bold;
 	float: left;
 	text-align: center;
+}
+
+.small-text  {
+	margin-top: -10px;
+	font-size: 85%;
+	
 }

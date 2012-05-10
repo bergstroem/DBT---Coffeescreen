@@ -31,6 +31,8 @@ function Channel(name, note, mainContent, subContent) {
 		function(err, results){
 		    var mainFeed = results[0];
 		    var subFeed = results[1];
+			
+			console.log("Fetched " + mainFeed);
 		    
 		    var feed = '{'
 			+ '"name":"' + name + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
@@ -57,10 +59,9 @@ function fetchContent(content, callback) {
 			res.on('data', function(chunk) {
 				result += chunk; 
 			}).on('end', function() {
+				result = result.substr(result.indexOf('{'));
 				
-				console.log("Fetched " + result);
-				
-				callback(null, result.substr(result.indexOf('{')));
+				callback(null, result);
 				
 			});   
 		}).on('error', function(e) {  
