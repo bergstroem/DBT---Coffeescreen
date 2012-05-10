@@ -270,16 +270,29 @@ function getTypeParameters(fname){
 					//ShortText = 0; (input text)
 						input = document.createElement("input");
 						input.name = row;
+						input.id = row;
 						input.className = "formTXB";
 						input.value = item["value"];
-						
+
+						td.appendChild(input);
+						tr.appendChild(td);
+						table.appendChild(tr);
+
+						$('#'+row).watermark(item["tooltip"]);
 						break;
 					case 1:
 					//LongText = 1; (text area)
-						input = document.createElement("textarea");
+						input = document.createElement("textarea");	
+						input.id = row;
 						input.name = row;
 						input.className = "noteTXB";
 						input.appendChild(document.createTextNode(item["value"]));
+
+						td.appendChild(input);
+						tr.appendChild(td);
+						table.appendChild(tr);
+						
+						$('#'+row).watermark(item["tooltip"]);
 						break;
 					case 2:
 					//Number = 2; (input number)
@@ -288,21 +301,36 @@ function getTypeParameters(fname){
 						input.type = "number";
 						input.className = "formNB";
 						input.value = item["value"];
+
+						td.appendChild(input);
+						tr.appendChild(td);
+						table.appendChild(tr);
+						
+						var tooltip = document.createElement("div");
+						tooltip.className = "tooltip";
+						tooltip.appendChild(document.createTextNode(item["tooltip"]));
+						td.appendChild(tooltip);
 						break;
 					case 3:
 					//Boolean = 3; (input checkbox)
 						input = document.createElement("input");
 						input.name = row;
 						input.type = "checkbox";
+						input.className = "formCB";
 						input.value = item["value"];
+
+						td.appendChild(input);
+						tr.appendChild(td);
+						table.appendChild(tr);
+						
+						var tooltip = document.createElement("div");
+						tooltip.className = "tooltip";
+						tooltip.appendChild(document.createTextNode(item["tooltip"]));
+						td.appendChild(tooltip);
 						break;
 					default:
 					  break;
 				}
-				td.appendChild(input);
-				tr.appendChild(td);
-				
-				table.appendChild(tr);
 			}
 			if(fname){
 				editFeed(true, fname);

@@ -212,6 +212,10 @@ body{
 	float:left;
 }
 
+.formCB{
+	float:left;
+}
+
 .noteTXB{
 	width:522px;
 	height:60px;
@@ -257,6 +261,7 @@ body{
 	min-height:500px;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
+	background-image: url("../images/dropFeedsHere.png");
 	position:relative;
 	margin: 0 auto 25px auto;
 	padding-bottom: 10px;
