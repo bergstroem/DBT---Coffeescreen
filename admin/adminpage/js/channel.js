@@ -343,6 +343,11 @@ function getFeeds(){
 	$('#static').watermark('Static information at the bottom of the client display');
 	$('#description').watermark('A short description of this channel');
 	
+	var maincontent = document.getElementById("maincontent");
+	if(maincontent.childNodes.length != 0){
+		maincontent.style.backgroundImage = "url('')";
+	}
+	
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
