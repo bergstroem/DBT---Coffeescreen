@@ -200,6 +200,16 @@ function connectToServer () {
 		//Read screen name from URL
         var name = getQueryVariable('name');
         var channel = getQueryVariable('channel');
+
+        if(name == null)
+        	name = "default";
+
+        name = name.replace("%20", " ");
+
+        if(channel == null)
+        	channel = name;
+
+        channel = channel.replace("%20", " ");
         
         if(typeof name == "undefined")
         	name = "default";
@@ -285,4 +295,6 @@ function getQueryVariable(variable) {
 			return pair[1];
 		}
 	}
+
+	return null;
 }
