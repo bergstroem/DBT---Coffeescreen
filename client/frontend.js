@@ -12,7 +12,7 @@ var running = false;
 window.onload = init;
 
 function init() {
-	staticText = document.createTextNode("asdf");
+	staticText = document.createTextNode("");
 	document.getElementById('staticText').appendChild(staticText);
 	connectToServer();
 }
