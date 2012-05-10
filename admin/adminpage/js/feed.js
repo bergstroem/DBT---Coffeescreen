@@ -126,6 +126,7 @@ function getFeedTypes(name){
 				editFeed(false,name);
 			}
 			else{
+				console.log(name);
 				getTypeParameters();
 			}
 		}
@@ -242,11 +243,6 @@ function getTypeParameters(fname){
 			table.removeChild(table.getElementsByTagName("tr")[i]);
 		}
 	}
-	
-	
-	jQuery(function($){
-		$("#name").Watermark("test");
-	});
 	
 	$.ajax({
 		type: "GET",
