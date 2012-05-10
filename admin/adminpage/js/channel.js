@@ -27,7 +27,7 @@ function createItem(name, target, filler, feeddata){
 		delbutton.setAttribute("type","button");
 		delbutton.setAttribute("name","rbutton");
 		delbutton.setAttribute("value","Delete");
-		delbutton.setAttribute("class","removebutton red");
+		delbutton.setAttribute("class","removebutton");
 		delbutton.setAttribute("onclick","removeItem(this)");
 		divTag.appendChild(delbutton);
 		

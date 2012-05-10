@@ -246,22 +246,6 @@ body{
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
-.saveButton{
-	background: #EBEBEB;
-	width:120px;
-	height:40px;
-	border-radius:10px;
-	-webkit-border-radius:10px;
-	-moz-border-radius:10px;
-	border:1px solid #C7C7C7;
-	float:right;
-	font-size:17px;
-}
-
-.saveButton:hover{
-	background: rgba(0,174,239,0.5);
-}
-
 #namebox{
 	width:744px;
 	height:245px;
@@ -324,16 +308,23 @@ body{
 }
 
 .removebutton{
+	background-image: url("../images/rod_knapp50x20.png");
 	width:50px;
 	height:20px;
 	float:right;
-	border-radius:5px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	-0-border-radius:5px;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	-webkit-border-radius:10px;
+	-o-border-radius:10px;
 	position:relative;
 	margin:0;
 	border:0px;
+	color:white;
+	font-family:"Calibri", Calibri, sans-serif;
+}
+
+.removebutton:hover{
+	opacity:0.5;
 }
 
 #leftColumn{
