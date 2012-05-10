@@ -99,10 +99,11 @@ h1 {
 }
 
 .bottomBarSection {
-	width: 50%;
+	width: 100%;
 	color: white;
 	float: left;
 	text-align: center;
+	margin: 0px;
 }
 
 .small-text  {

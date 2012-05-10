@@ -10,11 +10,12 @@ var async = require('async');
 var http = require('http');
 
 //Representation of a channel
-function Channel(name, note, mainContent, subContent) {
+function Channel(name, note, mainContent, subContent, staticText) {
 	this.name = name;
 	this.note = note;
 	this.mainContent = mainContent;
 	this.subContent = subContent;
+	this.staticText = staticText;
 	
 	//Parses and sends itself in json-format to the specified connection.
 	this.sendJson = function(connection) {
@@ -35,7 +36,7 @@ function Channel(name, note, mainContent, subContent) {
 			console.log("Fetched " + mainFeed);
 		    
 		    var feed = '{'
-			+ '"name":"' + name + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
+			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
 			
 		    connection.send(feed);
 		});
@@ -78,8 +79,9 @@ this.prepareChannelFileForDelivery = function(connection, channel) {
 	var note = jsonObject.note;
 	var mainContent = jsonObject.maincontent;
 	var subContent = jsonObject.subcontent;
+	var staticText = jsonObject.static;
 	
-	var channel = new Channel(name, note, mainContent, subContent);
+	var channel = new Channel(name, note, mainContent, subContent, staticText);
 	
 	var feed = channel.sendJson(connection);
 	
