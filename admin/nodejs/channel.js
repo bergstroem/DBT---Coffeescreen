@@ -46,7 +46,7 @@ function fetchContent(content, callback) {
 		var options = {
 			   host: 'localhost',
 			   port: 80,   
-			   path: '/dbt/services/FeedFetcher.php?sources=' + encodeURI(content)
+			   path: '/coffeescreen/services/FeedFetcher.php?sources=' + encodeURI(content)
 		};
 		
 		var result = "";

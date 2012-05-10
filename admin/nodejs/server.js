@@ -154,7 +154,7 @@ var server = http.createServer(function(request, response) {
 		response.end(isPanicMode.toString());
 	}
 });
-server.listen(8081, function() { });
+server.listen(18081, function() { });
 
 // create the server
 wsServer = new WebSocketServer({
