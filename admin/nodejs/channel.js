@@ -36,7 +36,7 @@ function Channel(name, note, mainContent, subContent, staticText) {
 			console.log("Fetched " + mainFeed);
 		    
 		    var feed = '{'
-			+ '"name":"' + name + '","static":' + staticText + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
+			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"subcontent":' + subFeed + "}";
 			
 		    connection.send(feed);
 		});
