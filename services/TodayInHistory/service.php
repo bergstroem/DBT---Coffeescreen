@@ -12,7 +12,9 @@ class TodayInHistory extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("latest", "Only latest event", Type::Boolean);
+		$this->createParameter("latest", "Only latest event",
+				"Check this if you only want to display the latest historical event of today.",
+				Type::Boolean);
 	}
 
 	/**

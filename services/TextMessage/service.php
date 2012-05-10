@@ -8,7 +8,7 @@ class TextMessage extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("text", "Message text", Type::LongText);
+		$this->createParameter("text", "Message", "The text you want to display", Type::LongText);
 	}
 
 	/**
