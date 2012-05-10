@@ -101,7 +101,12 @@ h1 {
 .bottomBarSection {
 	width: 50%;
 	color: white;
-	font-weight: bold;
 	float: left;
 	text-align: center;
+}
+
+.small-text  {
+	margin-top: -10px;
+	font-size: 85%;
+	
 }

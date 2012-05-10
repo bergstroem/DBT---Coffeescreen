@@ -40,7 +40,7 @@ class RSS extends Service {
 			$content = $item->get_content();
 
 			//Generate a HTML string
-			$html = "<h1>".$title."</h1><p>".$date."</p>".$content;
+			$html = "<h1>".$title."</h1><p class='small-text'>".$date."</p>".$content;
 
 			$this->bundleView(strtotime($date), $html);
 		}
