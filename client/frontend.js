@@ -3,6 +3,7 @@ var currentInformation = null;
 var mainContentCounter = 0;
 var mainContentProgressTimeout = null;
 var mainContentSwitchingTimeout = null;
+var staticText = null;
 
 var connection;
 
@@ -11,6 +12,8 @@ var running = false;
 window.onload = init;
 
 function init() {
+	staticText = document.createTextNode("asdf");
+	document.getElementById('staticText').appendChild(staticText);
 	connectToServer();
 }
 
@@ -183,6 +186,10 @@ function connectToServer () {
 	console.log("Connecting to server...");
 	setConnectionStatus("Connecting...");
 	var host = window.location.host;
+	if(getQueryVariable("host") != null){
+		console.log("TESTAR");
+		host = getQueryVariable("host");
+	}
     connection = new WebSocket('ws://'+host+':18081');
 
     //When a connection opens
@@ -244,6 +251,8 @@ function connectToServer () {
             var json = JSON.parse(message.data);
 			currentInformation = json;
 			mainContentCounter = 0;
+			
+			staticText.data = json.static;
 			
 			console.log("Feed name: " + json.name);
 			
