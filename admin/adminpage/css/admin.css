@@ -91,10 +91,10 @@ html{
 body{
 	min-height:100%;
 	background: black;
-	background: linear-gradient(top, #000000 0%,#45484d 100%);
-	background: -webkit-linear-gradient(top, #000000 0%,#45484d 100%);
-	background: -moz-linear-gradient(top, #000000 0%,#45484d 100%);
-	background: -o-linear-gradient(top, #000000 0%,#45484d 100%);
+	background: linear-gradient(top, #2B2935 0%,#959695 100%);
+	background: -webkit-linear-gradient(top, #2B2935 0%,#959695 100%);
+	background: -moz-linear-gradient(top, #2B2935 0%,#959695 100%);
+	background: -o-linear-gradient(top, #2B2935 0%,#959695 100%);
 	font-family:"Calibri", Calibri, sans-serif;
 }
 
@@ -126,6 +126,10 @@ body{
 	position:relative;
 	font-weight:bold;
 	font-size:1.5em;
+}
+
+.listHeadName{
+	min-width:155px;
 }
 
 #listContent{
@@ -188,7 +192,7 @@ body{
 }
 
 .formtable{
-	margin: 0 auto 0 auto;
+	margin:0 auto 0 auto;
 }
 
 .formTXB{
@@ -196,12 +200,14 @@ body{
 	height:20px;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .lformTXB{
 	width:550px;
 	height:20px;
 	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .formNB{
@@ -210,6 +216,7 @@ body{
 	border:1px solid #C7C7C7;
 	text-align:right;
 	float:left;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .formCB{
@@ -222,6 +229,7 @@ body{
 	resize:none;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .formTypeSelect{
@@ -229,6 +237,7 @@ body{
 	height:20px;
 	border:1px solid #C7C7C7;
 	float:left;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .saveButton{

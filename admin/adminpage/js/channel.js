@@ -104,13 +104,13 @@ function feedExists(name){
  * Used for saving a channel, will use the information in the form.
 */
 function saveChannel(){
-	var name = document.getElementById("nameTXB").value;
+	var name = document.getElementById("name").value;
 	if(name == ""){
 		alert("Please enter a name");
 	}
 	else{
-		var note = document.getElementById("noteTXB").value;
-		var stat = document.getElementById("staticTXB").value;
+		var note = document.getElementById("description").value;
+		var stat = document.getElementById("static").value;
 
 		var children = document.getElementById('maincontent').childNodes;
 		var length = children.length;
