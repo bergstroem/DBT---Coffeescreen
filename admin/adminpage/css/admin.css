@@ -196,12 +196,14 @@ body{
 	height:20px;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .lformTXB{
 	width:550px;
 	height:20px;
 	border:1px solid #00AEEF;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .formNB{
@@ -210,6 +212,7 @@ body{
 	border:1px solid #C7C7C7;
 	text-align:right;
 	float:left;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .formCB{
@@ -222,6 +225,7 @@ body{
 	resize:none;
 	border:1px solid #C7C7C7;
 	background: #EBEBEB;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .formTypeSelect{
@@ -229,6 +233,7 @@ body{
 	height:20px;
 	border:1px solid #C7C7C7;
 	float:left;
+	font-family:"Calibri", Calibri, sans-serif;
 }
 
 .saveButton{
