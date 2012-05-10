@@ -186,7 +186,7 @@ function connectToServer () {
 	console.log("Connecting to server...");
 	setConnectionStatus("Connecting...");
 	var host = window.location.host;
-    connection = new WebSocket('ws://'+host+':8081');
+    connection = new WebSocket('ws://'+host+':18081');
 
     //When a connection opens
     connection.onopen = function () {
