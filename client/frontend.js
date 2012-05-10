@@ -8,12 +8,6 @@ var connection;
 
 var running = false;
 
-//Progress bar
-var progress = 0;
-var totalElapsedTime = 0;
-var totalTime = 0;
-var startTime = 0;
-
 window.onload = init;
 
 function init() {
@@ -64,52 +58,55 @@ function mainPostLoaded() {
 			
 	//Temp. moved here
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
-	displaytime = parseFloat(displaytime)*1000; // Fixed: Seems like the code 
-												//wants milliseconds. But 
-												//displaytime is given in seconds
+	displaytime = parseFloat(displaytime)*1000;
+
+	var totalTime = 100;
+
 	if(displaytime==0){
 		//Calculate time to display the view
-		var displaytime = 100;
-		displaytime *= document.getElementById("mainContent").offsetHeight;
-		
-		console.log("Will display for " + (displaytime/1000) + "s");
-		//Setup progress bar variables
-		totalTime = displaytime;
-		startTime = new Date().getTime();
-		//Setup display and scroll timers
-		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
-		document.getElementById("pageWrapper").scrollTop = 0;
-		clearTimeout(mainContentProgressTimeout);
-		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*2);
+		totalTime *= document.getElementById("mainContent").offsetHeight;
 	}
 	else{
 		//Setup progress bra variables
 		totalTime = displaytime;
-		startTime = new Date().getTime();
-		console.log("Will display for " + (displaytime/1000) + "s");
-		//Setup display and scroll timers
-		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
-		document.getElementById("pageWrapper").scrollTop = 0;
-		clearTimeout(mainContentProgressTimeout);
-		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*2);
 	}
+
+
+	console.log("Will display for " + (totalTime/1000) + "s");
+	//Setup progress bar variables
+	var startTime = new Date().getTime();
+	//Setup display and scroll timers
+	//mainContentSwitchingTimeout = setTimeout(switchMainInformation, totalTime);
+	document.getElementById("pageWrapper").scrollTop = 0;
+	document.getElementById("pageWrapper").scrollLeft = 0;
+	document.getElementById('progressBar').style.width = 0;
+	clearTimeout(mainContentProgressTimeout);
+	stepContent(totalTime, startTime);
 }
 
 //One scrolling jump
-function scrollMainContent(stepTime) {
-	totalElapsedTime = (new Date().getTime() - startTime);
+function stepContent(totalTime, startTime) {
+	var delay = 4000;
+	var totalElapsedTime = new Date().getTime() - startTime;
 	
-	//Update progress bar
-	document.getElementById('progressBar').style.width = totalElapsedTime/totalTime * window.innerWidth + "px";
-	
-	document.getElementById("pageWrapper").scrollTop += 1;
-	document.getElementById("pageWrapper").scrollLeft += 1;
-	
-	if	(document.getElementById("pageWrapper").scrollTop <
-		(document.getElementById("pageWrapper").scrollHeight) &&
-		(document.getElementById("pageWrapper").scrollLeft) <
-		(document.getElementById("pageWrapper").scrollWidth)) {
-		mainContentProgressTimeout = setTimeout(scrollMainContent, stepTime, stepTime);
+	var progress = totalElapsedTime/(totalTime + delay);
+
+	if(totalElapsedTime >= delay) {
+		var scrollProgress = (totalElapsedTime - delay)/totalTime;
+		
+		var width = document.getElementById("pageWrapper").scrollWidth;
+		var height = document.getElementById("pageWrapper").scrollHeight;
+
+		document.getElementById("pageWrapper").scrollLeft = scrollProgress * width;
+		document.getElementById("pageWrapper").scrollTop = scrollProgress * height;
+	}
+
+	document.getElementById('progressBar').style.width = Math.round(progress * window.innerWidth) + "px";
+
+	if(progress < 1) {
+		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime, startTime);
+	} else {
+		switchMainInformation();
 	}
 }
 
