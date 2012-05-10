@@ -46,6 +46,7 @@ h1 {
 }
 #codemill_logo{
 	height:24px;
+	margin-left: 10px;
 }
 
 .topBarSection {
@@ -53,7 +54,6 @@ h1 {
 	float: left;
 	color: white;
 	font-weight: bold;
-	
 }
 
 #topBarCenter {
@@ -77,18 +77,28 @@ h1 {
 
 #progressBar {
 	height: 2px;
-	position: fixed;
-	bottom: 46px;
+	position: absolute;
+	top: -3px;
 	background: #00aeef;
+	left: 0px;
 }
 
 #bottomBar {
+
 	background: black;
 	padding: 10px;
-	font-size: 24px;
+	font-size: 18px;
 	position: fixed;
 	border-top: 1px solid #00aeef;
-	height: 25px;
+	height: 22px;
 	width: 100%;
 	bottom: 0px;
+}
+
+.bottomBarSection {
+	width: 50%;
+	color: white;
+	font-weight: bold;
+	float: left;
+	text-align: center;
 }
