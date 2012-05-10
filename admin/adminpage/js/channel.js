@@ -27,7 +27,7 @@ function createItem(name, target, filler, feeddata){
 		delbutton.setAttribute("type","button");
 		delbutton.setAttribute("name","rbutton");
 		delbutton.setAttribute("value","Delete");
-		delbutton.setAttribute("class","removebutton red");
+		delbutton.setAttribute("class","removebutton");
 		delbutton.setAttribute("onclick","removeItem(this)");
 		divTag.appendChild(delbutton);
 		
@@ -342,6 +342,11 @@ function getFeeds(){
 	$('#name').watermark('Descriptive title for this channel');
 	$('#static').watermark('Static information at the bottom of the client display');
 	$('#description').watermark('A short description of this channel');
+	
+	var maincontent = document.getElementById("maincontent");
+	if(maincontent.childNodes.length != 0){
+		maincontent.style.backgroundImage = "url('')";
+	}
 	
 	$.ajax({
 		type: "POST",
