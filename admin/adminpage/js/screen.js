@@ -6,7 +6,7 @@
 $(document).ready(function(){
 	$.ajax({
 		type: "POST",
-		url: "http://" + host + ":8081/isPanic",
+		url: "http://" + host + ":18081/isPanic",
 		data: "",
 		success: function(msg){
 			if(msg == "true") {
@@ -21,7 +21,7 @@ $(document).ready(function(){
 				e.target.value = "Unpanic all";
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":8081/panic/?screen=*",
+					url: "http://" + host + ":18081/panic/?screen=*",
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -32,7 +32,7 @@ $(document).ready(function(){
 				e.target.value = "Panic all";
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":8081/unPanic",
+					url: "http://" + host + ":18081/unPanic",
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -45,7 +45,7 @@ $(document).ready(function(){
 				
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":8081/set/?screen="+name+"&channel="+select.value,
+					url: "http://" + host + ":18081/set/?screen="+name+"&channel="+select.value,
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -57,7 +57,7 @@ $(document).ready(function(){
 			
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":8081/panic/?screen="+name,
+					url: "http://" + host + ":18081/panic/?screen="+name,
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -76,7 +76,7 @@ function listScreens(){
 	var table = document.getElementById("listContent");
 	$.ajax({
 		type: "POST",
-		url: "http://" + host + ":8081/listscreens",
+		url: "http://" + host + ":18081/listscreens",
 		data: "",
 		success: function(msg){
 			if(msg.length > 2){
