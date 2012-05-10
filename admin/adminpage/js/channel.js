@@ -204,8 +204,9 @@ function editChannel(name){
 		data: "p=2&name="+name,
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
-			document.getElementById("nameTXB").value = jsonobj["name"];
-			document.getElementById("noteTXB").value = jsonobj["note"];
+			document.getElementById("name").value = jsonobj["name"];
+			document.getElementById("static").value = jsonobj["static"];
+			document.getElementById("description").value = jsonobj["note"];
 			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
 			if(arr.length > 0){

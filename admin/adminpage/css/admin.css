@@ -132,6 +132,12 @@ body{
 	min-width:155px;
 }
 
+#descriptionTD{
+	column-span:all;
+	color: #999;
+	font-size: 0.75em;
+}
+
 #listContent{
 	width:100%;
 	margin: 10px 0 25px 0;
