@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Coffeescreen Client</title>
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+		<link type="text/css" href="css/main.css" rel="stylesheet" />
+		<script src="frontend.js"></script>
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Expires" content="-1">
+	</head>
+	<body>
+	
+		<!-- <div id="screen"> -->
+			<div id="pageWrapper">
+				<div id="contentArea">
+					<div id="mainContent">
+						<h1>Waiting for content</h1>
+						<p class="small-text">This shouldn't take too long...</p>
+					</div>
+				</div>
+			</div>
+		<!-- </div> -->
+		<div id="topBar">
+			<div id="topBarLeft" class="topBarSection">
+                		<img id="codemill_logo" src="Codemill_logo_vit_24.png" alt="Codemill"/> 
+			</div>
+			<div id="topBarCenter" class="topBarSection">
+				&nbsp;
+        	</div>
+			<div id="topBarRight" class="topBarSection">
+				&nbsp;
+			</div>
+           <div id="progressBar"></div>
+		</div>
+		<div id="bottomBar">
+				 
+			<div class="bottomBarSideSection">
+				<img class="bottomBarImage" src="prev_pil.png"/>
+				<div id="prevText"></div>
+			</div>
+			<div id="bottomBarMiddleSection">
+				<span class="bubble" id="staticText"></span>
+                <img class="bubble_point" src="pratbubbla_spets.png" height="10"/>
+				<img class="bottomBarImage" style="margin:5px;" src="codeperson.png" height="30"/>
+			</div>
+			<div class="bottomBarSideSection" style="text-align:right;">
+				<div id="nextText">Doesn't work in IE!</div>
+				<img class="bottomBarImage" src="next_pil.png"/>
+			</div>
+		</div>
+        
+        <!--Watch-->
+		<script>
+		function show(){
+			var Digital=new Date();
+			var hours=Digital.getHours();
+			var minutes=Digital.getMinutes();
+			if (minutes<=9)
+			minutes="0"+minutes;
+			document.getElementById("topBarRight").innerHTML=hours+":"+minutes;
+			setTimeout("show()",1000);
+		}
+		show();
+		//-->
+		</script>
+	</body>
+</html>

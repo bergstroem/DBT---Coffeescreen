@@ -1,0 +1,45 @@
+﻿<div id="leftColumn">
+	<div id="namebox">
+		<table class="formtable">
+			<tr class="listHeader">
+				<td>Create a channel</td>
+				<td><input type="button" name="savechannelbutton" value="Save" class="itemButton cyanbutton" onclick="saveChannel()"></td>
+			</tr>
+			<tr>
+				<td colspan="2"><div class="tooltip">A channel works exactly like a tv or radio channel, you can olny watch one channel at a time. Fill your channel with feeds, they resemble tv shows. Pick which ever feeds you want to broadcast!</div></td>
+			</tr>
+			<tr class="listItem">
+				<td>
+					<label for=nameTXB>Name</label>
+				</td>
+				<td>
+					<input type="text" id="name" name="name" class="formTXB"/>
+				</td>
+			</tr>
+			<tr class="listItem">
+				<td>
+					<label for=staticTXB>Static</label>
+				</td>
+				<td>
+					<input type="text" id="static" name="static" class="formTXB"/>
+				</td>
+			</tr>
+			<tr class="listItem">
+				<td>
+					<label for=noteTXB>Description</label>
+				</td>
+				<td>
+					<textarea name="description" id="description" class="noteTXB"></textarea>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div id="maincontent"></div>
+	<div id="subcontent"></div>
+</div>
+<div id="rightColumn">
+	<div id="contentlist"><p class="feedlist">Feedlist</p></div>
+</div>
+<script>
+	addEL();
+</script>
