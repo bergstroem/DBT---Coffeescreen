@@ -18,6 +18,7 @@ function Screen(id, name, channel, connection) {
 	}
 	
 	this.sendChannel = function() {
+		console.log(__dirname);
 		if(isPanicMode) {
 			console.log("Panic mode. Only send panic channel");
 			fs.readFile("../../channels/panic.json", 'utf8', function(err, data) {
