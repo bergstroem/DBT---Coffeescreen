@@ -79,6 +79,7 @@ h1 {
 }
 
 #progressBar {
+	/* Unn */
 	height: 10px;
 	position: absolute;
 	top: -10px;
