@@ -1,4 +1,5 @@
 var retries = 0;
+var futureInformation = null;
 var currentInformation = null;
 var mainContentCounter = 0;
 var mainContentProgressTimeout = null;
@@ -7,6 +8,8 @@ var staticText = null;
 var connection;
 
 var running = false;
+
+var loader = null;
 
 window.onload = init;
 
@@ -39,7 +42,7 @@ function switchMainInformation() {
 	}
 	
 	if(urls.length > 0) {
-		preloadimages(urls).done(mainPostLoaded);
+		loader = preloadimages(urls).done(mainPostLoaded);
 	} else {
 		mainPostLoaded();
 	}
@@ -125,8 +128,6 @@ function adjustPostWidth() {
 	for (var i = 0; i < childImages.length; i++) {
 		
 		//If the image isnt too small or too big, scale it.
-		
-		console.log(main.clientWidth/1.5 + " " + childImages[i].clientWidth + " " + main.clientWidth*1.5);
 		if(childImages[i].clientWidth > main.clientWidth/1.5 && childImages[i].clientWidth < main.clientWidth*1.5) {
 			console.log("Scaling image from: " + childImages[i].clientWidth + ", to: " + (main.clientWidth - 100));
 			adjusted = true;
@@ -187,7 +188,6 @@ function connectToServer () {
 	setConnectionStatus("Connecting...");
 	var host = window.location.host;
 	if(getQueryVariable("host") != null){
-		console.log("TESTAR");
 		host = getQueryVariable("host");
 	}
     connection = new WebSocket('ws://'+host+':18081');
@@ -249,8 +249,14 @@ function connectToServer () {
         try {
         	//Extract data from JSON string
             var json = JSON.parse(message.data);
-			currentInformation = json;
-			mainContentCounter = 0;
+
+            if(currentInformation == null) {
+				currentInformation = json;
+            }
+
+            futureInformation = json;
+
+			//mainContentCounter = 0;
 			
 			staticText.data = json.static;
 			
@@ -303,3 +309,36 @@ function getQueryVariable(variable) {
 
 	return null;
 }
+
+
+//Physical button integration
+
+function moveRight() {
+	if(mainContentCounter > currentInformation.length) {
+		mainContentCounter = 0;
+	}
+	
+	if(loader != null)
+		loader.postaction = function() {};
+	
+	switchMainInformation();
+}
+
+function moveLeft() {
+	if(mainContentCounter > 1) {
+		mainContentCounter -= 2;
+		switchMainInformation();
+	}
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+        case 37:
+            moveLeft();
+            break;
+        case 39:
+            moveRight();
+            break;
+    }
+};
