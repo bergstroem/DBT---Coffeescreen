@@ -87,9 +87,8 @@ h1 {
 }
 
 #bottomBar {
-
 	background: black;
-	font-size: 18px;
+	font-size: 85%;
 	position: fixed;
 	border-top: 1px solid #00aeef;
 	height: 40px;
@@ -106,7 +105,7 @@ h1 {
 
 .bottomBarSideSection {
 	width: 25%;
-	color: white;
+	color: #00aeef;
 	float: left;
 	margin: 0px;
 }
@@ -123,9 +122,8 @@ h1 {
 	color: #00AEEF;
 	background-color: white;
 	border-radius: 8px;
-	font-size: 12px;
 	display:inline-block;
-	
+	max-width: 260px;
 }
 
 #codemill_symbol {

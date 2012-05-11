@@ -287,7 +287,7 @@ function reconnect() {
 
 //Display connection status on the screen
 function setConnectionStatus(statusText) {
-	document.getElementById("topBarRight").innerHTML = statusText;
+	//document.getElementById("topBarRight").innerHTML = statusText;
 }
 
 //Get variables from the URL
