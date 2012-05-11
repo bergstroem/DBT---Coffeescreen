@@ -20,8 +20,10 @@ class TextMessage extends Service {
 		
 		//Generate a HTML string
 		$html = "<p>$text</p>";
-
-		$this->bundleView(time(), $html);
+		
+		$title = "Text message";
+		
+		$this->bundleView($title, time(), $html);
 	}
 }
 

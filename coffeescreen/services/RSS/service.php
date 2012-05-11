@@ -43,7 +43,7 @@ class RSS extends Service {
 			//Generate a HTML string
 			$html = "<h1>".$title."</h1><p class='small-text'>".date("j F Y H:i", $time)."</p>".$content;
 
-			$this->bundleView($time, $html);
+			$this->bundleView($title, $time, $html);
 		}
 	}
 }

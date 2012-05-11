@@ -93,8 +93,8 @@ abstract class Service {
 	 * 		$js		- [Optional] A string containing the extra JavaScript for
 	 * 					the view.
 	**/
-	protected function bundleView($time, $html, $css="", $js="") {
-		$this->views[] = array("date" => $time, "html" => $html, "css" => $css, "js" => $js);
+	protected function bundleView($title, $time, $html, $css="", $js="") {
+		$this->views[] = array("title" => $title, "date" => $time, "html" => $html, "css" => $css, "js" => $js);
 	}
 
 
