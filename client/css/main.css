@@ -9,6 +9,7 @@ body {
 	font-family:"Droid Sans", "Calibri";
 	color: white;
 	/*background: black;*/
+	background-image: -moz-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
 	background-image: -webkit-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
 }
 a{
@@ -85,6 +86,7 @@ h1 {
 	position: absolute;
 	bottom: -8px;
 	/*background: #00aeef;*/
+	background-image: -moz-linear-gradient(top left, #3366CC 0%, #00AEEF 50%, #99CCFF 100%);
 	background-image: -webkit-linear-gradient(top left, #3366CC 0%, #00AEEF 50%, #99CCFF 100%);
 	border-radius: 5px;
 	left: 0px;
@@ -98,6 +100,7 @@ h1 {
 	height: 40px;
 	width: 100%;
 	bottom: 0px;
+	
 }
 
 #bottomBarMiddleSection {
@@ -107,11 +110,19 @@ h1 {
 	text-align: center;
 }
 
-.bottomBarSideSection {
-	width: 25%;
+.bottomBarLeft {
+	width: 23%;
 	color: #00aeef;
 	float: left;
 	height: 100%;
+	padding-left: 10px;
+}
+.bottomBarRight {
+	width: 23%;
+	color: #00aeef;
+	float: right;
+	height: 100%;
+	padding-right: 10px;
 }
 
 .small-text  {

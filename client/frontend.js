@@ -1,12 +1,17 @@
 var retries = 0;
+var futureInformation = null;
 var currentInformation = null;
-var mainContentCounter = 0;
+var mainContentCounter = -1;
 var mainContentProgressTimeout = null;
 var staticText = null;
 
 var connection;
 
 var running = false;
+
+var newimages = new Array();
+
+var channel = "";
 
 window.onload = init;
 
@@ -18,6 +23,13 @@ function init() {
 
 //Switch to next view
 function switchMainInformation() {
+	mainContentCounter++;
+	if(mainContentCounter >= currentInformation.maincontent.posts.length) {
+		mainContentCounter = 0;
+	}
+
+	console.log(mainContentCounter + ", " + currentInformation.maincontent.posts.length);
+
 	//Här byts channel
 	console.log("Switching...");
 	//Extract article info
@@ -48,14 +60,13 @@ function switchMainInformation() {
 	}
 	
 	if(urls.length > 0) {
-		preloadimages(urls).done(mainPostLoaded);
+		loader = preloadimages(urls).done(mainPostLoaded);
 	} else {
 		mainPostLoaded();
 	}
 	
 	//Ask for new info when the cycle is done
-	if(++mainContentCounter >= currentInformation.maincontent.posts.length) {
-		mainContentCounter = 0;
+	if(mainContentCounter+1 >= currentInformation.maincontent.posts.length) {
 		//request new information
 		console.log("Refreshing...");
 		connection.send('Refresh');
@@ -68,6 +79,7 @@ function mainPostLoaded() {
 	adjustPostWidth();
 			
 	//Temp. moved here
+	console.log(mainContentCounter);
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
 	displaytime = parseFloat(displaytime)*1000;
 
@@ -134,8 +146,6 @@ function adjustPostWidth() {
 	for (var i = 0; i < childImages.length; i++) {
 		
 		//If the image isnt too small or too big, scale it.
-		
-		console.log(main.clientWidth/1.5 + " " + childImages[i].clientWidth + " " + main.clientWidth*1.5);
 		if(childImages[i].clientWidth > main.clientWidth/1.5 && childImages[i].clientWidth < main.clientWidth*1.5) {
 			console.log("Scaling image from: " + childImages[i].clientWidth + ", to: " + (main.clientWidth - 100));
 			adjusted = true;
@@ -161,7 +171,8 @@ function adjustPostWidth() {
 
 //Image preloading magic!
 function preloadimages(arr){
-    var newimages=[], loadedimages=0
+    window.newimages=[];
+    var loadedimages=0
     var postaction=function(){}
     var arr=(typeof arr!="object")? [arr] : arr
     function imageloadpost(){
@@ -182,7 +193,7 @@ function preloadimages(arr){
     }
     return { //return blank object with done() method
         done:function(f){
-            postaction=f || postaction
+            postaction=f || postaction;
         }
     }
 }
@@ -196,7 +207,6 @@ function connectToServer () {
 	setConnectionStatus("Connecting...");
 	var host = window.location.host;
 	if(getQueryVariable("host") != null){
-		console.log("TESTAR");
 		host = getQueryVariable("host");
 	}
     connection = new WebSocket('ws://'+host+':18081');
@@ -212,7 +222,7 @@ function connectToServer () {
 		
 		//Read screen name from URL
         var name = getQueryVariable('name');
-        var channel = getQueryVariable('channel');
+        channel = getQueryVariable('channel');
 
         if(name == null)
         	name = "default";
@@ -258,8 +268,16 @@ function connectToServer () {
         try {
         	//Extract data from JSON string
             var json = JSON.parse(message.data);
-			currentInformation = json;
-			mainContentCounter = 0;
+
+            if(currentInformation == null || json.name != channel) {
+				currentInformation = json;
+				mainContentCounter = -1;
+				futureInformation = null;
+            } else {
+            	futureInformation = json;
+            }
+
+			//mainContentCounter = 0;
 			
 			staticText.data = json.static;
 			
@@ -312,3 +330,45 @@ function getQueryVariable(variable) {
 
 	return null;
 }
+
+
+//Physical button integration
+
+function moveRight() {
+	if(mainContentCounter >= currentInformation.maincontent.posts.length && futureInformation != null) {
+		mainContentCounter = -1;
+		currentInformation = futureInformation;
+		futureInformation = null;
+
+		forceSwitch();
+	} else if(mainContentCounter < currentInformation.maincontent.posts.length) {
+		forceSwitch();
+	}
+}
+
+function moveLeft() {
+	if(mainContentCounter > 0) {
+		mainContentCounter -= 2;
+		forceSwitch();
+	}
+}
+
+function forceSwitch() {
+		for(var i = newimages.length; i--;)
+			newimages[i].onload = function() {};
+		newimages = new Array();
+
+		switchMainInformation();
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+        case 37:
+            moveLeft();
+            break;
+        case 39:
+            moveRight();
+            break;
+    }
+};

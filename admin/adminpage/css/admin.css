@@ -35,6 +35,9 @@ fieldset{
 .redbutton{
 	background-image:url("../images/rod_knapp.png");
 }
+.greenbutton{
+	background-image:url("../images/gron_knapp_80.png");
+}
 
 .maincolor{
 	background: #00AEEF;
