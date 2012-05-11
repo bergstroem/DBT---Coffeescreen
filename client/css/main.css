@@ -79,10 +79,12 @@ h1 {
 }
 
 #progressBar {
-	height: 2px;
+	/* Unn */
+	height: 10px;
 	position: absolute;
-	top: -3px;
+	top: -10px;
 	background: #00aeef;
+	border-radius: 5px;
 	left: 0px;
 }
 
@@ -107,7 +109,7 @@ h1 {
 	width: 25%;
 	color: #00aeef;
 	float: left;
-	margin: 0px;
+	height: 100%;
 }
 
 .small-text  {
@@ -124,10 +126,19 @@ h1 {
 	border-radius: 8px;
 	display:inline-block;
 	max-width: 260px;
+	height: 16px;
 }
 
 .bottomBarImage {
 	vertical-align: middle;
 	display: inline-block;
 	position: relative;
+}
+
+#nextText, #prevText {
+	display:inline-block;
+	max-width: 130px;
+	height: 16px;
+	position: relative;
+	overflow: hidden;
 }

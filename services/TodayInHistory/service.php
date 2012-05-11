@@ -33,7 +33,6 @@ class TodayInHistory extends Service {
 
 		//Select a random event and display it
 		$content = "<h1>Today in History</h1>";
-
 		if($onlyLatest)
 			$content .= "<p>".$events[count($events)-1]->plaintext."</p>";
 		else
@@ -43,7 +42,8 @@ class TodayInHistory extends Service {
 		$content .= "Source: http://en.wikipedia.org/wiki/".$month."_".$day;
 		$content .= "</p>";
 
-		$this->bundleView(time(), $content);
+		$title = "Today in History";
+		$this->bundleView($title, time(), $content);
 	}
 }
 ?>
