@@ -126,9 +126,8 @@ h1 {
 	max-width: 260px;
 }
 
-#codemill_symbol {
+.bottomBarImage {
 	vertical-align: middle;
-	width: 35px;
 	display: inline-block;
 	position: relative;
 }
