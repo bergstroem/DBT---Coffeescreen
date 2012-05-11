@@ -2,7 +2,6 @@ var retries = 0;
 var currentInformation = null;
 var mainContentCounter = 0;
 var mainContentProgressTimeout = null;
-var mainContentSwitchingTimeout = null;
 var staticText = null;
 
 var connection;
@@ -92,13 +91,14 @@ function stepContent(totalTime, startTime) {
 	var delay = 4000;
 	var totalElapsedTime = new Date().getTime() - startTime;
 	
-	var progress = totalElapsedTime/(totalTime + delay);
+	var progress = totalElapsedTime/(totalTime + 3*delay);
 
 	if(totalElapsedTime >= delay) {
 		var scrollProgress = (totalElapsedTime - delay)/totalTime;
 		
 		var width = document.getElementById("pageWrapper").scrollWidth;
-		var height = document.getElementById("pageWrapper").scrollHeight;
+		var height = document.getElementById("pageWrapper").scrollHeight - 
+				document.getElementById("pageWrapper").clientHeight;
 
 		document.getElementById("pageWrapper").scrollLeft = scrollProgress * width;
 		document.getElementById("pageWrapper").scrollTop = scrollProgress * height;
@@ -258,7 +258,6 @@ function connectToServer () {
 			
 			//Force immediate change if panic feed
 			if(!running || json.name == "panic"){
-				clearTimeout(mainContentSwitchingTimeout);
 				switchMainInformation();
 				running = true;
 			}
