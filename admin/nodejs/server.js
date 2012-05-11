@@ -20,7 +20,7 @@ function Screen(id, name, channel, connection) {
 	this.sendChannel = function() {
 		if(isPanicMode) {
 			console.log("Panic mode. Only send panic channel");
-			fs.readFile("../../channels/panic.json", 'utf8', function(err, data) {
+			fs.readFile(__dirname + "/../../channels/panic.json", 'utf8', function(err, data) {
 				if(err) {
 					connection.send("No data available");
 				}
@@ -28,10 +28,10 @@ function Screen(id, name, channel, connection) {
 			});
 		}
 		else {
-			fs.readFile("../../channels/" + channel + ".json", 'utf8', function (err, data) {
+			fs.readFile(__dirname + "/../../channels/" + channel + ".json", 'utf8', function (err, data) {
 				if (err) {
 					console.log("Looking for default");
-					fs.readFile("../../channels/default.json", 'utf8', function (err, data) {
+					fs.readFile(__dirname + "/../../channels/default.json", 'utf8', function (err, data) {
 						if(err) {
 							//Send no data
 							connection.send("No data available");
