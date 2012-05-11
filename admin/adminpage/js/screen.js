@@ -1,8 +1,9 @@
-﻿var host = window.location.host/*"85.24.223.52"*/;
+﻿var host = "dbt2k12b.codemill.se";//window.location.host/*"85.24.223.52"*/;
 
 /*
  * Handles click events in index.php
 */
+
 $(document).ready(function(){
 	$.ajax({
 		type: "POST",
