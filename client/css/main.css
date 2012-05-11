@@ -89,20 +89,25 @@ h1 {
 #bottomBar {
 
 	background: black;
-	padding: 10px;
 	font-size: 18px;
 	position: fixed;
 	border-top: 1px solid #00aeef;
-	height: 22px;
+	height: 40px;
 	width: 100%;
 	bottom: 0px;
 }
 
-.bottomBarSection {
+#bottomBarMiddleSection {
 	width: 50%;
 	color: white;
 	float: left;
 	text-align: center;
+}
+
+.bottomBarSideSection {
+	width: 25%;
+	color: white;
+	float: left;
 	margin: 0px;
 }
 
@@ -112,7 +117,20 @@ h1 {
 	
 }
 
-#staticText {
-	text-align: center;
-	margin: 0px;
+.bubble {
+	position: relative;
+	padding: 7px;
+	color: #00AEEF;
+	background-color: white;
+	border-radius: 8px;
+	font-size: 12px;
+	display:inline-block;
+	
+}
+
+#codemill_symbol {
+	vertical-align: middle;
+	width: 35px;
+	display: inline-block;
+	position: relative;
 }
