@@ -87,26 +87,48 @@ h1 {
 }
 
 #bottomBar {
-
 	background: black;
-	padding: 10px;
-	font-size: 18px;
+	font-size: 85%;
 	position: fixed;
 	border-top: 1px solid #00aeef;
-	height: 22px;
+	height: 40px;
 	width: 100%;
 	bottom: 0px;
 }
 
-.bottomBarSection {
+#bottomBarMiddleSection {
 	width: 50%;
 	color: white;
 	float: left;
 	text-align: center;
 }
 
+.bottomBarSideSection {
+	width: 25%;
+	color: #00aeef;
+	float: left;
+	margin: 0px;
+}
+
 .small-text  {
 	margin-top: -10px;
 	font-size: 85%;
 	
+}
+
+.bubble {
+	position: relative;
+	top: 1px;
+	padding: 7px;
+	color: #00AEEF;
+	background-color: white;
+	border-radius: 8px;
+	display:inline-block;
+	max-width: 260px;
+}
+
+.bottomBarImage {
+	vertical-align: middle;
+	display: inline-block;
+	position: relative;
 }

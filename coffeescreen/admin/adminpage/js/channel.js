@@ -27,7 +27,7 @@ function createItem(name, target, filler, feeddata){
 		delbutton.setAttribute("type","button");
 		delbutton.setAttribute("name","rbutton");
 		delbutton.setAttribute("value","Delete");
-		delbutton.setAttribute("class","removebutton red");
+		delbutton.setAttribute("class","removebutton");
 		delbutton.setAttribute("onclick","removeItem(this)");
 		divTag.appendChild(delbutton);
 		
@@ -204,8 +204,9 @@ function editChannel(name){
 		data: "p=2&name="+name,
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
-			document.getElementById("nameTXB").value = jsonobj["name"];
-			document.getElementById("noteTXB").value = jsonobj["note"];
+			document.getElementById("name").value = jsonobj["name"];
+			document.getElementById("static").value = jsonobj["static"];
+			document.getElementById("description").value = jsonobj["note"];
 			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
 			if(arr.length > 0){
@@ -341,6 +342,11 @@ function getFeeds(){
 	$('#name').watermark('Descriptive title for this channel');
 	$('#static').watermark('Static information which will be displayed as the speech bubble at the bottom of the screen');
 	$('#description').watermark('A short description of this channel');
+	
+	var maincontent = document.getElementById("maincontent");
+	if(maincontent.childNodes.length != 0){
+		maincontent.style.backgroundImage = "url('')";
+	}
 	
 	$.ajax({
 		type: "POST",

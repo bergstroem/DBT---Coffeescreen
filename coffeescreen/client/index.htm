@@ -6,7 +6,8 @@
 		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
 		<link type="text/css" href="css/main.css" rel="stylesheet" />
 		<script src="frontend.js"></script>
-		
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Expires" content="-1">
 	</head>
 	<body>
 	
@@ -34,7 +35,18 @@
 		
 		<div id="bottomBar">
 		<div id="progressBar"></div>
-		<div class="bottomBarSection">codemaster: ahhae5Ceek</div><div class="bottomBarSection">Codeguest1: eishah0X</div></div>
+			<div class="bottomBarSideSection">
+			<img class="bottomBarImage" src="prev_pil.png"/>
+			Föregående
+			</div>
+			<div id="bottomBarMiddleSection">
+				<span class="bubble" id="staticText"></span>
+				<img class="bottomBarImage" style="margin:5px;" src="codeperson.png" height="30"/>
+			</div>
+			<div class="bottomBarSideSection" style="text-align:right;">
+			Nästa<img class="bottomBarImage" src="next_pil.png"/>
+			</div>
+		</div>
 		<script>
 		function show(){
 			var Digital=new Date();
@@ -42,7 +54,7 @@
 			var minutes=Digital.getMinutes();
 			if (minutes<=9)
 			minutes="0"+minutes;
-			document.getElementById("topBarCenter").innerHTML=hours+":"+minutes;
+			document.getElementById("topBarRight").innerHTML=hours+":"+minutes;
 			setTimeout("show()",1000);
 		}
 		show();

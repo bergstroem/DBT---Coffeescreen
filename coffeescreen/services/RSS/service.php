@@ -36,13 +36,14 @@ class RSS extends Service {
 			$item = $feed->get_item($i);
 
 			$title = $item->get_title();
-			$date = $item->get_date();
+
+			$time = strtotime($item->get_date());
 			$content = $item->get_content();
 
 			//Generate a HTML string
-			$html = "<h1>".$title."</h1><p class='small-text'>".$date."</p>".$content;
+			$html = "<h1>".$title."</h1><p class='small-text'>".date("j F Y H:i", $time)."</p>".$content;
 
-			$this->bundleView(strtotime($date), $html);
+			$this->bundleView($time, $html);
 		}
 	}
 }
