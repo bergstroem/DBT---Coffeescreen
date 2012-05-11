@@ -118,6 +118,7 @@ h1 {
 
 .bubble {
 	position: relative;
+	top: 1px;
 	padding: 7px;
 	color: #00AEEF;
 	background-color: white;
