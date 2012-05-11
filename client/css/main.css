@@ -125,6 +125,7 @@ h1 {
 	border-radius: 8px;
 	display:inline-block;
 	max-width: 260px;
+	height: 16px;
 }
 
 .bottomBarImage {

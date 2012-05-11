@@ -25,6 +25,15 @@ function switchMainInformation() {
 	
 	document.getElementById("mainContent").innerHTML = content;
 	
+	//Set next/prev text
+	if(currentInformation.maincontent.posts.length > (mainContentCounter + 1))
+		document.getElementById("nextText").innerHTML = currentInformation.maincontent.posts[mainContentCounter+1].title;
+	else
+		document.getElementById("nextText").innerHTML = "";
+	if(mainContentCounter > 0)
+		document.getElementById("prevText").innerHTML = currentInformation.maincontent.posts[mainContentCounter-1].title;
+	else
+		document.getElementById("prevText").innerHTML = "";
 	
 	//Preload images
 	var images = document.getElementById("mainContent").getElementsByTagName("img");
