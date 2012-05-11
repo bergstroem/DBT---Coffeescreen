@@ -98,6 +98,7 @@ h1 {
 	height: 40px;
 	width: 100%;
 	bottom: 0px;
+	
 }
 
 #bottomBarMiddleSection {
@@ -107,11 +108,19 @@ h1 {
 	text-align: center;
 }
 
-.bottomBarSideSection {
-	width: 25%;
+.bottomBarLeft {
+	width: 23%;
 	color: #00aeef;
 	float: left;
 	height: 100%;
+	padding-left: 10px;
+}
+.bottomBarRight {
+	width: 23%;
+	color: #00aeef;
+	float: right;
+	height: 100%;
+	padding-right: 10px;
 }
 
 .small-text  {
