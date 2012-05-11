@@ -340,7 +340,7 @@ function listChannels(){
 function getFeeds(){
 	
 	$('#name').watermark('Descriptive title for this channel');
-	$('#static').watermark('Static information at the bottom of the client display');
+	$('#static').watermark('Static information which will be displayed as the speech bubble at the bottom of the screen');
 	$('#description').watermark('A short description of this channel');
 	
 	var maincontent = document.getElementById("maincontent");

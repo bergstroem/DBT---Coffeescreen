@@ -90,7 +90,7 @@ function mainPostLoaded() {
 		totalTime *= document.getElementById("mainContent").offsetHeight;
 	}
 	else{
-		//Setup progress bra variables
+		//Setup progress bar variables
 		totalTime = displaytime;
 	}
 
