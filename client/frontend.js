@@ -1,7 +1,7 @@
 var retries = 0;
 var futureInformation = null;
 var currentInformation = null;
-var mainContentCounter = 0;
+var mainContentCounter = -1;
 var mainContentProgressTimeout = null;
 var staticText = null;
 
@@ -9,7 +9,9 @@ var connection;
 
 var running = false;
 
-var loader = null;
+var newimages = new Array();
+
+var channel = "";
 
 window.onload = init;
 
@@ -21,6 +23,13 @@ function init() {
 
 //Switch to next view
 function switchMainInformation() {
+	mainContentCounter++;
+	if(mainContentCounter >= currentInformation.maincontent.posts.length) {
+		mainContentCounter = 0;
+	}
+
+	console.log(mainContentCounter + ", " + currentInformation.maincontent.posts.length);
+
 	//Här byts channel
 	console.log("Switching...");
 	//Extract article info
@@ -57,8 +66,7 @@ function switchMainInformation() {
 	}
 	
 	//Ask for new info when the cycle is done
-	if(++mainContentCounter >= currentInformation.maincontent.posts.length) {
-		mainContentCounter = 0;
+	if(mainContentCounter+1 >= currentInformation.maincontent.posts.length) {
 		//request new information
 		console.log("Refreshing...");
 		connection.send('Refresh');
@@ -71,6 +79,7 @@ function mainPostLoaded() {
 	adjustPostWidth();
 			
 	//Temp. moved here
+	console.log(mainContentCounter);
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
 	displaytime = parseFloat(displaytime)*1000;
 
@@ -162,7 +171,8 @@ function adjustPostWidth() {
 
 //Image preloading magic!
 function preloadimages(arr){
-    var newimages=[], loadedimages=0
+    window.newimages=[];
+    var loadedimages=0
     var postaction=function(){}
     var arr=(typeof arr!="object")? [arr] : arr
     function imageloadpost(){
@@ -183,7 +193,7 @@ function preloadimages(arr){
     }
     return { //return blank object with done() method
         done:function(f){
-            postaction=f || postaction
+            postaction=f || postaction;
         }
     }
 }
@@ -212,7 +222,7 @@ function connectToServer () {
 		
 		//Read screen name from URL
         var name = getQueryVariable('name');
-        var channel = getQueryVariable('channel');
+        channel = getQueryVariable('channel');
 
         if(name == null)
         	name = "default";
@@ -259,11 +269,13 @@ function connectToServer () {
         	//Extract data from JSON string
             var json = JSON.parse(message.data);
 
-            if(currentInformation == null) {
+            if(currentInformation == null || json.name != channel) {
 				currentInformation = json;
+				mainContentCounter = -1;
+				futureInformation = null;
+            } else {
+            	futureInformation = json;
             }
-
-            futureInformation = json;
 
 			//mainContentCounter = 0;
 			
@@ -323,21 +335,30 @@ function getQueryVariable(variable) {
 //Physical button integration
 
 function moveRight() {
-	if(mainContentCounter > currentInformation.length) {
-		mainContentCounter = 0;
+	if(mainContentCounter >= currentInformation.maincontent.posts.length && futureInformation != null) {
+		mainContentCounter = -1;
+		currentInformation = futureInformation;
+		futureInformation = null;
+
+		forceSwitch();
+	} else if(mainContentCounter < currentInformation.maincontent.posts.length) {
+		forceSwitch();
 	}
-	
-	if(loader != null)
-		loader.postaction = function() {};
-	
-	switchMainInformation();
 }
 
 function moveLeft() {
-	if(mainContentCounter > 1) {
+	if(mainContentCounter > 0) {
 		mainContentCounter -= 2;
-		switchMainInformation();
+		forceSwitch();
 	}
+}
+
+function forceSwitch() {
+		for(var i = newimages.length; i--;)
+			newimages[i].onload = function() {};
+		newimages = new Array();
+
+		switchMainInformation();
 }
 
 document.onkeydown = function(evt) {
