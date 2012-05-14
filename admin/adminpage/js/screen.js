@@ -49,6 +49,7 @@ $(document).ready(function(){
 					data: "",
 					success: function(msg){
 						console.log(msg);
+						alert("Setting channel " + select.value + " to the screen " + name);
 					}
 				});
 			}

@@ -96,6 +96,11 @@ function editFeed(full, name){
 			var keys = Object.keys(jsonobj);
 			
 			if(full){
+				
+				var title = document.getElementById("title");
+				title.removeChild(title.lastChild);
+				title.appendChild(document.createTextNode("Edit feed"));
+				
 				for(var i = 0; i < keys.length; i++){
 					var key = keys[i];
 					document.getElementsByName(key)[0].value = jsonobj[key];
@@ -216,14 +221,16 @@ $(document).ready(function(){
 function deleteFeed(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
-	$.ajax({
-		type: "POST",
-		url: "feedhandler.php",
-		data: "p=3&name="+name,
-		success: function(msg){
-			document.getElementById(parentname).removeChild(document.getElementById(divname));
-		}
-	});
+	if(confirm('This will delete this feed. Continue?')){
+		$.ajax({
+			type: "POST",
+			url: "feedhandler.php",
+			data: "p=3&name="+name,
+			success: function(msg){
+				document.getElementById(parentname).removeChild(document.getElementById(divname));
+			}
+		});
+	}
 }
 
 /**

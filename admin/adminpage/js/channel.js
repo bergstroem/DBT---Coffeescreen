@@ -208,6 +208,10 @@ function editChannel(name){
 			document.getElementById("static").value = jsonobj["static"];
 			document.getElementById("description").value = jsonobj["note"];
 			
+			var title = document.getElementById("title");
+			title.removeChild(title.lastChild);
+			title.appendChild(document.createTextNode("Edit channel"));
+			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
 			if(arr.length > 0){
 				for(var i = 0; i < arr.length-1; i++){
@@ -241,15 +245,16 @@ function editChannel(name){
 function deleteChannel(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
-	
-	$.ajax({
-		type: "POST",
-		url: "channelhandler.php",
-		data: "p=3&name="+name,
-		success: function(msg){
-			document.getElementById(parentname).removeChild(document.getElementById(divname));
-		}
-	});
+	if(confirm('This will delete this channel. Continue?')){
+		$.ajax({
+			type: "POST",
+			url: "channelhandler.php",
+			data: "p=3&name="+name,
+			success: function(msg){
+				document.getElementById(parentname).removeChild(document.getElementById(divname));
+			}
+		});
+	}
 }
 
 /*
