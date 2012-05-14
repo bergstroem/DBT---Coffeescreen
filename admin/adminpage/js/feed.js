@@ -151,7 +151,7 @@ function listFeeds(){
 				
 				var tr = document.createElement("tr");
 				tr.id = jsonitem["name"];
-				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listItem" : "listItem grey";
+				tr.className = "listItem";
 				
 				var td = document.createElement("td");
 				td.className = "itemName";
@@ -188,6 +188,7 @@ function listFeeds(){
 				
 				table.appendChild(tr);
 			}
+			$('#listContent tr:nth-child(even)').addClass('grey');
 		}
 	});
 }
@@ -228,6 +229,8 @@ function deleteFeed(name){
 			data: "p=3&name="+name,
 			success: function(msg){
 				document.getElementById(parentname).removeChild(document.getElementById(divname));
+				$('#listContent tr').removeClass('grey');
+				$('#listContent tr:nth-child(even)').addClass('grey');
 			}
 		});
 	}
