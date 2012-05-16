@@ -8,6 +8,7 @@
 		$priority = $_POST['priority'];
 		$displaytime = $_POST['displaytime'];
 		$expiretime = $_POST['expiretime'];
+		$timingmode = $_POST['timingmode'];
 		
 		$c = explode(",",$custom);
 		
@@ -24,6 +25,7 @@
 		$data['priority'] = $priority;
 		$data['displaytime'] = $displaytime;
 		$data['expiretime'] = $expiretime;
+		$data['timingmode'] = $timingmode;
 		
 		$jsondata = json_encode($data);
 		echo $jsondata;

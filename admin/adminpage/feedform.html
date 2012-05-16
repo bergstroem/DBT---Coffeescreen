@@ -37,6 +37,14 @@
 		<div class="tooltip">Set how long the feed will be displayed, 0 is dynamic time.</div></td>
 	</tr>
 	<tr class="listItem">
+		<td><label for=timingmode>Timing mode</label></td>
+		<td><select name="timingmode" id="timingmode" class="formTypeSelect">
+			<option value="0">Based on height</option>
+			<option value="1">Based on text length</option>
+		</select>
+		<div class="tooltip">Determine how dynamic time should be calculated.</div></td>
+	</tr>
+	<tr class="listItem">
 		<td><label for=expireTime>Expire time (h)</label></td>
 		<td><input type="number" name="expiretime" id="expireTime" class="formNB" value=0 min=0 />
 		<div class="tooltip">Set how long the feed will exist, 0 is unlimited.</div></td>

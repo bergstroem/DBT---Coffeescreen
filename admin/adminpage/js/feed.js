@@ -22,6 +22,7 @@ function saveFeed(){
 		var priority = document.getElementById("priority").value;
 		var displaytime = document.getElementById("displayTime").value;
 		var expiretime = document.getElementById("expireTime").value;
+		var timingmode = document.getElementById("timingmode").value;
 		
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
@@ -53,7 +54,7 @@ function saveFeed(){
 								$.ajax({
 									type: "POST",
 									url: "feedhandler.php",
-									data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+									data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
 									success: function(msg){
 										window.location = "adminfeed.php";
 									}
@@ -64,7 +65,7 @@ function saveFeed(){
 						$.ajax({
 							type: "POST",
 							url: "feedhandler.php",
-							data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+							data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
 							success: function(msg){
 								window.location = "adminfeed.php";
 							}
@@ -76,7 +77,7 @@ function saveFeed(){
 			$.ajax({
 				type: "POST",
 				url: "feedhandler.php",
-				data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+				data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
 				success: function(msg){
 					window.location = "adminfeed.php";
 				}
