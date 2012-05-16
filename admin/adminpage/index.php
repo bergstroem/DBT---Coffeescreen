@@ -16,7 +16,7 @@
 					<tr class="listHeader">
 						<td class="itemName">Name</td>
 						<td class="itemType">Channel</td>
-						<td><input type="button" id="panic:All" class="itemButton redbutton" value="Panic all"/></td>
+						<td><input type="button" id="panicAll" class="itemButton redbutton" value="Panic all"/></td>
 					</tr>
 				</table>
 			</div>
