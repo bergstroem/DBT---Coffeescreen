@@ -12,14 +12,6 @@ $(document).ready(function(){
 				deleteChannel(e.target.id);
 		}
 	});
-	
-	$('#name').watermark('Descriptive title for this channel');
-	$('#static').watermark('Static information which will be displayed as the speech bubble at the bottom of the screen');
-	$('#description').watermark('A short description of this channel');
-	
-
-	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
-	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
 });
 
 /* 
