@@ -26,7 +26,7 @@ function createItem(name, target, filler, feeddata){
 		var delbutton = document.createElement("input");
 		delbutton.setAttribute("type","button");
 		delbutton.setAttribute("name","rbutton");
-		delbutton.setAttribute("value","Delete");
+		delbutton.setAttribute("value","Remove");
 		delbutton.setAttribute("class","removebutton");
 		delbutton.setAttribute("onclick","removeItem(this)");
 		divTag.appendChild(delbutton);
