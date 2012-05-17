@@ -1,4 +1,28 @@
-﻿/* 
+﻿/*
+ * Handle clicks in adminchannel.php
+*/
+$(document).ready(function(){
+	$('.content').click(function(e){
+		if($(e.target).is('.itemButton')){
+			if(e.target.value == "Add")
+				window.location = "channel.php?p=1";
+			else if(e.target.value == "Edit")
+				window.location = "channel.php?p=2&name="+e.target.id;
+			else if(e.target.value == "Delete")
+				deleteChannel(e.target.id);
+		}
+	});
+	
+	$('#name').watermark('Descriptive title for this channel');
+	$('#static').watermark('Static information which will be displayed as the speech bubble at the bottom of the screen');
+	$('#description').watermark('A short description of this channel');
+	
+
+	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
+	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
+});
+
+/* 
  * createItem(name, target)
  * Function used for creating a new drag-/droppable div inside a target div.
  * name: Will be the id of the div
@@ -80,14 +104,6 @@ function feedExists(name){
 			return true;
 	}
 	
-	children = document.getElementById('subcontent').childNodes;
-	length = children.length;
-	for(var i = 0; i < length; i++){
-		if(name == children[i].getAttribute('id'))
-			return true;
-	}
-	
-	
 	children = document.getElementById('contentlist').childNodes;
 	length = children.length;
 	for(var i = 0; i < length; i++){
@@ -121,15 +137,7 @@ function saveChannel(){
 		}
 		mainContent = mainContent.substr(0,mainContent.length-1);
 		
-		children = document.getElementById('subcontent').childNodes;
-		var length = children.length;
 		var subContent = "";
-		
-		for(var i = 0; i < length; i++){
-			subContent += children[i].getAttribute('data') + ",";
-		}
-		
-		subContent = subContent.substr(0,subContent.length-1);
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
@@ -223,16 +231,8 @@ function editChannel(name){
 					createItem(jsonitem["name"], "maincontent", true, jsonToString(jsonitem))
 				}
 			}
-			/*
-			var arr = jsonobj["subcontent"].substr(0, jsonobj["subcontent"].length).split('},');
-			arr[0] += "}";
-			if(arr.length > 1){
-				for(var i = 0; i < arr.length; i++){
-					var jsonitem = jQuery.parseJSON(arr[i]);
-					createItem(jsonitem["name"], "subcontent", true, jsonToString(jsonitem))
-				}
-			}*/
-			getFeeds();
+
+			getFeeds(null);
 		}
 	});
 }
@@ -259,35 +259,32 @@ function deleteChannel(name){
 	}
 }
 
-/*
- * Handle clicks in adminchannel.php
-*/
-$(document).ready(function(){
-	$('.content').click(function(e){
-		if($(e.target).is('.itemButton')){
-			if(e.target.value == "Add")
-				window.location = "channel.php?p=1";
-			else if(e.target.value == "Edit")
-				window.location = "channel.php?p=2&name="+e.target.id;
-			else if(e.target.value == "Delete")
-				deleteChannel(e.target.id);
+function getFeeds(data){
+	var arr = data || null; 
+	var maincontent = document.getElementById("maincontent");
+	if(maincontent.childNodes.length != 0){
+		maincontent.style.backgroundImage = "url('')";
+	}
+	
+	
+	$.ajax({
+		type: "POST",
+		url: "feedhandler.php",
+		data: "p=list",
+		success: function(msg){
+			var jsonobj = jQuery.parseJSON(msg);
+			if(arr == null){
+				for(var i = 0; i < jsonobj.length; i++){
+					var jsonitem = jQuery.parseJSON(jsonobj[i])
+					var data = jsonToString(jsonitem);
+					createItem(jsonitem["name"], "contentlist", true, data);
+				}
+			}
+			else{
+				
+			}
 		}
 	});
-});
-
-/*
- * addEL()
- * Used for adding eventhandlers to the channel form.
-*/
-function addEL(){
-	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
-	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
-	
-	document.getElementById("subcontent").addEventListener('dragover', handleDragOver, false);
-	document.getElementById("subcontent").addEventListener('drop', handleDrop, false);
-	
-	document.getElementById("contentlist").addEventListener('dragover', handleDragOver, false);
-	document.getElementById("contentlist").addEventListener('drop', handleDrop, false);
 }
 
 /*
@@ -341,32 +338,6 @@ function listChannels(){
 				table.appendChild(tr);
 			}
 			$('#listContent tr:nth-child(even)').addClass('grey');
-		}
-	});
-}
-
-function getFeeds(){
-	
-	$('#name').watermark('Descriptive title for this channel');
-	$('#static').watermark('Static information which will be displayed as the speech bubble at the bottom of the screen');
-	$('#description').watermark('A short description of this channel');
-	
-	var maincontent = document.getElementById("maincontent");
-	if(maincontent.childNodes.length != 0){
-		maincontent.style.backgroundImage = "url('')";
-	}
-	
-	$.ajax({
-		type: "POST",
-		url: "feedhandler.php",
-		data: "p=list",
-		success: function(msg){
-			var jsonobj = jQuery.parseJSON(msg);
-			for(var i = 0; i < jsonobj.length; i++){
-				var jsonitem = jQuery.parseJSON(jsonobj[i])
-				var data = jsonToString(jsonitem);
-				createItem(jsonitem["name"], "contentlist", true, data);
-			}
 		}
 	});
 }
