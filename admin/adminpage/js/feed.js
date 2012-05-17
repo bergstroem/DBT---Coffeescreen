@@ -213,6 +213,9 @@ $(document).ready(function(){
 	$('#type').bind('change', function(e){
 		getTypeParameters();
 	});
+	
+	$('#name').watermark('Descriptive title for this feed');
+	$('#description').watermark('Short description of this feed');
 });
 
 /*
@@ -253,9 +256,6 @@ function getTypeParameters(fname){
 			table.removeChild(table.getElementsByTagName("tr")[i]);
 		}
 	}
-	
-	$('#name').watermark('Descriptive title for this feed');
-	$('#description').watermark('Short description of this feed');
 	
 	$.ajax({
 		type: "GET",
