@@ -15,7 +15,6 @@ function Channel(name, note, mainContent, panic, staticText) {
 	this.mainContent = mainContent;
 	this.panic = panic;
 	this.staticText = staticText;
-	this.isPanic = false;
 	
 	//Parses and sends itself in json-format to the specified connection.
 	this.sendJson = function(connection) {
@@ -45,7 +44,6 @@ function Channel(name, note, mainContent, panic, staticText) {
 
 //
 function fetchContent(content, callback) {
-		
 		var options = {
 			   host: 'localhost',
 			   port: 80,   

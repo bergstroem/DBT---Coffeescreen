@@ -263,6 +263,15 @@ function connectToServer () {
 
     //When a message arrives from the server
     connection.onmessage = function (message) {
+    
+    	if(message.data == "Panic"){
+    		console.log("TODO: I should go to panic now");
+    		return;
+    	}
+    	else if(message.data == "Unpanic"){
+    		console.log("TODO: I should go to unpanic now");
+    		return;
+    	}
         // try to decode json (I assume that each messagse from server is json)
         console.log("Got message");
         try {
@@ -273,21 +282,21 @@ function connectToServer () {
 				currentInformation = json;
 				mainContentCounter = -1;
 				futureInformation = null;
+            
+            	channel = json.name;
+            	
+            	//Force immediate change if panic feed
+				if(!running || json.name == "panic"){
+					switchMainInformation();
+					running = true;
+				}
             } else {
             	futureInformation = json;
             }
-
-			//mainContentCounter = 0;
 			
 			staticText.data = json.static;
 			
 			console.log("Feed name: " + json.name);
-			
-			//Force immediate change if panic feed
-			if(!running || json.name == "panic"){
-				switchMainInformation();
-				running = true;
-			}
         } catch (e) {
         	console.log(e.message);
             console.log('This doesn\'t look like a valid JSON: ', message.data);

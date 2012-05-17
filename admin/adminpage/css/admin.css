@@ -309,6 +309,7 @@ body{
 	padding:10px 10px;
 	z-index:100;
 	font-weight:bold;
+	cursor:move;
 }
 
 .removebutton{
