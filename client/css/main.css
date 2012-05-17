@@ -46,7 +46,6 @@ h1 {
 	height: 35px;
 	top: 0;
 	left:0;
-	font-size:24px;
 	padding-top: 10px;
 	background: black;
 	
@@ -57,18 +56,21 @@ h1 {
 }
 
 .topBarSection {
-	width: 33%;
 	float: left;
 	color: white;
 	font-weight: bold;
 }
 
-#topBarCenter {
-	text-align: center;
+#topBarLeft {
+	width: 33%;
 }
 
 #topBarRight {
+	width: 66%;
+	color: white;
+	float: left;
 	text-align: right;
+	
 }
 
 #contentArea {
@@ -117,21 +119,23 @@ h1 {
 }
 
 #bottomBarMiddleSection {
-	width: 50%;
+	width: 17%;
+	font-size:180%;
 	color: white;
 	float: left;
 	text-align: center;
+	margin-top:10px;
 }
 
 .bottomBarLeft {
-	width: 23%;
+	width: 40%;
 	color: #00aeef;
 	float: left;
 	height: 100%;
 	padding-left: 10px;
 }
 .bottomBarRight {
-	width: 23%;
+	width: 40%;
 	color: #00aeef;
 	float: right;
 	height: 100%;
@@ -144,21 +148,31 @@ h1 {
 	
 }
 
+#codeperson{
+	float:right;
+	margin-left: 1px;
+}
+
 .bubble {
-	position: relative;
-	padding: 7px;
+	/*position: relative;*/
+	padding: 5px;
 	color: #00AEEF;
 	background-color: white;
 	border-radius: 8px;
-	display:inline-block;
+	/*display:inline-block;*/
+	float:right;
 	max-width: 260px;
-	height: 16px;
+	/*height: 10px;*/
+	text-decoration:none;
+	font-weight:normal;
+	font-size:12px;
+
 }
 
 .bubble_point {
-	margin-left: -5px;
-	/*margin-right:-5px;*/
-	margin-top: 1px;
+	float:right;
+	margin-left:-1px;
+	margin-top: 8px;
 }
 
 .bottomBarImage {
