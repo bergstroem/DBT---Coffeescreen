@@ -1,4 +1,25 @@
 ﻿/*
+ * Handle clicks in adminfeed.php
+*/
+$(document).ready(function(){
+	$('.content').click(function(e){
+		if($(e.target).is('.itemButton')){
+			if(e.target.value == "Add")
+				window.location = "feed.php?p=1";
+			else if(e.target.value == "Edit")
+				window.location = "feed.php?p=2&name="+e.target.id;
+			else if(e.target.value == "Delete"){
+				deleteFeed(e.target.id);
+			}
+		}
+	});
+	
+	$('#type').bind('change', function(e){
+		getTypeParameters($('#type').val());
+	});
+});
+
+/*
  * saveFeed()
  * Used for saving a feed, will use the information in the form.
 */
@@ -86,36 +107,54 @@ function saveFeed(){
 	}
 }
 
-function editFeed(full, name){
-	$.ajax({
-		type: "POST",
-		url: "feedhandler.php",
-		data: "p=2&name="+name,
-		success: function(msg){
-			var jsonobj = jQuery.parseJSON(msg);
-			document.getElementsByName("type")[0].value = jsonobj["type"];
-			var keys = Object.keys(jsonobj);
-			
-			if(full){
-				
+function editFeed(edit, name){
+	if(edit){
+		$.ajax({
+			type: "POST",
+			url: "feedhandler.php",
+			data: "p=2&name="+name,
+			success: function(msg){
 				var title = document.getElementById("title");
 				title.removeChild(title.lastChild);
 				title.appendChild(document.createTextNode("Edit feed"));
 				
-				for(var i = 0; i < keys.length; i++){
-					var key = keys[i];
-					document.getElementsByName(key)[0].value = jsonobj[key];
-				}
+				var jsonobj = jQuery.parseJSON(msg);
+				
+				getFeedTypes(jsonobj);
 			}
-			else{
-				getTypeParameters(name);
-			}
-		}
-	});
+		});
+	}
+	else{
+		getFeedTypes();
+	}
 }
 
-function getFeedTypes(name){
+/*
+ * deleteFeed(name)
+ * Will delete the feed with the given name.
+ * name: Name of the feed that is going to be deleted.
+*/
+function deleteFeed(name){
+	var divname = name.substr(0, name.length-5);
+	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
+	if(confirm('This will delete this feed. Continue?')){
+		$.ajax({
+			type: "POST",
+			url: "feedhandler.php",
+			data: "p=3&name="+name,
+			success: function(msg){
+				document.getElementById(parentname).removeChild(document.getElementById(divname));
+				$('#listContent tr').removeClass('grey');
+				$('#listContent tr:nth-child(even)').addClass('grey');
+			}
+		});
+	}
+}
+
+
+function getFeedTypes(json){
 	var select = document.getElementById("type");
+	
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
@@ -128,11 +167,118 @@ function getFeedTypes(name){
 				temp.appendChild(document.createTextNode(arr[i]));
 				select.appendChild(temp);
 			}
-			if(name){
-				editFeed(false,name);
+			getTypeParameters(json);
+		}
+	});
+}
+
+/**
+ * Parametertypes:
+ * ShortText = 0; (input text)
+ * LongText = 1; (text area)
+ * Number = 2; (input number)
+ * Boolean = 3; (input checkbox)
+ */
+function getTypeParameters(json){
+	var table = document.getElementById("required").getElementsByTagName("tbody")[0];
+	var sel = (json == undefined) ? document.getElementById("type").value : json["type"];
+	document.getElementById("type").value = sel;
+	
+	if(table.getElementsByTagName("tr").length > 5){
+		for(var i = table.getElementsByTagName("tr").length-1; i >= 5; i--){
+			table.removeChild(table.getElementsByTagName("tr")[i]);
+		}
+	}
+	
+	$.ajax({
+		type: "GET",
+		url: "../../services/Api.php",
+		data: "getParameters&service="+sel,
+		success: function(msg){
+			var jsonobj = jQuery.parseJSON(msg);
+			for(row in jsonobj){
+				item = jsonobj[row];
+				var tr = document.createElement("tr");
+				tr.className = "listItem";
+				
+				var td = document.createElement("td");
+				td.appendChild(document.createTextNode(item["label"]));
+				tr.appendChild(td);
+				
+				var td = document.createElement("td");
+				var type = parseInt(item["type"]);
+				var input = null;
+				switch(type)
+				{
+					case 0: //ShortText = 0; (input text)
+						input = document.createElement("input");
+						input.name = row;
+						input.id = row;
+						input.className = "formTXB";
+						input.value = item["value"];
+
+						td.appendChild(input);
+						tr.appendChild(td);
+						table.appendChild(tr);
+
+						$('#'+row).watermark(item["tooltip"]);
+						break;
+					case 1: //LongText = 1; (text area)
+						input = document.createElement("textarea");	
+						input.id = row;
+						input.name = row;
+						input.className = "noteTXB";
+						input.appendChild(document.createTextNode(item["value"]));
+
+						td.appendChild(input);
+						tr.appendChild(td);
+						table.appendChild(tr);
+						
+						$('#'+row).watermark(item["tooltip"]);
+						break;
+					case 2: //Number = 2; (input number)
+						input = document.createElement("input");
+						input.name = row;
+						input.type = "number";
+						input.className = "formNB";
+						input.value = item["value"];
+
+						td.appendChild(input);
+						tr.appendChild(td);
+						table.appendChild(tr);
+						
+						var tooltip = document.createElement("div");
+						tooltip.className = "tooltip";
+						tooltip.appendChild(document.createTextNode(item["tooltip"]));
+						td.appendChild(tooltip);
+						break;
+					case 3: //Boolean = 3; (input checkbox)
+						input = document.createElement("input");
+						input.name = row;
+						input.type = "checkbox";
+						input.className = "formCB";
+						input.value = item["value"];
+
+						td.appendChild(input);
+						tr.appendChild(td);
+						table.appendChild(tr);
+						
+						var tooltip = document.createElement("div");
+						tooltip.className = "tooltip";
+						tooltip.appendChild(document.createTextNode(item["tooltip"]));
+						td.appendChild(tooltip);
+						break;
+					default:
+					  break;
+				}
 			}
-			else{
-				getTypeParameters();
+			if(json != undefined){
+				var keys = Object.keys(json);
+				
+				for(var i = 0; i < keys.length; i++){
+					var key = keys[i];
+					document.getElementsByName(key)[0].value = json[key];
+				}
 			}
 		}
 	});
@@ -190,162 +336,6 @@ function listFeeds(){
 				table.appendChild(tr);
 			}
 			$('#listContent tr:nth-child(even)').addClass('grey');
-		}
-	});
-}
-
-/*
- * Handle clicks in adminfeed.php
-*/
-$(document).ready(function(){
-	$('.content').click(function(e){
-		if($(e.target).is('.itemButton')){
-			if(e.target.value == "Add")
-				window.location = "feed.php?p=1";
-			else if(e.target.value == "Edit")
-				window.location = "feed.php?p=2&name="+e.target.id;
-			else if(e.target.value == "Delete"){
-				deleteFeed(e.target.id);
-			}
-		}
-	});
-	
-	$('#type').bind('change', function(e){
-		getTypeParameters();
-	});
-	
-	$('#name').watermark('Descriptive title for this feed');
-	$('#description').watermark('Short description of this feed');
-});
-
-/*
- * deleteFeed(name)
- * Will delete the feed with the given name.
- * name: Name of the feed that is going to be deleted.
-*/
-function deleteFeed(name){
-	var divname = name.substr(0, name.length-5);
-	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
-	if(confirm('This will delete this feed. Continue?')){
-		$.ajax({
-			type: "POST",
-			url: "feedhandler.php",
-			data: "p=3&name="+name,
-			success: function(msg){
-				document.getElementById(parentname).removeChild(document.getElementById(divname));
-				$('#listContent tr').removeClass('grey');
-				$('#listContent tr:nth-child(even)').addClass('grey');
-			}
-		});
-	}
-}
-
-/**
- * Parametertypes:
- * ShortText = 0; (input text)
- * LongText = 1; (text area)
- * Number = 2; (input number)
- * Boolean = 3; (input checkbox)
- */
-function getTypeParameters(fname){
-	var table = document.getElementById("required").getElementsByTagName("tbody")[0];
-	var select = document.getElementById("type").value;
-	
-	if(table.getElementsByTagName("tr").length > 5){
-		for(var i = table.getElementsByTagName("tr").length-1; i >= 5; i--){
-			table.removeChild(table.getElementsByTagName("tr")[i]);
-		}
-	}
-	
-	$.ajax({
-		type: "GET",
-		url: "../../services/Api.php",
-		data: "getParameters&service="+select,
-		success: function(msg){
-			var jsonobj = jQuery.parseJSON(msg);
-			for(row in jsonobj){
-				item = jsonobj[row];
-				var tr = document.createElement("tr");
-				tr.className = "listItem";
-				
-				var td = document.createElement("td");
-				td.appendChild(document.createTextNode(item["label"]));
-				tr.appendChild(td);
-				
-				var td = document.createElement("td");
-				var type = parseInt(item["type"]);
-				var input = null;
-				switch(type)
-				{
-					case 0:
-					//ShortText = 0; (input text)
-						input = document.createElement("input");
-						input.name = row;
-						input.id = row;
-						input.className = "formTXB";
-						input.value = item["value"];
-
-						td.appendChild(input);
-						tr.appendChild(td);
-						table.appendChild(tr);
-
-						$('#'+row).watermark(item["tooltip"]);
-						break;
-					case 1:
-					//LongText = 1; (text area)
-						input = document.createElement("textarea");	
-						input.id = row;
-						input.name = row;
-						input.className = "noteTXB";
-						input.appendChild(document.createTextNode(item["value"]));
-
-						td.appendChild(input);
-						tr.appendChild(td);
-						table.appendChild(tr);
-						
-						$('#'+row).watermark(item["tooltip"]);
-						break;
-					case 2:
-					//Number = 2; (input number)
-						input = document.createElement("input");
-						input.name = row;
-						input.type = "number";
-						input.className = "formNB";
-						input.value = item["value"];
-
-						td.appendChild(input);
-						tr.appendChild(td);
-						table.appendChild(tr);
-						
-						var tooltip = document.createElement("div");
-						tooltip.className = "tooltip";
-						tooltip.appendChild(document.createTextNode(item["tooltip"]));
-						td.appendChild(tooltip);
-						break;
-					case 3:
-					//Boolean = 3; (input checkbox)
-						input = document.createElement("input");
-						input.name = row;
-						input.type = "checkbox";
-						input.className = "formCB";
-						input.value = item["value"];
-
-						td.appendChild(input);
-						tr.appendChild(td);
-						table.appendChild(tr);
-						
-						var tooltip = document.createElement("div");
-						tooltip.className = "tooltip";
-						tooltip.appendChild(document.createTextNode(item["tooltip"]));
-						td.appendChild(tooltip);
-						break;
-					default:
-					  break;
-				}
-			}
-			if(fname){
-				editFeed(true, fname);
-			}
 		}
 	});
 }

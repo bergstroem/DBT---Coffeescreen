@@ -12,14 +12,6 @@ $(document).ready(function(){
 				deleteChannel(e.target.id);
 		}
 	});
-	
-	$('#name').watermark('Descriptive title for this channel');
-	$('#static').watermark('Static information which will be displayed as the speech bubble at the bottom of the screen');
-	$('#description').watermark('A short description of this channel');
-	
-
-	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
-	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
 });
 
 /* 
@@ -221,7 +213,8 @@ function editChannel(name){
 			title.appendChild(document.createTextNode("Edit channel"));
 			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
-
+			arr = (arr[0] == "") ? undefined : arr;
+			
 			getFeeds(arr);
 		}
 	});
@@ -251,20 +244,24 @@ function deleteChannel(name){
 
 function getFeeds(data){
 	var arr = (data == undefined) ? new Array(0): data;
+
 	var names = new Array(); 
 	var maincontent = document.getElementById("maincontent");
 	if(maincontent.childNodes.length != 0){
 		maincontent.style.backgroundImage = "url('')";
 	}
 	
-	for(var i = 0; i < arr.length-1; i++){
-		arr[i] += "}";
+	if(arr.length > 0){
+		for(var i = 0; i < arr.length-1; i++){
+			arr[i] += "}";
+		}
+		for(var i = 0; i < arr.length; i++){
+			var jsonitem = jQuery.parseJSON(arr[i]);
+			var data = jsonToString(jsonitem);
+			names.push(jsonitem["name"]);
+		}
 	}
-	for(var i = 0; i < arr.length; i++){
-		var jsonitem = jQuery.parseJSON(arr[i]);
-		var data = jsonToString(jsonitem);
-		names.push(jsonitem["name"]);
-	}
+	
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
