@@ -8,6 +8,7 @@ var staticText = null;
 var connection;
 
 var running = false;
+var startTime = 0;
 
 var newimages = new Array();
 
@@ -41,7 +42,7 @@ function switchMainInformation() {
 	if(currentInformation.maincontent.posts.length > (mainContentCounter + 1))
 		document.getElementById("nextText").innerHTML = currentInformation.maincontent.posts[mainContentCounter+1].title;
 	else
-		document.getElementById("nextText").innerHTML = "";
+		document.getElementById("nextText").innerHTML = "Refresh!";
 	if(mainContentCounter > 0)
 		document.getElementById("prevText").innerHTML = currentInformation.maincontent.posts[mainContentCounter-1].title;
 	else
@@ -77,6 +78,10 @@ function switchMainInformation() {
 function mainPostLoaded() {
 	//Adjust width of the post.											
 	adjustPostWidth();
+		
+	var timingMode = 1;//currentInformation.maincontent.posts[mainContentCounter];
+	//console.log(timingMode);
+			
 			
 	//Temp. moved here
 	console.log(mainContentCounter);
@@ -87,7 +92,15 @@ function mainPostLoaded() {
 
 	if(displaytime==0){
 		//Calculate time to display the view
-		totalTime *= document.getElementById("mainContent").offsetHeight;
+		switch(timingMode) {
+			case 1:
+			totalTime *= document.getElementById("mainContent").offsetHeight;
+			break;
+			
+			case 2:
+			totalTime *= document.getElementById("mainContent").innerHTML.length;
+			break;
+		}
 	}
 	else{
 		//Setup progress bar variables
@@ -97,24 +110,27 @@ function mainPostLoaded() {
 
 	console.log("Will display for " + (totalTime/1000) + "s");
 	//Setup progress bar variables
-	var startTime = new Date().getTime();
+	startTime = new Date().getTime();
 	//Setup display and scroll timers
 	//mainContentSwitchingTimeout = setTimeout(switchMainInformation, totalTime);
 	document.getElementById("pageWrapper").scrollTop = 0;
 	document.getElementById("pageWrapper").scrollLeft = 0;
 	document.getElementById('progressBar').style.width = 0;
 	clearTimeout(mainContentProgressTimeout);
-	stepContent(totalTime, startTime);
+	stepContent(totalTime);
 }
 
 //One scrolling jump
-function stepContent(totalTime, startTime) {
+function stepContent(totalTime) {
 	var delay = 4000;
 	var totalElapsedTime = new Date().getTime() - startTime;
 	
 	var progress = totalElapsedTime/(totalTime + 3*delay);
-
-	if(totalElapsedTime >= delay) {
+	
+	if(totalElapsedTime < delay) {
+		document.getElementById("pageWrapper").scrollLeft = 0;
+		document.getElementById("pageWrapper").scrollTop = 0;
+	} else if(totalElapsedTime >= delay) {
 		var scrollProgress = (totalElapsedTime - delay)/totalTime;
 		
 		var width = document.getElementById("pageWrapper").scrollWidth;
@@ -128,7 +144,7 @@ function stepContent(totalTime, startTime) {
 	document.getElementById('progressBar').style.width = Math.round(progress * window.innerWidth) + "px";
 
 	if(progress < 1) {
-		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime, startTime);
+		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime);
 	} else {
 		switchMainInformation();
 	}
@@ -347,10 +363,20 @@ function moveRight() {
 }
 
 function moveLeft() {
-	if(mainContentCounter > 0) {
+	if(mainContentCounter > 0 && (Date.now()-startTime) < 1000 ) {
 		mainContentCounter -= 2;
 		forceSwitch();
+	} else {
+		startTime = Date.now();
 	}
+}
+
+function pause() {
+	
+}
+
+function unPause() {
+	
 }
 
 function forceSwitch() {
@@ -361,14 +387,44 @@ function forceSwitch() {
 		switchMainInformation();
 }
 
-document.onkeydown = function(evt) {
-    evt = evt || window.event;
-    switch (evt.keyCode) {
-        case 37:
+function getButton(event) {
+	var button = 0;
+	
+	if (event.which == null)
+		/* IE case */
+		button= (event.button < 2) ? 1 :
+		((event.button == 4) ? 3 : 2);
+	else
+		/* All others */
+		button= (event.which < 2) ? 1 :
+			((event.which == 2) ? 3 : 2);
+	
+	return button;
+}
+
+document.onmousedown = function(event) {
+	switch (getButton(event)) {
+        case 1:
             moveLeft();
             break;
-        case 39:
+        case 2:
             moveRight();
             break;
+        case 3:
+        	pause();
+			break;
     }
+    
+	return false;
+};
+
+document.onmouseup = function(event){
+	if(getButton(event) == 2)
+		unPause();
+	
+	return false;
+};
+
+document.oncontextmenu = function() {
+	return false;
 };
