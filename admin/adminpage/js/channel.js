@@ -221,18 +221,8 @@ function editChannel(name){
 			title.appendChild(document.createTextNode("Edit channel"));
 			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
-			if(arr.length > 0){
-				for(var i = 0; i < arr.length-1; i++){
-					arr[i] += "}";
-				}
-				for(var i = 0; i < arr.length; i++){
-					var jsonitem = jQuery.parseJSON(arr[i]);
-					var data = jsonToString(jsonitem);
-					createItem(jsonitem["name"], "maincontent", true, jsonToString(jsonitem))
-				}
-			}
 
-			getFeeds(null);
+			getFeeds(arr);
 		}
 	});
 }
@@ -260,12 +250,18 @@ function deleteChannel(name){
 }
 
 function getFeeds(data){
-	var arr = data || null; 
+	var arr = (data == undefined) ? new Array(0): data;
+	var names = new Array(); 
 	var maincontent = document.getElementById("maincontent");
 	if(maincontent.childNodes.length != 0){
 		maincontent.style.backgroundImage = "url('')";
 	}
 	
+	for(var i = 0; i < arr.length; i++){
+		var jsonitem = jQuery.parseJSON(arr[i]);
+		var data = jsonToString(jsonitem);
+		names.push(jsonitem["name"]);
+	}
 	
 	$.ajax({
 		type: "POST",
@@ -273,7 +269,7 @@ function getFeeds(data){
 		data: "p=list",
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
-			if(arr == null){
+			if(names.length == 0){
 				for(var i = 0; i < jsonobj.length; i++){
 					var jsonitem = jQuery.parseJSON(jsonobj[i])
 					var data = jsonToString(jsonitem);
@@ -281,7 +277,17 @@ function getFeeds(data){
 				}
 			}
 			else{
-				
+				for(var i = 0; i < jsonobj.length; i++){
+					var jsonitem = jQuery.parseJSON(jsonobj[i])
+					var data = jsonToString(jsonitem);
+					if($.inArray(jsonitem["name"], names)){
+						createItem(jsonitem["name"], "maincontent", true, data);
+					}
+					else{
+						createItem(jsonitem["name"], "contentlist", true, data);
+					}
+					
+				}
 			}
 		}
 	});
