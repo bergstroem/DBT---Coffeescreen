@@ -1,4 +1,4 @@
-﻿var host = "dbt2k12b.codemill.se";//window.location.host/*"85.24.223.52"*/;
+﻿var host = window.location.host;//window.location.host/*"85.24.223.52"*/;
 
 /*
  * Handles click events in index.php
