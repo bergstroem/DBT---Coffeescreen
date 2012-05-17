@@ -39,8 +39,8 @@ h1 {
 
 #topBar {
 	position: fixed;
-	border-bottom: 8px solid #373534;
-	border-radius: 5px;
+	/*border-bottom: 8px solid #373534;
+	border-radius: 5px;*/
 	width: 100%;
 	height: 35px;
 	top: 0;
@@ -90,6 +90,16 @@ h1 {
 	background-image: -webkit-linear-gradient(top left, #3366CC 0%, #00AEEF 50%, #99CCFF 100%);
 	border-radius: 5px;
 	left: 0px;
+}
+
+#progressBarBackground{
+	height: 8px;
+	position: absolute;
+	bottom: -8px;
+	background: #373534;
+	border-radius: 5px;
+	left: 0px;
+
 }
 
 #bottomBar {
@@ -144,6 +154,7 @@ h1 {
 
 .bubble_point {
 	margin-left: -5px;
+	/*margin-right:-5px;*/
 	margin-top: 1px;
 }
 
