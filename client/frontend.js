@@ -1,25 +1,35 @@
 var retries = 0;
+var futureInformation = null;
 var currentInformation = null;
-var mainContentCounter = 0;
+var mainContentCounter = -1;
 var mainContentProgressTimeout = null;
-var mainContentSwitchingTimeout = null;
+var staticText = null;
+
+var connection;
 
 var running = false;
 
-//Progress bar
-var progress = 0;
-var totalElapsedTime = 0;
-var totalTime = 0;
-var startTime = 0;
+var newimages = new Array();
+
+var channel = "";
 
 window.onload = init;
 
 function init() {
+	staticText = document.createTextNode("");
+	document.getElementById('staticText').appendChild(staticText);
 	connectToServer();
 }
 
 //Switch to next view
 function switchMainInformation() {
+	mainContentCounter++;
+	if(mainContentCounter >= currentInformation.maincontent.posts.length) {
+		mainContentCounter = 0;
+	}
+
+	console.log(mainContentCounter + ", " + currentInformation.maincontent.posts.length);
+
 	//Här byts channel
 	console.log("Switching...");
 	//Extract article info
@@ -27,6 +37,15 @@ function switchMainInformation() {
 	
 	document.getElementById("mainContent").innerHTML = content;
 	
+	//Set next/prev text
+	if(currentInformation.maincontent.posts.length > (mainContentCounter + 1))
+		document.getElementById("nextText").innerHTML = currentInformation.maincontent.posts[mainContentCounter+1].title;
+	else
+		document.getElementById("nextText").innerHTML = "";
+	if(mainContentCounter > 0)
+		document.getElementById("prevText").innerHTML = currentInformation.maincontent.posts[mainContentCounter-1].title;
+	else
+		document.getElementById("prevText").innerHTML = "";
 	
 	//Preload images
 	var images = document.getElementById("mainContent").getElementsByTagName("img");
@@ -41,14 +60,13 @@ function switchMainInformation() {
 	}
 	
 	if(urls.length > 0) {
-		preloadimages(urls).done(mainPostLoaded);
+		loader = preloadimages(urls).done(mainPostLoaded);
 	} else {
 		mainPostLoaded();
 	}
 	
 	//Ask for new info when the cycle is done
-	if(++mainContentCounter >= currentInformation.maincontent.posts.length) {
-		mainContentCounter = 0;
+	if(mainContentCounter+1 >= currentInformation.maincontent.posts.length) {
 		//request new information
 		console.log("Refreshing...");
 		connection.send('Refresh');
@@ -61,53 +79,58 @@ function mainPostLoaded() {
 	adjustPostWidth();
 			
 	//Temp. moved here
+	console.log(mainContentCounter);
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
-	displaytime = parseFloat(displaytime)*1000; // Fixed: Seems like the code 
-												//wants milliseconds. But 
-												//displaytime is given in seconds
+	displaytime = parseFloat(displaytime)*1000;
+
+	var totalTime = 100;
+
 	if(displaytime==0){
 		//Calculate time to display the view
-		var displaytime = 100;
-		displaytime *= document.getElementById("mainContent").offsetHeight;
-		
-		console.log("Will display for " + (displaytime/1000) + "s");
-		//Setup progress bar variables
-		totalTime = displaytime;
-		startTime = new Date().getTime();
-		//Setup display and scroll timers
-		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
-		document.getElementById("pageWrapper").scrollTop = 0;
-		clearTimeout(mainContentProgressTimeout);
-		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*2);
+		totalTime *= document.getElementById("mainContent").offsetHeight;
 	}
 	else{
-		//Setup progress bra variables
+		//Setup progress bar variables
 		totalTime = displaytime;
-		startTime = new Date().getTime();
-		console.log("Will display for " + (displaytime/1000) + "s");
-		//Setup display and scroll timers
-		mainContentSwitchingTimeout = setTimeout(switchMainInformation, displaytime);
-		document.getElementById("pageWrapper").scrollTop = 0;
-		clearTimeout(mainContentProgressTimeout);
-		scrollMainContent(Math.ceil(displaytime/document.getElementById("pageWrapper").scrollHeight)*2);
 	}
+
+
+	console.log("Will display for " + (totalTime/1000) + "s");
+	//Setup progress bar variables
+	var startTime = new Date().getTime();
+	//Setup display and scroll timers
+	//mainContentSwitchingTimeout = setTimeout(switchMainInformation, totalTime);
+	document.getElementById("pageWrapper").scrollTop = 0;
+	document.getElementById("pageWrapper").scrollLeft = 0;
+	document.getElementById('progressBar').style.width = 0;
+	clearTimeout(mainContentProgressTimeout);
+	stepContent(totalTime, startTime);
 }
 
 //One scrolling jump
-function scrollMainContent(stepTime) {
-	totalElapsedTime = (new Date().getTime() - startTime);
+function stepContent(totalTime, startTime) {
+	var delay = 4000;
+	var totalElapsedTime = new Date().getTime() - startTime;
 	
-	//Update progress bar
-	document.getElementById('progressBar').style.width = totalElapsedTime/totalTime * window.innerWidth + "px";
-	
-	document.getElementById("pageWrapper").scrollTop += 1;
-	document.getElementById("pageWrapper").scrollLeft += 1;
-	
-	if	(document.getElementById("pageWrapper").scrollTop <
-		(document.getElementById("pageWrapper").scrollHeight) &&
-		(document.getElementById("pageWrapper").scrollLeft) <
-		(document.getElementById("pageWrapper").scrollWidth)) {
-		mainContentProgressTimeout = setTimeout(scrollMainContent, stepTime, stepTime);
+	var progress = totalElapsedTime/(totalTime + 3*delay);
+
+	if(totalElapsedTime >= delay) {
+		var scrollProgress = (totalElapsedTime - delay)/totalTime;
+		
+		var width = document.getElementById("pageWrapper").scrollWidth;
+		var height = document.getElementById("pageWrapper").scrollHeight - 
+				document.getElementById("pageWrapper").clientHeight;
+
+		document.getElementById("pageWrapper").scrollLeft = scrollProgress * width;
+		document.getElementById("pageWrapper").scrollTop = scrollProgress * height;
+	}
+
+	document.getElementById('progressBar').style.width = Math.round(progress * window.innerWidth) + "px";
+
+	if(progress < 1) {
+		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime, startTime);
+	} else {
+		switchMainInformation();
 	}
 }
 
@@ -123,8 +146,6 @@ function adjustPostWidth() {
 	for (var i = 0; i < childImages.length; i++) {
 		
 		//If the image isnt too small or too big, scale it.
-		
-		console.log(main.clientWidth/1.5 + " " + childImages[i].clientWidth + " " + main.clientWidth*1.5);
 		if(childImages[i].clientWidth > main.clientWidth/1.5 && childImages[i].clientWidth < main.clientWidth*1.5) {
 			console.log("Scaling image from: " + childImages[i].clientWidth + ", to: " + (main.clientWidth - 100));
 			adjusted = true;
@@ -150,7 +171,8 @@ function adjustPostWidth() {
 
 //Image preloading magic!
 function preloadimages(arr){
-    var newimages=[], loadedimages=0
+    window.newimages=[];
+    var loadedimages=0
     var postaction=function(){}
     var arr=(typeof arr!="object")? [arr] : arr
     function imageloadpost(){
@@ -171,7 +193,7 @@ function preloadimages(arr){
     }
     return { //return blank object with done() method
         done:function(f){
-            postaction=f || postaction
+            postaction=f || postaction;
         }
     }
 }
@@ -184,7 +206,10 @@ function connectToServer () {
 	console.log("Connecting to server...");
 	setConnectionStatus("Connecting...");
 	var host = window.location.host;
-    var connection = new WebSocket('ws://'+host+':8081');
+	if(getQueryVariable("host") != null){
+		host = getQueryVariable("host");
+	}
+    connection = new WebSocket('ws://'+host+':18081');
 
     //When a connection opens
     connection.onopen = function () {
@@ -197,7 +222,17 @@ function connectToServer () {
 		
 		//Read screen name from URL
         var name = getQueryVariable('name');
-        var channel = getQueryVariable('channel');
+        channel = getQueryVariable('channel');
+
+        if(name == null)
+        	name = "default";
+
+        name = name.replace("%20", " ");
+
+        if(channel == null)
+        	channel = name;
+
+        channel = channel.replace("%20", " ");
         
         if(typeof name == "undefined")
         	name = "default";
@@ -233,14 +268,23 @@ function connectToServer () {
         try {
         	//Extract data from JSON string
             var json = JSON.parse(message.data);
-			currentInformation = json;
-			mainContentCounter = 0;
+
+            if(currentInformation == null || json.name != channel) {
+				currentInformation = json;
+				mainContentCounter = -1;
+				futureInformation = null;
+            } else {
+            	futureInformation = json;
+            }
+
+			//mainContentCounter = 0;
+			
+			staticText.data = json.static;
 			
 			console.log("Feed name: " + json.name);
 			
 			//Force immediate change if panic feed
 			if(!running || json.name == "panic"){
-				clearTimeout(mainContentSwitchingTimeout);
 				switchMainInformation();
 				running = true;
 			}
@@ -270,7 +314,7 @@ function reconnect() {
 
 //Display connection status on the screen
 function setConnectionStatus(statusText) {
-	document.getElementById("topBarRight").innerHTML = statusText;
+	//document.getElementById("topBarRight").innerHTML = statusText;
 }
 
 //Get variables from the URL
@@ -283,4 +327,48 @@ function getQueryVariable(variable) {
 			return pair[1];
 		}
 	}
+
+	return null;
 }
+
+
+//Physical button integration
+
+function moveRight() {
+	if(mainContentCounter >= currentInformation.maincontent.posts.length && futureInformation != null) {
+		mainContentCounter = -1;
+		currentInformation = futureInformation;
+		futureInformation = null;
+
+		forceSwitch();
+	} else if(mainContentCounter < currentInformation.maincontent.posts.length) {
+		forceSwitch();
+	}
+}
+
+function moveLeft() {
+	if(mainContentCounter > 0) {
+		mainContentCounter -= 2;
+		forceSwitch();
+	}
+}
+
+function forceSwitch() {
+		for(var i = newimages.length; i--;)
+			newimages[i].onload = function() {};
+		newimages = new Array();
+
+		switchMainInformation();
+}
+
+document.onkeydown = function(evt) {
+    evt = evt || window.event;
+    switch (evt.keyCode) {
+        case 37:
+            moveLeft();
+            break;
+        case 39:
+            moveRight();
+            break;
+    }
+};

@@ -8,7 +8,7 @@
 		<script type="text/javascript" src="js/channel.js"></script>
 		<meta charset="UTF-8"/>
 	</head>
-	<body onload="listChannels()">
+	<body onLoad="listChannels()">
 		<div id="background" class="background">
 			<?php include("navigation.html") ?>
 			<div id="adminchannelcontent" class="content">
@@ -16,7 +16,7 @@
 					<tr class="listHeader">
 						<td class="itemName">Name</td>
 						<td>Description</td>
-						<td><input type="button" id="newChannelButton" class="itemButton cyanbutton" value="Add"/></td>
+						<td><input type="button" id="newChannelButton" class="itemButton greenbutton" value="Add"/></td>
 					</tr>
 				</table>
 			</div>

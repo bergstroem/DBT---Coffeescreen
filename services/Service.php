@@ -78,8 +78,9 @@ abstract class Service {
 	 * 		$defaultValue	- [Optional] The default value for the parameter if
 	 * 			nothing else is set.
 	**/
-	protected function createParameter($key, $label="", $type=Type::ShortText, $defaultValue="") {
+	protected function createParameter($key, $label, $tooltip, $type=Type::ShortText, $defaultValue="") {
 		$this->parameters[$key]["label"] = $label;
+		$this->parameters[$key]["tooltip"] = $tooltip;
 		$this->parameters[$key]["type"] = $type;
 		$this->parameters[$key]["value"] = $defaultValue;
 	}
@@ -92,8 +93,8 @@ abstract class Service {
 	 * 		$js		- [Optional] A string containing the extra JavaScript for
 	 * 					the view.
 	**/
-	protected function bundleView($time, $html, $css="", $js="") {
-		$this->views[] = array("date" => $time, "html" => $html, "css" => $css, "js" => $js);
+	protected function bundleView($title, $time, $html, $css="", $js="") {
+		$this->views[] = array("title" => $title, "date" => $time, "html" => $html, "css" => $css, "js" => $js);
 	}
 
 

@@ -5,11 +5,16 @@ html {
 body {
 	margin: 0;
 	padding: 0;
-	
 	height: 100%;
 	font-family:"Droid Sans", "Calibri";
 	color: white;
-	background: black;
+	/*background: black;*/
+	background-image: -moz-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
+	background-image: -webkit-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
+}
+a{
+	color::white;
+	text-decoration:none;
 }
 
 h1 {
@@ -34,7 +39,8 @@ h1 {
 
 #topBar {
 	position: fixed;
-	border-bottom: 3px solid #00aeef;
+	border-bottom: 8px solid #373534;
+	border-radius: 5px;
 	width: 100%;
 	height: 35px;
 	top: 0;
@@ -46,6 +52,7 @@ h1 {
 }
 #codemill_logo{
 	height:24px;
+	margin-left: 10px;
 }
 
 .topBarSection {
@@ -53,7 +60,6 @@ h1 {
 	float: left;
 	color: white;
 	font-weight: bold;
-	
 }
 
 #topBarCenter {
@@ -76,19 +82,81 @@ h1 {
 }
 
 #progressBar {
-	height: 2px;
-	position: fixed;
-	bottom: 46px;
-	background: #00aeef;
+	height: 8px;
+	position: absolute;
+	bottom: -8px;
+	/*background: #00aeef;*/
+	background-image: -moz-linear-gradient(top left, #3366CC 0%, #00AEEF 50%, #99CCFF 100%);
+	background-image: -webkit-linear-gradient(top left, #3366CC 0%, #00AEEF 50%, #99CCFF 100%);
+	border-radius: 5px;
+	left: 0px;
 }
 
 #bottomBar {
-	background: black;
-	padding: 10px;
-	font-size: 24px;
+	background: #07090a;
+	font-size: 85%;
 	position: fixed;
-	border-top: 1px solid #00aeef;
-	height: 25px;
+	border-top: 0px solid #00aeef;
+	height: 40px;
 	width: 100%;
 	bottom: 0px;
+	
+}
+
+#bottomBarMiddleSection {
+	width: 50%;
+	color: white;
+	float: left;
+	text-align: center;
+}
+
+.bottomBarLeft {
+	width: 23%;
+	color: #00aeef;
+	float: left;
+	height: 100%;
+	padding-left: 10px;
+}
+.bottomBarRight {
+	width: 23%;
+	color: #00aeef;
+	float: right;
+	height: 100%;
+	padding-right: 10px;
+}
+
+.small-text  {
+	margin-top: -10px;
+	font-size: 85%;
+	
+}
+
+.bubble {
+	position: relative;
+	padding: 7px;
+	color: #00AEEF;
+	background-color: white;
+	border-radius: 8px;
+	display:inline-block;
+	max-width: 260px;
+	height: 16px;
+}
+
+.bubble_point {
+	margin-left: -5px;
+	margin-top: 1px;
+}
+
+.bottomBarImage {
+	vertical-align: middle;
+	display: inline-block;
+	position: relative;
+}
+
+#nextText, #prevText {
+	display:inline-block;
+	max-width: 130px;
+	height: 16px;
+	position: relative;
+	overflow: hidden;
 }

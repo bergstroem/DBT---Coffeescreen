@@ -3,10 +3,11 @@
 	if($p == 1){
 		$name = $_POST['name'];
 		$note = $_POST['note'];
+		$static = $_POST['static'];
 		$maincontent = $_POST['maincontent'];
 		$subcontent = $_POST['subcontent'];
 		
-		$data = array('name' => $name ,'note' => $note, 'maincontent' => $maincontent, 'subcontent' => $subcontent);
+		$data = array('name' => $name ,'static' => $static, 'note' => $note, 'maincontent' => $maincontent, 'subcontent' => $subcontent);
 		$jsondata = json_encode($data);
 		echo $jsondata;
 		

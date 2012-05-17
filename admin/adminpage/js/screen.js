@@ -1,16 +1,17 @@
-﻿var host = window.location.host/*"85.24.223.52"*/;
+﻿var host = "dbt2k12b.codemill.se";//window.location.host/*"85.24.223.52"*/;
 
 /*
  * Handles click events in index.php
 */
+
 $(document).ready(function(){
 	$.ajax({
 		type: "POST",
-		url: "http://" + host + ":8081/isPanic",
+		url: "http://" + host + ":18081/isPanic",
 		data: "",
 		success: function(msg){
 			if(msg == "true") {
-				document.getElementById('panic:All').value = "Unpanic all";
+				document.getElementById('panicAll').value = "Unpanic all";
 			}
 		}
 	});
@@ -19,9 +20,11 @@ $(document).ready(function(){
 		if($(e.target).is('.itemButton')){
 			if(e.target.value == "Panic all"){
 				e.target.value = "Unpanic all";
+				$('#panicAll').removeClass('redbutton');
+				$('#panicAll').addClass('greenbutton');
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":8081/panic/?screen=*",
+					url: "http://" + host + ":18081/panic/?screen=*",
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -30,9 +33,11 @@ $(document).ready(function(){
 			}
 			else if(e.target.value == "Unpanic all"){
 				e.target.value = "Panic all";
+				$('#panicAll').removeClass('greenbutton');
+				$('#panicAll').addClass('redbutton');
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":8081/unPanic",
+					url: "http://" + host + ":18081/unPanic",
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -42,13 +47,14 @@ $(document).ready(function(){
 			else if(e.target.value == "Set"){
 				var name = e.target.id.substr(e.target.id.indexOf(":")+1);
 				var select = document.getElementById("select:"+name);
-				
+
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":8081/set/?screen="+name+"&channel="+select.value,
+					url: "http://" + host + ":18081/set/?screen="+name+"&channel="+select.value,
 					data: "",
 					success: function(msg){
 						console.log(msg);
+						alert("Setting channel " + select.value + " to the screen " + name);
 					}
 				});
 			}
@@ -57,7 +63,7 @@ $(document).ready(function(){
 			
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":8081/panic/?screen="+name,
+					url: "http://" + host + ":18081/panic/?screen="+name,
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -76,7 +82,7 @@ function listScreens(){
 	var table = document.getElementById("listContent");
 	$.ajax({
 		type: "POST",
-		url: "http://" + host + ":8081/listscreens",
+		url: "http://" + host + ":18081/listscreens",
 		data: "",
 		success: function(msg){
 			if(msg.length > 2){

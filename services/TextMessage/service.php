@@ -8,7 +8,7 @@ class TextMessage extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("text", "Message text", Type::LongText);
+		$this->createParameter("text", "Message", "The text you want to display", Type::LongText);
 	}
 
 	/**
@@ -20,8 +20,10 @@ class TextMessage extends Service {
 		
 		//Generate a HTML string
 		$html = "<p>$text</p>";
-
-		$this->bundleView(time(), $html);
+		
+		$title = "Text message";
+		
+		$this->bundleView($title, time(), $html);
 	}
 }
 

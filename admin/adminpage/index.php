@@ -5,6 +5,7 @@
 		<title>Screens</title>
 		<link rel="stylesheet" type="text/css" href="css/admin.css"/>
 		<script type="text/javascript" src="js/jquery-1.7.1.js"></script>
+		<script type="text/javascript" src="js/dialog.js"></script>
 		<script type="text/javascript" src="js/screen.js"></script>
 		<meta charset="UTF-8"/>
 	</head>
@@ -16,7 +17,7 @@
 					<tr class="listHeader">
 						<td class="itemName">Name</td>
 						<td class="itemType">Channel</td>
-						<td><input type="button" id="panic:All" class="itemButton redbutton" value="Panic all"/></td>
+						<td><input type="button" id="panicAll" class="itemButton redbutton" value="Panic all"/></td>
 					</tr>
 				</table>
 			</div>

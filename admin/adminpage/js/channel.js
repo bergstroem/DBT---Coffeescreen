@@ -27,7 +27,7 @@ function createItem(name, target, filler, feeddata){
 		delbutton.setAttribute("type","button");
 		delbutton.setAttribute("name","rbutton");
 		delbutton.setAttribute("value","Delete");
-		delbutton.setAttribute("class","removebutton red");
+		delbutton.setAttribute("class","removebutton");
 		delbutton.setAttribute("onclick","removeItem(this)");
 		divTag.appendChild(delbutton);
 		
@@ -61,6 +61,10 @@ function removeItem(element){
 	var name = element.parentNode.getAttribute("id");
 	var parentname = element.parentNode.parentNode.getAttribute("id");
 	document.getElementById("contentlist").appendChild(document.getElementById(name));
+	var maincont = document.getElementById("maincontent");
+	if(maincont.childNodes.length == 0){
+		maincont.style.backgroundImage = "url(images/dropFeedsHere.png)";
+	}
 }
 
 /*
@@ -100,13 +104,13 @@ function feedExists(name){
  * Used for saving a channel, will use the information in the form.
 */
 function saveChannel(){
-	var name = document.getElementById("nameTXB").value;
+	var name = document.getElementById("name").value;
 	if(name == ""){
 		alert("Please enter a name");
 	}
 	else{
-		var note = document.getElementById("noteTXB").value;
-		var stat = document.getElementById("staticTXB").value;
+		var note = document.getElementById("description").value;
+		var stat = document.getElementById("static").value;
 
 		var children = document.getElementById('maincontent').childNodes;
 		var length = children.length;
@@ -200,8 +204,13 @@ function editChannel(name){
 		data: "p=2&name="+name,
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
-			document.getElementById("nameTXB").value = jsonobj["name"];
-			document.getElementById("noteTXB").value = jsonobj["note"];
+			document.getElementById("name").value = jsonobj["name"];
+			document.getElementById("static").value = jsonobj["static"];
+			document.getElementById("description").value = jsonobj["note"];
+			
+			var title = document.getElementById("title");
+			title.removeChild(title.lastChild);
+			title.appendChild(document.createTextNode("Edit channel"));
 			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
 			if(arr.length > 0){
@@ -236,15 +245,18 @@ function editChannel(name){
 function deleteChannel(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
-	
-	$.ajax({
-		type: "POST",
-		url: "channelhandler.php",
-		data: "p=3&name="+name,
-		success: function(msg){
-			document.getElementById(parentname).removeChild(document.getElementById(divname));
-		}
-	});
+	if(confirm('This will delete this channel. Continue?')){
+		$.ajax({
+			type: "POST",
+			url: "channelhandler.php",
+			data: "p=3&name="+name,
+			success: function(msg){
+				document.getElementById(parentname).removeChild(document.getElementById(divname));
+				$('#listContent tr').removeClass('grey');
+				$('#listContent tr:nth-child(even)').addClass('grey');
+			}
+		});
+	}
 }
 
 /*
@@ -296,7 +308,7 @@ function listChannels(){
 				
 				var tr = document.createElement("tr");
 				tr.id = jsonitem["name"];
-				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listItem" : "listItem grey";
+				tr.className = "listItem";
 				
 				var td = document.createElement("td");
 				td.className = "itemName";
@@ -328,11 +340,22 @@ function listChannels(){
 				
 				table.appendChild(tr);
 			}
+			$('#listContent tr:nth-child(even)').addClass('grey');
 		}
 	});
 }
 
 function getFeeds(){
+	
+	$('#name').watermark('Descriptive title for this channel');
+	$('#static').watermark('Static information which will be displayed as the speech bubble at the bottom of the screen');
+	$('#description').watermark('A short description of this channel');
+	
+	var maincontent = document.getElementById("maincontent");
+	if(maincontent.childNodes.length != 0){
+		maincontent.style.backgroundImage = "url('')";
+	}
+	
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",

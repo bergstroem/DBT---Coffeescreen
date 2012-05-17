@@ -13,8 +13,8 @@ class RSS extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("url", "RSS Url", Type::ShortText, "");
-		$this->createParameter("quantity", "Quantity", Type::Number, 3);
+		$this->createParameter("url", "RSS Url", "The URL to the RSS feed", Type::ShortText, "");
+		$this->createParameter("quantity", "Quantity", "How many articles should be displayed?", Type::Number, 3);
 	}
 
 	/**
@@ -22,7 +22,7 @@ class RSS extends Service {
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getViews() {
-		$feedSourcesArray = array($this->readParameter("url"));
+		$feedSourcesArray = array("http://".$this->readParameter("url"));
 		$quantity = max(array($this->readParameter("quantity")), 0);
 		
 		$feed = new SimplePie();
@@ -36,13 +36,14 @@ class RSS extends Service {
 			$item = $feed->get_item($i);
 
 			$title = $item->get_title();
-			$date = $item->get_date();
+
+			$time = strtotime($item->get_date());
 			$content = $item->get_content();
 
 			//Generate a HTML string
-			$html = "<h1>".$title."</h1><p>".$date."</p>".$content;
+			$html = "<h1>".$title."</h1><p class='small-text'>".date("j F Y H:i", $time)."</p>".$content;
 
-			$this->bundleView(strtotime($date), $html);
+			$this->bundleView($title, $time, $html);
 		}
 	}
 }
