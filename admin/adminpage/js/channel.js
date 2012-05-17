@@ -257,7 +257,6 @@ function getFeeds(data){
 		maincontent.style.backgroundImage = "url('')";
 	}
 	
-	console.log(arr);
 	for(var i = 0; i < arr.length-1; i++){
 		arr[i] += "}";
 	}
@@ -266,7 +265,6 @@ function getFeeds(data){
 		var data = jsonToString(jsonitem);
 		names.push(jsonitem["name"]);
 	}
-	
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
@@ -288,7 +286,7 @@ function getFeeds(data){
 						createItem(jsonitem["name"], "maincontent", true, data);
 					}
 					else{
-						//console.log("FALSE " + jsonitem["name"]);
+						createItem(jsonitem["name"], "contentlist", true, data);
 					}
 					
 				}
