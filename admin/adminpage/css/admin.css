@@ -243,7 +243,7 @@ body{
 }
 
 .formTypeSelect{
-	width:120px;
+	min-width:120px;
 	height:20px;
 	border:1px solid #C7C7C7;
 	float:left;
@@ -309,6 +309,7 @@ body{
 	padding:10px 10px;
 	z-index:100;
 	font-weight:bold;
+	cursor:move;
 }
 
 .removebutton{

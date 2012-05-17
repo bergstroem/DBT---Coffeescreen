@@ -279,6 +279,15 @@ function connectToServer () {
 
     //When a message arrives from the server
     connection.onmessage = function (message) {
+    
+    	if(message.data == "Panic"){
+    		console.log("TODO: I should go to panic now");
+    		return;
+    	}
+    	else if(message.data == "Unpanic"){
+    		console.log("TODO: I should go to unpanic now");
+    		return;
+    	}
         // try to decode json (I assume that each messagse from server is json)
         console.log("Got message");
         try {

@@ -1,5 +1,5 @@
-﻿var host = window.location.host;//window.location.host/*"85.24.223.52"*/;
 
+﻿var host = "dbt2k12b.codemill.se";//window.location.host/*"85.24.223.52"*/;
 /*
  * Handles click events in index.php
 */
@@ -37,7 +37,7 @@ $(document).ready(function(){
 				$('#panicAll').addClass('redbutton');
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":18081/unPanic",
+					url: "http://" + host + ":18081/unPanic/?screen=*",
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -60,10 +60,20 @@ $(document).ready(function(){
 			}
 			else{
 				var name = e.target.id.substr(e.target.id.indexOf(":")+1);
-			
+				$(e.target).toggleClass('redbutton');
+				$(e.target).toggleClass('greenbutton');
+				var panic = "unPanic";
+				if(e.target.value == "Panic") {
+					e.target.value = "Unpanic";
+					panic = "panic";
+					
+				}
+				else
+					e.target.value = "Panic";
+					
 				$.ajax({
 					type: "POST",
-					url: "http://" + host + ":18081/panic/?screen="+name,
+					url: "http://" + host + ":18081/"+panic+"/?screen="+name,
 					data: "",
 					success: function(msg){
 						console.log(msg);
@@ -104,6 +114,7 @@ function createScreen(info){
 	console.log(info.split(","));
 	var name = info.split(",")[0];
 	var currentChannel = info.split(",")[1];
+	var isPanic = info.split(",")[2];
 	table = document.getElementById("listContent");
 	
 	var tr = document.createElement("tr");
@@ -129,8 +140,15 @@ function createScreen(info){
 	var button = document.createElement("input");
 	button.type = "button";
 	button.id = "panic:" + name;
-	button.className = "itemButton redbutton";
-	button.value = "Panic";
+	
+	if(isPanic == "false"){
+		button.className = "itemButton redbutton";
+		button.value = "Panic";
+	}
+	else{
+		button.className = "itemButton greenbutton";
+		button.value = "Unpanic";
+	}
 	td.appendChild(button);
 	
 	button = document.createElement("input");

@@ -11,6 +11,7 @@ body {
 	/*background: black;*/
 	background-image: -moz-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
 	background-image: -webkit-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
+	background-image: -ms-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
 }
 a{
 	color::white;
@@ -39,8 +40,8 @@ h1 {
 
 #topBar {
 	position: fixed;
-	border-bottom: 8px solid #373534;
-	border-radius: 5px;
+	/*border-bottom: 8px solid #373534;
+	border-radius: 5px;*/
 	width: 100%;
 	height: 35px;
 	top: 0;
@@ -83,13 +84,25 @@ h1 {
 
 #progressBar {
 	height: 8px;
-	position: absolute;
-	bottom: -8px;
+	/*position: absolute;
+	bottom: -8px;*/
 	/*background: #00aeef;*/
 	background-image: -moz-linear-gradient(top left, #3366CC 0%, #00AEEF 50%, #99CCFF 100%);
 	background-image: -webkit-linear-gradient(top left, #3366CC 0%, #00AEEF 50%, #99CCFF 100%);
+	background-image: -ms-linear-gradient(top left, #3366CC 0%, #00AEEF 50%, #99CCFF 100%);
 	border-radius: 5px;
 	left: 0px;
+}
+
+#progressBarBackground{
+	height: 8px;
+	position: absolute;
+	bottom: -8px;
+	background: #373534;
+	border-radius: 5px;
+	left: 0px;
+	width: 100%;
+
 }
 
 #bottomBar {
@@ -144,6 +157,7 @@ h1 {
 
 .bubble_point {
 	margin-left: -5px;
+	/*margin-right:-5px;*/
 	margin-top: 1px;
 }
 
@@ -156,7 +170,8 @@ h1 {
 #nextText, #prevText {
 	display:inline-block;
 	max-width: 130px;
-	height: 16px;
+	max-height: 33px;
+	vertical-align: middle;
 	position: relative;
 	overflow: hidden;
 }

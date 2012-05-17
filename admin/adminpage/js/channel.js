@@ -1,4 +1,20 @@
-﻿/* 
+﻿/*
+ * Handle clicks in adminchannel.php
+*/
+$(document).ready(function(){
+	$('.content').click(function(e){
+		if($(e.target).is('.itemButton')){
+			if(e.target.value == "Add")
+				window.location = "channel.php?p=1";
+			else if(e.target.value == "Edit")
+				window.location = "channel.php?p=2&name="+e.target.id;
+			else if(e.target.value == "Delete")
+				deleteChannel(e.target.id);
+		}
+	});
+});
+
+/* 
  * createItem(name, target)
  * Function used for creating a new drag-/droppable div inside a target div.
  * name: Will be the id of the div
@@ -26,7 +42,7 @@ function createItem(name, target, filler, feeddata){
 		var delbutton = document.createElement("input");
 		delbutton.setAttribute("type","button");
 		delbutton.setAttribute("name","rbutton");
-		delbutton.setAttribute("value","Delete");
+		delbutton.setAttribute("value","Remove");
 		delbutton.setAttribute("class","removebutton");
 		delbutton.setAttribute("onclick","removeItem(this)");
 		divTag.appendChild(delbutton);
@@ -80,14 +96,6 @@ function feedExists(name){
 			return true;
 	}
 	
-	children = document.getElementById('subcontent').childNodes;
-	length = children.length;
-	for(var i = 0; i < length; i++){
-		if(name == children[i].getAttribute('id'))
-			return true;
-	}
-	
-	
 	children = document.getElementById('contentlist').childNodes;
 	length = children.length;
 	for(var i = 0; i < length; i++){
@@ -121,15 +129,7 @@ function saveChannel(){
 		}
 		mainContent = mainContent.substr(0,mainContent.length-1);
 		
-		children = document.getElementById('subcontent').childNodes;
-		var length = children.length;
 		var subContent = "";
-		
-		for(var i = 0; i < length; i++){
-			subContent += children[i].getAttribute('data') + ",";
-		}
-		
-		subContent = subContent.substr(0,subContent.length-1);
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
@@ -213,26 +213,9 @@ function editChannel(name){
 			title.appendChild(document.createTextNode("Edit channel"));
 			
 			var arr = jsonobj["maincontent"].substr(0, jsonobj["maincontent"].length).split('},');
-			if(arr.length > 0){
-				for(var i = 0; i < arr.length-1; i++){
-					arr[i] += "}";
-				}
-				for(var i = 0; i < arr.length; i++){
-					var jsonitem = jQuery.parseJSON(arr[i]);
-					var data = jsonToString(jsonitem);
-					createItem(jsonitem["name"], "maincontent", true, jsonToString(jsonitem))
-				}
-			}
-			/*
-			var arr = jsonobj["subcontent"].substr(0, jsonobj["subcontent"].length).split('},');
-			arr[0] += "}";
-			if(arr.length > 1){
-				for(var i = 0; i < arr.length; i++){
-					var jsonitem = jQuery.parseJSON(arr[i]);
-					createItem(jsonitem["name"], "subcontent", true, jsonToString(jsonitem))
-				}
-			}*/
-			getFeeds();
+			arr = (arr[0] == "") ? undefined : arr;
+			
+			getFeeds(arr);
 		}
 	});
 }
@@ -259,35 +242,54 @@ function deleteChannel(name){
 	}
 }
 
-/*
- * Handle clicks in adminchannel.php
-*/
-$(document).ready(function(){
-	$('.content').click(function(e){
-		if($(e.target).is('.itemButton')){
-			if(e.target.value == "Add")
-				window.location = "channel.php?p=1";
-			else if(e.target.value == "Edit")
-				window.location = "channel.php?p=2&name="+e.target.id;
-			else if(e.target.value == "Delete")
-				deleteChannel(e.target.id);
+function getFeeds(data){
+	var arr = (data == undefined) ? new Array(0): data;
+
+	var names = new Array(); 
+	var maincontent = document.getElementById("maincontent");
+	if(maincontent.childNodes.length != 0){
+		maincontent.style.backgroundImage = "url('')";
+	}
+	
+	if(arr.length > 0){
+		for(var i = 0; i < arr.length-1; i++){
+			arr[i] += "}";
+		}
+		for(var i = 0; i < arr.length; i++){
+			var jsonitem = jQuery.parseJSON(arr[i]);
+			var data = jsonToString(jsonitem);
+			names.push(jsonitem["name"]);
+		}
+	}
+	
+	$.ajax({
+		type: "POST",
+		url: "feedhandler.php",
+		data: "p=list",
+		success: function(msg){
+			var jsonobj = jQuery.parseJSON(msg);
+			if(names.length == 0){
+				for(var i = 0; i < jsonobj.length; i++){
+					var jsonitem = jQuery.parseJSON(jsonobj[i])
+					var data = jsonToString(jsonitem);
+					createItem(jsonitem["name"], "contentlist", true, data);
+				}
+			}
+			else{
+				for(var i = 0; i < jsonobj.length; i++){
+					var jsonitem = jQuery.parseJSON(jsonobj[i])
+					var data = jsonToString(jsonitem);
+					if($.inArray(jsonitem["name"], names) != -1){
+						createItem(jsonitem["name"], "maincontent", true, data);
+					}
+					else{
+						createItem(jsonitem["name"], "contentlist", true, data);
+					}
+					
+				}
+			}
 		}
 	});
-});
-
-/*
- * addEL()
- * Used for adding eventhandlers to the channel form.
-*/
-function addEL(){
-	document.getElementById("maincontent").addEventListener('dragover', handleDragOver, false);
-	document.getElementById("maincontent").addEventListener('drop', handleDrop, false);
-	
-	document.getElementById("subcontent").addEventListener('dragover', handleDragOver, false);
-	document.getElementById("subcontent").addEventListener('drop', handleDrop, false);
-	
-	document.getElementById("contentlist").addEventListener('dragover', handleDragOver, false);
-	document.getElementById("contentlist").addEventListener('drop', handleDrop, false);
 }
 
 /*
@@ -341,32 +343,6 @@ function listChannels(){
 				table.appendChild(tr);
 			}
 			$('#listContent tr:nth-child(even)').addClass('grey');
-		}
-	});
-}
-
-function getFeeds(){
-	
-	$('#name').watermark('Descriptive title for this channel');
-	$('#static').watermark('Static information which will be displayed as the speech bubble at the bottom of the screen');
-	$('#description').watermark('A short description of this channel');
-	
-	var maincontent = document.getElementById("maincontent");
-	if(maincontent.childNodes.length != 0){
-		maincontent.style.backgroundImage = "url('')";
-	}
-	
-	$.ajax({
-		type: "POST",
-		url: "feedhandler.php",
-		data: "p=list",
-		success: function(msg){
-			var jsonobj = jQuery.parseJSON(msg);
-			for(var i = 0; i < jsonobj.length; i++){
-				var jsonitem = jQuery.parseJSON(jsonobj[i])
-				var data = jsonToString(jsonitem);
-				createItem(jsonitem["name"], "contentlist", true, data);
-			}
 		}
 	});
 }

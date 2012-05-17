@@ -17,10 +17,10 @@
 					include("feedform.html");
 					if($_GET['p'] == 2){
 						$name = $_GET['name'];
-						echo "<script>getFeedTypes(\"$name\")</script>";
+						echo "<script>editFeed(true,\"$name\")</script>";
 					}
 					else{
-						echo "<script>getFeedTypes();</script>";
+						echo "<script>editFeed(false);</script>";
 					}
 				?>
 			</div>
