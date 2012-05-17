@@ -273,21 +273,21 @@ function connectToServer () {
 				currentInformation = json;
 				mainContentCounter = -1;
 				futureInformation = null;
+            
+            	channel = json.name;
+            	
+            	//Force immediate change if panic feed
+				if(!running || json.name == "panic"){
+					switchMainInformation();
+					running = true;
+				}
             } else {
             	futureInformation = json;
             }
-
-			//mainContentCounter = 0;
 			
 			staticText.data = json.static;
 			
 			console.log("Feed name: " + json.name);
-			
-			//Force immediate change if panic feed
-			if(!running || json.name == "panic"){
-				switchMainInformation();
-				running = true;
-			}
         } catch (e) {
         	console.log(e.message);
             console.log('This doesn\'t look like a valid JSON: ', message.data);

@@ -88,7 +88,7 @@ var server = http.createServer(function(request, response) {
     	var connectedScreens = "";
     
 		for(i = 0; i < screens.length; i++) {
-			connectedScreens += screens[i].name + "," + screens[i].channel + ";";
+			connectedScreens += screens[i].name + "," + screens[i].channel + "," + screens[i].isPanic + ";";
 		}
 		
 		connectedScreens = connectedScreens.substring(0, connectedScreens.length-1);
