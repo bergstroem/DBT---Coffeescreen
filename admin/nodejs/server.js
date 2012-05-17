@@ -12,9 +12,17 @@ function Screen(id, name, channel, connection) {
 	this.name = name;
 	this.channel = channel;
 	this.connection = connection;
+	this.isPanic = false;
 	
 	this.setChannel = function(newChannel) {
 		channel = newChannel;
+	}
+	
+	this.sendPanicSignal = function(doPanic) {
+		if(doPanic)
+			connection.send("Panic");
+		else
+			connection.send("Unpanic");
 	}
 	
 	this.sendChannel = function() {
@@ -112,8 +120,7 @@ var server = http.createServer(function(request, response) {
 				var i;
 				for(i = 0; i < screens.length; i++)
 				{
-					screens[i].setChannel("panic");
-					screens[i].sendChannel();
+					screens[i].sendPanicSignal(true);
 				}
     		}
     		else {
@@ -122,8 +129,8 @@ var server = http.createServer(function(request, response) {
 				for(i = 0; i < screens.length; i++)
 				{
 					if(query['screen'] == screens[i].name)
-						screens[i].setChannel("panic");
-						screens[i].sendChannel();
+						screens[i].isPanic = true;
+						screens[i].sendPanicSignal(true);
 				}
     		}
     	}
@@ -131,9 +138,30 @@ var server = http.createServer(function(request, response) {
     }
 
 	else if(url_parts.pathname == "/unPanic" || url_parts.pathname == "/unPanic/") {
-		isPanicMode = false;
-		response.end("Set panic mode to false");
-		console.log("Set panic mode to false");
+		var query = url_parts.query;
+		//Send panic to user, bla bla bla
+    	if(query['screen'] != undefined){
+    		
+    		if(query['screen'] == '*'){
+				isPanicMode = false;
+				for(i = 0; i < screens.length; i++)
+				{
+					screens[i].sendPanicSignal(false);
+				}
+				response.end("Set panic mode to false");
+    		}
+    		else {
+				console.log("Sending unpanic feeds to: " + query['screen']);
+				response.end("Sending unpanic feeds to: " + query['screen']);
+				var i;
+				for(i = 0; i < screens.length; i++)
+				{
+					if(query['screen'] == screens[i].name)
+						screens[i].isPanic = false;
+						screens[i].sendPanicSignal(false);
+				}
+    		}
+    	}
 	}
     
     //Set template
