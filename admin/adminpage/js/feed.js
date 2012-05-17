@@ -22,6 +22,7 @@ function saveFeed(){
 		var priority = document.getElementById("priority").value;
 		var displaytime = document.getElementById("displayTime").value;
 		var expiretime = document.getElementById("expireTime").value;
+		var timingmode = document.getElementById("timingmode").value;
 		
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
@@ -53,7 +54,7 @@ function saveFeed(){
 								$.ajax({
 									type: "POST",
 									url: "feedhandler.php",
-									data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+									data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
 									success: function(msg){
 										window.location = "adminfeed.php";
 									}
@@ -64,7 +65,7 @@ function saveFeed(){
 						$.ajax({
 							type: "POST",
 							url: "feedhandler.php",
-							data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+							data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
 							success: function(msg){
 								window.location = "adminfeed.php";
 							}
@@ -76,7 +77,7 @@ function saveFeed(){
 			$.ajax({
 				type: "POST",
 				url: "feedhandler.php",
-				data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime,
+				data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
 				success: function(msg){
 					window.location = "adminfeed.php";
 				}
@@ -96,6 +97,11 @@ function editFeed(full, name){
 			var keys = Object.keys(jsonobj);
 			
 			if(full){
+				
+				var title = document.getElementById("title");
+				title.removeChild(title.lastChild);
+				title.appendChild(document.createTextNode("Edit feed"));
+				
 				for(var i = 0; i < keys.length; i++){
 					var key = keys[i];
 					document.getElementsByName(key)[0].value = jsonobj[key];
@@ -146,7 +152,7 @@ function listFeeds(){
 				
 				var tr = document.createElement("tr");
 				tr.id = jsonitem["name"];
-				tr.className = (table.getElementsByTagName("tr").length % 2 == 0) ? "listItem" : "listItem grey";
+				tr.className = "listItem";
 				
 				var td = document.createElement("td");
 				td.className = "itemName";
@@ -183,6 +189,7 @@ function listFeeds(){
 				
 				table.appendChild(tr);
 			}
+			$('#listContent tr:nth-child(even)').addClass('grey');
 		}
 	});
 }
@@ -216,14 +223,18 @@ $(document).ready(function(){
 function deleteFeed(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
-	$.ajax({
-		type: "POST",
-		url: "feedhandler.php",
-		data: "p=3&name="+name,
-		success: function(msg){
-			document.getElementById(parentname).removeChild(document.getElementById(divname));
-		}
-	});
+	if(confirm('This will delete this feed. Continue?')){
+		$.ajax({
+			type: "POST",
+			url: "feedhandler.php",
+			data: "p=3&name="+name,
+			success: function(msg){
+				document.getElementById(parentname).removeChild(document.getElementById(divname));
+				$('#listContent tr').removeClass('grey');
+				$('#listContent tr:nth-child(even)').addClass('grey');
+			}
+		});
+	}
 }
 
 /**

@@ -11,7 +11,7 @@ $(document).ready(function(){
 		data: "",
 		success: function(msg){
 			if(msg == "true") {
-				document.getElementById('panic:All').value = "Unpanic all";
+				document.getElementById('panicAll').value = "Unpanic all";
 			}
 		}
 	});
@@ -20,6 +20,8 @@ $(document).ready(function(){
 		if($(e.target).is('.itemButton')){
 			if(e.target.value == "Panic all"){
 				e.target.value = "Unpanic all";
+				$('#panicAll').removeClass('redbutton');
+				$('#panicAll').addClass('greenbutton');
 				$.ajax({
 					type: "POST",
 					url: "http://" + host + ":18081/panic/?screen=*",
@@ -31,6 +33,8 @@ $(document).ready(function(){
 			}
 			else if(e.target.value == "Unpanic all"){
 				e.target.value = "Panic all";
+				$('#panicAll').removeClass('greenbutton');
+				$('#panicAll').addClass('redbutton');
 				$.ajax({
 					type: "POST",
 					url: "http://" + host + ":18081/unPanic",
@@ -43,13 +47,14 @@ $(document).ready(function(){
 			else if(e.target.value == "Set"){
 				var name = e.target.id.substr(e.target.id.indexOf(":")+1);
 				var select = document.getElementById("select:"+name);
-				
+
 				$.ajax({
 					type: "POST",
 					url: "http://" + host + ":18081/set/?screen="+name+"&channel="+select.value,
 					data: "",
 					success: function(msg){
 						console.log(msg);
+						alert("Setting channel " + select.value + " to the screen " + name);
 					}
 				});
 			}
