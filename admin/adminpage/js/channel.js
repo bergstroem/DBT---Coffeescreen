@@ -257,12 +257,14 @@ function getFeeds(data){
 		maincontent.style.backgroundImage = "url('')";
 	}
 	
+	for(var i = 0; i < arr.length-1; i++){
+		arr[i] += "}";
+	}
 	for(var i = 0; i < arr.length; i++){
 		var jsonitem = jQuery.parseJSON(arr[i]);
 		var data = jsonToString(jsonitem);
 		names.push(jsonitem["name"]);
 	}
-	
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
@@ -280,7 +282,7 @@ function getFeeds(data){
 				for(var i = 0; i < jsonobj.length; i++){
 					var jsonitem = jQuery.parseJSON(jsonobj[i])
 					var data = jsonToString(jsonitem);
-					if($.inArray(jsonitem["name"], names)){
+					if($.inArray(jsonitem["name"], names) != -1){
 						createItem(jsonitem["name"], "maincontent", true, data);
 					}
 					else{
