@@ -119,7 +119,6 @@ function editFeed(edit, name){
 				title.appendChild(document.createTextNode("Edit feed"));
 				
 				var jsonobj = jQuery.parseJSON(msg);
-				document.getElementById("type").value = jsonobj["type"];
 				
 				getFeedTypes(jsonobj);
 			}
