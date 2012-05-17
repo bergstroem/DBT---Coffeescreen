@@ -156,7 +156,7 @@ h1 {
 #nextText, #prevText {
 	display:inline-block;
 	max-width: 130px;
-	max-height: 30px;
+	max-height: 33px;
 	vertical-align: middle;
 	position: relative;
 	overflow: hidden;
