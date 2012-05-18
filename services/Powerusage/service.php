@@ -8,7 +8,7 @@ class PowerUsage extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("text", "Message", "The text you want to display", Type::LongText);
+		$this->createParameter("power", "Message", "Path to the xml with powerdata", Type::ShortText);
 	}
 
 	/**
@@ -16,29 +16,28 @@ class PowerUsage extends Service {
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getViews() {
-		$text = $this->readParameter("text");
-		
-		//Generate a HTML string
-		$html = "<p>$text</p>";
-		
-		$title = "Text message";
-		
-		$this->bundleView($title, time(), $html);
-	}
-}
-
-?>
-
-<?php
-	$xml = simplexml_load_file("http://titan.codemill.se/~denols/infoboard/power/graphs/lastdata.xml");
+		$path = "";
+		$xml = simplexml_load_file("http://titan.codemill.se/~denols/infoboard/power/graphs/lastdata.xml");
 	$arr = array();
 	foreach($xml->data->row as $row){
 		$arr[] = $row->v0;
 	}
 	for($i = sizeof($arr)-1; $i > 0; $i--){
 		if($arr[$i] != "NaN"){
-			echo $arr[$i];
+			$power = $arr[$i];
 			break;
 		}
 	}
+		
+		//$text = $this->readParameter("text");
+		
+		//Generate a HTML string
+		$html = "<p>$power</p>";
+		
+		$title = "Power usage";
+		
+		$this->bundleView($title, time(), $html);
+	}
+}
+
 ?>
