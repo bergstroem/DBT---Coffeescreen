@@ -22,7 +22,13 @@ class RSS extends Service {
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getViews() {
-		$feedSource = "http://".$this->readParameter("url");
+		if(substr($this->readParameter("url"), 0, 4) == "http"){
+			$feedSource = $this->readParameter("url");
+		}
+		else{
+			$feedSource = "http://".$this->readParameter("url");
+		}
+		
 		$feedSourcesArray = array($feedSource);
 		$quantity = max(array($this->readParameter("quantity")), 0);
 		
@@ -38,6 +44,8 @@ class RSS extends Service {
 
 			$title = $item->get_title();
 			
+			$feedTitle = $feed->get_title();
+			
 			$source = ($item->get_link())? $item->get_link(): $feedSource;
 
 			$time = strtotime($item->get_date());
@@ -45,12 +53,13 @@ class RSS extends Service {
 
 			//Generate a HTML string
 			$html = "<h1>".$title."</h1>";
-			$html .= "<p class='small-text'>".date("j F Y H:i", $time)."</p>";
+			$html .= "<p class='small-text'>".$feedTitle." ".date("j F Y H:i", $time)."</p>";
 			$html .= "<div style=\"overflow: auto; margin: 10px 0;\">$content</div>";
 			$html .= "<p class=\"small-text\">Source: $source</p>";
 			$this->bundleView($title, $time, $html);
 		}
 	}
+	
 }
 
 ?>
