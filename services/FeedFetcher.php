@@ -27,6 +27,7 @@
 				//Set values
 				$resultItem["displaytime"] = $item->displaytime;
 				$resultItem["priority"] = $item->priority;
+				$resultItem["timingmode"] = $item->timingmode;
 				$result[] = $resultItem;
 			}
     	}

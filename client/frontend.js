@@ -81,8 +81,8 @@ function mainPostLoaded() {
 	//Adjust width of the post.											
 	adjustPostWidth();
 		
-	var timingMode = 1;//currentInformation.maincontent.posts[mainContentCounter];
-	//console.log(timingMode);
+	var timingMode = currentInformation.maincontent.posts[mainContentCounter];
+	console.log(timingMode);
 			
 			
 	//Temp. moved here
@@ -90,7 +90,7 @@ function mainPostLoaded() {
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
 	displaytime = parseFloat(displaytime)*1000;
 
-	var totalTime = 100;
+	var totalTime = 50;
 
 	if(displaytime==0){
 		//Calculate time to display the view
