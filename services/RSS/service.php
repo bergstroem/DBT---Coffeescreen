@@ -56,6 +56,7 @@ class RSS extends Service {
 			$html .= "<p class='small-text'>".$feedTitle." ".date("j F Y H:i", $time)."</p>";
 			$html .= "<div style=\"overflow: auto; margin: 10px 0;\">$content</div>";
 			$html .= "<p class=\"small-text\" style=\"color:#999;\">Source: $source</p>";
+			$html .= "<img src=\"http://chart.apis.google.com/chart?cht=qr&chs=200x200&chl=$source\" />";
 			$this->bundleView($title, $time, $html);
 		}
 	}
