@@ -11,7 +11,7 @@
 	}
 
 	foreach($plugins as $plugin){
-		require('$plugin/plugin.php');
+		require("$plugin/plugin.php");
 	}
 
 	/*require('TodayInHistory/plugin.php');
