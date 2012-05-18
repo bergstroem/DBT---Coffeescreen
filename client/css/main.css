@@ -12,6 +12,7 @@ body {
 	background-image: -moz-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
 	background-image: -webkit-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
 	background-image: -ms-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
+	cursor: none;
 }
 a{
 	color::white;
