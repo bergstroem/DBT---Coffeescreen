@@ -29,6 +29,20 @@ h1 {
 	height: 480px;
 	border: 1px dashed #333;
 }
+#fadeUp{
+	height: 15px;
+	width: 100%;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,1)), color-stop(24%,rgba(0,0,0,1)), color-stop(100%,rgba(0,0,0,0)));
+	position: absolute;
+	bottom: -23px;
+}
+#fadeDown{
+	position:absolute;
+	height:15px;
+	width:100%;
+	top:-15px;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(7,9,10,0)), color-stop(100%,rgba(7,9,10,1)));
+}
 
 #pageWrapper {
 	position: relative;
@@ -142,6 +156,7 @@ h1 {
 	height: 100%;
 	padding-right: 10px;
 }
+
 
 .small-text  {
 	margin-top: -10px;

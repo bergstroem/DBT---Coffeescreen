@@ -81,9 +81,12 @@ function mainPostLoaded() {
 	//Adjust width of the post.											
 	adjustPostWidth();
 		
-	var timingMode = currentInformation.maincontent.posts[mainContentCounter];
+	var timingMode = currentInformation.maincontent.posts[mainContentCounter].timingmode;
 	console.log(timingMode);
-			
+	if(timingMode == null)
+		timingMode = 0;
+		
+	timingMode = parseInt(timingMode);
 			
 	//Temp. moved here
 	console.log(mainContentCounter);
@@ -95,12 +98,17 @@ function mainPostLoaded() {
 	if(displaytime==0){
 		//Calculate time to display the view
 		switch(timingMode) {
-			case 1:
+		case 0:
 			totalTime *= document.getElementById("mainContent").offsetHeight;
 			break;
 			
-			case 2:
-			totalTime *= document.getElementById("mainContent").innerHTML.length;
+		case 1:
+			totalTime *= .1*document.getElementById("mainContent").innerHTML.length;
+			var images = document.getElementById('mainContent').getElementsByTagName('img');
+			for(var i = images.length; i--; i) {
+				totalTime += 25*images[i].clientHeight;
+				console.log("adding " + (25*images[i].clientHeight/1000) + "s");
+			}
 			break;
 		}
 	}
