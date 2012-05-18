@@ -1,5 +1,5 @@
 <?php
-	$dir = "../../services/";
+	$dir = "./";
 	$plugins = array();
 	if($handle = opendir("$dir")){
 		while(false !== ($entry = readdir($handle))){
@@ -11,7 +11,7 @@
 	}
 
 	foreach($plugins as $plugin){
-		require("$plugin/service.php");
+		require("$plugin/plugin.php");
 	}/*
 	require('TodayInHistory/plugin.php');
 	require('RSS/plugin.php');*/
