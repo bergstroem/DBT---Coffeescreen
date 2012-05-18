@@ -2,7 +2,7 @@
 //Include the base class for services.
 include_once("Service.php");
 
-class PowerUsage extends Service {
+class Powerusage extends Service {
 	/**
 	 * This is where the required parameters are specified with calls to
 	 * createParameter.
