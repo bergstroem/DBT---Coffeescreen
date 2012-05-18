@@ -15,8 +15,8 @@
 	}
 
 	/*require('TodayInHistory/plugin.php');
-	require('RSS/plugin.php');
-	require('prioritysort.php');*/
+	require('RSS/plugin.php');*/
+	require('prioritysort.php');
 	
 	$string = '{"posts": [' . $_GET["sources"] . "]}";
 	$sources = json_decode($string);
