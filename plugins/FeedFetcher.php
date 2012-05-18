@@ -13,7 +13,8 @@
 	foreach($plugins as $plugin){
 		require("$plugin/plugin.php");
 	}
-*/
+*/	ini_set('display_errors',1); 
+	error_reporting(-1);
 	require('TodayInHistory/plugin.php');
 	require('RSS/plugin.php');
 	require('prioritysort.php');
