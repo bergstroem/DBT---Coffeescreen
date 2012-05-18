@@ -6,7 +6,7 @@ include_once("Plugin.php");
 //Include a DOM parser
 include_once("TodayInHistory/simple_html_dom.php");
 
-class TodayInHistory extends Plugins {
+class TodayInHistory extends Plugin {
 	/**
 	 * This is where the required parameters are specified with calls to
 	 * createParameter.
