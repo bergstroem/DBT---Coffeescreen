@@ -15,7 +15,7 @@ $(document).ready(function(){
 	});
 	
 	$('#type').bind('change', function(e){
-		getTypeParameters($('#type').val());
+		getTypeParameters();
 	});
 });
 
@@ -119,7 +119,7 @@ function editFeed(edit, name){
 				title.appendChild(document.createTextNode("Edit feed"));
 				
 				var jsonobj = jQuery.parseJSON(msg);
-				
+				console.log(jsonobj);
 				getFeedTypes(jsonobj);
 			}
 		});
@@ -154,7 +154,7 @@ function deleteFeed(name){
 
 function getFeedTypes(json){
 	var select = document.getElementById("type");
-	
+	console.log(json);
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
@@ -183,6 +183,9 @@ function getTypeParameters(json){
 	var table = document.getElementById("required").getElementsByTagName("tbody")[0];
 	var sel = (json == undefined) ? document.getElementById("type").value : json["type"];
 	document.getElementById("type").value = sel;
+	
+	console.log(json);
+	console.log(sel);
 	
 	if(table.getElementsByTagName("tr").length > 5){
 		for(var i = table.getElementsByTagName("tr").length-1; i >= 5; i--){
