@@ -8,7 +8,7 @@ class PowerUsage extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("power", "Message", "Path to the xml with powerdata", Type::ShortText);
+		$this->createParameter("power", "XML path", "Path to the xml with powerdata", Type::ShortText);
 	}
 
 	/**

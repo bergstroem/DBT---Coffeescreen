@@ -129,7 +129,7 @@ function saveChannel(){
 		}
 		mainContent = mainContent.substr(0,mainContent.length-1);
 		
-		var subContent = "";
+		var panic = "";
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
@@ -160,7 +160,7 @@ function saveChannel(){
 								$.ajax({
 									type: "POST",
 									url: "channelhandler.php",
-									data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&subcontent="+subContent,
+									data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&panic="+panic,
 									success: function(msg){
 										window.location = "adminchannel.php";
 									}
@@ -171,7 +171,7 @@ function saveChannel(){
 						$.ajax({
 							type: "POST",
 							url: "channelhandler.php",
-							data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&subcontent="+subContent,
+							data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&panic="+panic,
 							success: function(msg){
 								window.location = "adminchannel.php";
 							}
@@ -183,7 +183,7 @@ function saveChannel(){
 			$.ajax({
 				type: "POST",
 				url: "channelhandler.php",
-				data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&subcontent="+subContent,
+				data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&panic="+panic,
 				success: function(msg){
 					window.location = "adminchannel.php";
 				}
