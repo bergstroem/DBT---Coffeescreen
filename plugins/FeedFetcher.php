@@ -1,5 +1,5 @@
 <?php
-	$dir = "./";
+	$dir = ".";
 	$plugins = array();
 	if($handle = opendir("$dir")){
 		while(false !== ($entry = readdir($handle))){
