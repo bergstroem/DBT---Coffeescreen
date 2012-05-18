@@ -1,5 +1,5 @@
 <?php
-	/*$dir = "../../plugins/";
+	$dir = "../../services/";
 	$plugins = array();
 	if($handle = opendir("$dir")){
 		while(false !== ($entry = readdir($handle))){
@@ -11,12 +11,10 @@
 	}
 
 	foreach($plugins as $plugin){
-		require("$plugin/plugin.php");
-	}
-*/	ini_set('display_errors',1); 
-	error_reporting(-1);
+		require("$plugin/service.php");
+	}/*
 	require('TodayInHistory/plugin.php');
-	require('RSS/plugin.php');
+	require('RSS/plugin.php');*/
 	require('prioritysort.php');
 	
 	$string = '{"posts": [' . $_GET["sources"] . "]}";
