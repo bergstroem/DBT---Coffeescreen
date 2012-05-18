@@ -5,7 +5,7 @@
 		$note = $_POST['note'];
 		$static = $_POST['static'];
 		$maincontent = $_POST['maincontent'];
-		$subcontent = $_POST['subcontent'];
+		$subcontent = $_POST['panic'];
 		
 		$data = array('name' => $name ,'static' => $static, 'note' => $note, 'maincontent' => $maincontent, 'panic' => $subcontent);
 		$jsondata = json_encode($data);
