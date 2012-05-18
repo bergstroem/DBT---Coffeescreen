@@ -55,7 +55,7 @@ class RSS extends Service {
 			$html = "<h1>".$title."</h1>";
 			$html .= "<p class='small-text'>".$feedTitle." ".date("j F Y H:i", $time)."</p>";
 			$html .= "<div style=\"overflow: auto; margin: 10px 0;\">$content</div>";
-			$html .= "<p class=\"small-text\">Source: $source</p>";
+			$html .= "<p class=\"small-text\" style=\"color:#999;\">Source: $source</p>";
 			$this->bundleView($title, $time, $html);
 		}
 	}
