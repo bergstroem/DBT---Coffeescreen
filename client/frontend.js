@@ -9,6 +9,8 @@ var connection;
 
 var running = false;
 var startTime = 0;
+var paused = false;
+var pauseTime = 0;
 
 var newimages = new Array();
 
@@ -127,23 +129,25 @@ function stepContent(totalTime) {
 	
 	var progress = totalElapsedTime/(totalTime + 3*delay);
 	
-	if(totalElapsedTime < delay) {
-		document.getElementById("pageWrapper").scrollLeft = 0;
-		document.getElementById("pageWrapper").scrollTop = 0;
-	} else if(totalElapsedTime >= delay) {
-		var scrollProgress = (totalElapsedTime - delay)/totalTime;
+	if(!paused) {
+		if(totalElapsedTime < delay) {
+			document.getElementById("pageWrapper").scrollLeft = 0;
+			document.getElementById("pageWrapper").scrollTop = 0;
+		} else if(totalElapsedTime >= delay) {
+			var scrollProgress = (totalElapsedTime - delay)/totalTime;
 		
-		var width = document.getElementById("pageWrapper").scrollWidth;
-		var height = document.getElementById("pageWrapper").scrollHeight - 
-				document.getElementById("pageWrapper").clientHeight;
+			var width = document.getElementById("pageWrapper").scrollWidth;
+			var height = document.getElementById("pageWrapper").scrollHeight - 
+					document.getElementById("pageWrapper").clientHeight;
 
-		document.getElementById("pageWrapper").scrollLeft = scrollProgress * width;
-		document.getElementById("pageWrapper").scrollTop = scrollProgress * height;
+			document.getElementById("pageWrapper").scrollLeft = scrollProgress * width;
+			document.getElementById("pageWrapper").scrollTop = scrollProgress * height;
+		}
+
+		document.getElementById('progressBar').style.width = Math.round(progress * window.innerWidth) + "px";
 	}
-
-	document.getElementById('progressBar').style.width = Math.round(progress * window.innerWidth) + "px";
-
-	if(progress < 1) {
+	
+	if(progress < 1 || paused) {
 		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime);
 	} else {
 		switchMainInformation();
@@ -381,11 +385,13 @@ function moveLeft() {
 }
 
 function pause() {
-	
+	pauseTime = Date.now();
+	paused = true;
 }
 
 function unPause() {
-	
+	startTime += (Date.now() - pauseTime);
+	paused = false;
 }
 
 function forceSwitch() {
@@ -428,7 +434,7 @@ document.onmousedown = function(event) {
 };
 
 document.onmouseup = function(event){
-	if(getButton(event) == 2)
+	if(getButton(event) == 3)
 		unPause();
 	
 	return false;
