@@ -47,7 +47,7 @@ function fetchContent(content, callback) {
 		var options = {
 			   host: 'localhost',
 			   port: 80,   
-			   path: '/coffeescreen/services/FeedFetcher.php?sources=' + encodeURI(content)
+			   path: '/coffeescreen/plugins/FeedFetcher.php?sources=' + encodeURI(content)
 		};
 		
 		var result = "";

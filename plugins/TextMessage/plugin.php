@@ -1,8 +1,8 @@
 <?php
-//Include the base class for services.
-include_once("Service.php");
+//Include the base class for plugins.
+include_once("Plugin.php");
 
-class TextMessage extends Service {
+class TextMessage extends Plugin {
 	/**
 	 * This is where the required parameters are specified with calls to
 	 * createParameter.

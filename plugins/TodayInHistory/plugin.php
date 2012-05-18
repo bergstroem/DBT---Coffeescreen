@@ -1,12 +1,12 @@
 <?php
 
-//Include the base class for services.
-include_once("Service.php");
+//Include the base class for plugins.
+include_once("Plugin.php");
 
 //Include a DOM parser
 include_once("TodayInHistory/simple_html_dom.php");
 
-class TodayInHistory extends Service {
+class TodayInHistory extends Plugins {
 	/**
 	 * This is where the required parameters are specified with calls to
 	 * createParameter.

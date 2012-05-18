@@ -7,21 +7,21 @@ error_reporting(0);
  * and default value.
  *
  * Additional parameters:
- * 		service - The name of the service. 
+ * 		plugin - The name of the plugin. 
  *
- * Query example: Api.php?getParameters&service=RSS
+ * Query example: Api.php?getParameters&plugin=RSS
  * Output syntax: {key1:{"label":labelText, "value":defaultValue}, key2:...}
 **/
 
-if(isset($_GET["getParameters"]) && isset($_GET["service"])) {
+if(isset($_GET["getParameters"]) && isset($_GET["plugin"])) {
 	
-	$directory = $_GET["service"];
+	$directory = $_GET["plugin"];
 	
 	if(file_exists($directory)){
-		include_once("$directory/service.php");
+		include_once("$directory/plugin.php");
 
-		$service = new $directory();
-		echo $service->getParameters();
+		$plugin = new $directory();
+		echo $plugin->getParameters();
 	}
 }
 

@@ -1,6 +1,6 @@
 <?php
-	require('TodayInHistory/service.php');
-	require('RSS/service.php');
+	require('TodayInHistory/plugin.php');
+	require('RSS/plugin.php');
 	require('prioritysort.php');
 	
 	$string = '{"posts": [' . $_GET["sources"] . "]}";
@@ -11,12 +11,12 @@
 	
 	foreach ($sources->posts as $item) {
 		
-		$servicename = $item->type;
-		$service = new $servicename();
+		$pluginname = $item->type;
+		$plugin = new $pluginname();
 		
-		$service->loadParameters($item);
+		$plugin->loadParameters($item);
 		
-		$itemList = $service->getViewList();
+		$itemList = $plugin->getViewList();
 		
 		foreach($itemList as $key => $resultItem) {
 			//Check if the post has past its expire time
