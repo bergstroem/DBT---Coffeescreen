@@ -51,6 +51,7 @@
 	
 	if(count($result) < 1) {
 		$result = null;
+		return "";
 	}
 	else {
 		$result = duplicate(merge_sort($result));
