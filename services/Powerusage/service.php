@@ -16,8 +16,15 @@ class Powerusage extends Service {
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getViews() {
-		$html = "<div>Herpderp</div>";
-		$js = "console.log('herpderp');";
+		$html = "<p>Herpderp</p>";
+		$js = "$.ajax({
+					type: 'POST',
+					url: 'powerusage.php',
+					data: '',
+					success: function(msg){
+						console.log(msg);
+					}
+				});";
 		
 		$title = "Power usage";
 		
