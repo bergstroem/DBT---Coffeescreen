@@ -8,7 +8,7 @@ class Powerusage extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("power", "XML path", "Path to the xml with powerdata", Type::ShortText);
+		$this->createParameter("time", "Update Time", "Seconds between updates", Type::Number);
 	}
 
 	/**
@@ -16,15 +16,18 @@ class Powerusage extends Service {
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getViews() {
+		$time = $this->readParameter("time");
 		$html = "<p>Herpderp</p>";
-		$js = "$.ajax({
-					type: 'POST',
-					url: '../services/Powerusage/powerusage.php',
-					data: '',
-					success: function(msg){
-						console.log(msg);
-					}
-				});";
+		$js = "setIntervall(function(){
+					$.ajax({
+						type: 'POST',
+						url: '../services/Powerusage/powerusage.php',
+						data: '',
+						success: function(msg){
+							console.log(msg);
+						}
+					});
+				}, 1000);";
 		
 		$title = "Power usage";
 		
