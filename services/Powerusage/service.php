@@ -19,7 +19,7 @@ class Powerusage extends Service {
 		$html = "<p>Herpderp</p>";
 		$js = "$.ajax({
 					type: 'POST',
-					url: 'powerusage.php',
+					url: '../services/Powerusage/powerusage.php',
 					data: '',
 					success: function(msg){
 						console.log(msg);
