@@ -1,6 +1,19 @@
 <?php
-	require('TodayInHistory/service.php');
-	require('RSS/service.php');
+	if($handle = opendir(".")){
+		$plugins = array();
+		while(false !== ($entry = readdir($handle))){
+			if(is_dir("./".$entry) && ($entry !== "." && $entry !== "..")){
+				$plugins[] = "$entry";
+			}
+		}
+
+		closedir($handle);
+	}
+	foreach($plugins as $plugin){
+		require("$plugin/service.php");
+	}
+	/*require('TodayInHistory/service.php');
+	require('RSS/service.php');*/
 	require('prioritysort.php');
 	
 	$string = '{"posts": [' . $_GET["sources"] . "]}";
