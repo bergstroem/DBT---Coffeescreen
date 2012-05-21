@@ -44,6 +44,9 @@ function Channel(name, note, mainContent, panic, staticText) {
 
 //
 function fetchContent(content, callback) {
+		if(content == null){
+			content = "";
+		}
 		var options = {
 			   host: 'localhost',
 			   port: 80,   
