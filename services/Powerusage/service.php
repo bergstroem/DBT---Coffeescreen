@@ -16,11 +16,12 @@ class Powerusage extends Service {
 	 * parameters. These should be bundeled using bundleView and returned.
 	**/
 	public function getViews() {
-		$html = "<script>console.log('herpderp');</script>";
+		$html = "<div>Herpderp</div>";
+		$js = "console.log('herpderp');";
 		
 		$title = "Power usage";
 		
-		$this->bundleView($title, time(), $html);
+		$this->bundleView($title, time(), $html, "", $js);
 	}
 }
 

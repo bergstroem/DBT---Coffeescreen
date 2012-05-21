@@ -37,8 +37,10 @@ function switchMainInformation() {
 	console.log("Switching...");
 	//Extract article info
 	var content = currentInformation.maincontent.posts[mainContentCounter].html;
+	var contentjs = currentInformation.maincontent.posts[mainContentCounter].js;
 	
 	document.getElementById("mainContent").innerHTML = content;
+	eval(contentjs);
 	
 	//Set next/prev text
 	if(currentInformation.maincontent.posts.length > (mainContentCounter + 1))
