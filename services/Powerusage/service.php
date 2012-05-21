@@ -17,6 +17,7 @@ class Powerusage extends Service {
 	**/
 	public function getViews() {
 		$html = "<script>
+					console.log('herpderp');
 					$.ajax({
 						type: 'POST',
 						url: 'powerusage.php',
