@@ -31,12 +31,12 @@ function createItem(name, target, filler, feeddata){
 	else{
 		var divTag = document.createElement("div");
 		divTag.id = "" + name;
+		divTag.className = "contentitem";
 		divTag.setAttribute("draggable","true");
 		divTag.setAttribute("data",data);
 		divTag.setAttribute("disabled","true");
 		divTag.addEventListener('dragstart', handleDragStart, false);
 		divTag.addEventListener('dragend', handleDragEnd, false);
-		divTag.className = "contentitem";
 		divTag.appendChild(document.createTextNode(name));
 		
 		var delbutton = document.createElement("input");

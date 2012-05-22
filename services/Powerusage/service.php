@@ -17,14 +17,7 @@ class Powerusage extends Service {
 	public function getViews() {
 		$time = $this->readParameter("time");
 		$html = '<div id="disp" style="text-align:center; font-size:5em; margin: 100px auto;"></div>';
-		$js = "$.ajax({".
-					"type: 'POST',".
-					"url: '../services/Powerusage/powerusage.php',".
-					"data: '',".
-					"success: function(msg){".
-					"var val = parseFloat(msg);".
-					"document.getElementById('disp').appendChild(document.createTextNode(val + 'W'))".
-				"}});";
+		$js = "../services/Powerusage/power.js";
 		
 		$title = "Power usage";
 		

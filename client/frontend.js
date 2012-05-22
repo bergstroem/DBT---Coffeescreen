@@ -35,12 +35,36 @@ function switchMainInformation() {
 
 	//Här byts channel
 	console.log("Switching...");
+	var js = document.getElementById("jsfile");
+	var css = document.getElementById("cssfile");
+	if(js != null)
+		document.getElementsByTagName("head")[0].removeChild(js);
+	if(css != null)
+		document.getElementsByTagName("head")[0].removeChild(css);
 	//Extract article info
 	var content = currentInformation.maincontent.posts[mainContentCounter].html;
 	var contentjs = currentInformation.maincontent.posts[mainContentCounter].js;
+	var contentcss = currentInformation.maincontent.posts[mainContentCounter].css;
 	
 	document.getElementById("mainContent").innerHTML = content;
 	eval(contentjs);
+	
+	if(contentjs != ""){
+		var js=document.createElement("script");
+		js.setAttribute("id", "jsfile");
+		js.setAttribute("type", "text/javascript");
+		js.setAttribute("src", contentjs);
+		document.getElementsByTagName("head")[0].appendChild(js);
+	}
+	
+	if(contentcss != ""){
+		var css=document.createElement("link");
+		css.setAttribute("id", "cssfile");
+		css.setAttribute("rel", "stylesheet");
+		css.setAttribute("type", "text/css");
+		css.setAttribute("href", contentcss);
+		document.getElementsByTagName("head")[0].appendChild(css);
+	}
 	
 	//Set next/prev text
 	if(currentInformation.maincontent.posts.length > (mainContentCounter + 1))
