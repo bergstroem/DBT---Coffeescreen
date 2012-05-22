@@ -116,7 +116,9 @@ function mainPostLoaded() {
 	//Temp. moved here
 	console.log(mainContentCounter);
 	var displaytime = currentInformation.maincontent.posts[mainContentCounter].displaytime;
+	console.log(displaytime + " asdfasdfasdfdasfas");
 	displaytime = parseFloat(displaytime)*1000;
+	console.log(displaytime + " asdfassfas");
 
 	var totalTime = 50;
 
