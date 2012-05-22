@@ -8,7 +8,7 @@ class Powerusage extends Service {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
-		$this->createParameter("time", "Update Time", "Seconds between updates", Type::Number);
+		$this->createParameter("time", "Update Time", "Seconds between updates", Type::Number, "1");
 	}
 
 	/**
@@ -18,7 +18,7 @@ class Powerusage extends Service {
 	public function getViews() {
 		$time = $this->readParameter("time");
 		$html = "<p>Herpderp</p>";
-		$js = "setIntervall(function(){ $.ajax({type: 'POST',url: '../services/Powerusage/powerusage.php',data: '',success: function(msg){console.log(msg);}});}, 1000);";
+		$js = "setInterval(function(){ $.ajax({type: 'POST', url: '../services/Powerusage/powerusage.php', data: '', success: function(msg){console.log(msg);}});}, 1000);";
 		
 		$title = "Power usage";
 		
