@@ -47,7 +47,6 @@ function switchMainInformation() {
 	var contentcss = currentInformation.maincontent.posts[mainContentCounter].css;
 	
 	document.getElementById("mainContent").innerHTML = content;
-	eval(contentjs);
 	
 	if(contentjs != ""){
 		var js=document.createElement("script");
