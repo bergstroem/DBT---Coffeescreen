@@ -16,7 +16,7 @@ class Powerusage extends Service {
 	**/
 	public function getViews() {
 		$time = $this->readParameter("time");
-		$html = "<div id='disp'>Herpderp</div>";
+		$html = '<div id="disp" style="margin: 100px auto;">Herpderp</div>';
 		$js = "$.ajax({".
 					"type: 'POST',".
 					"url: '../services/Powerusage/powerusage.php',".
