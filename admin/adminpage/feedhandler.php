@@ -40,7 +40,7 @@
 		$name = $_POST['name'];
 		unlink("../../feeds/$name");
 	}
-	else if($p === "type"){
+	else if($p == "type"){
 		$dir = "../../services/";
 		if($handle = opendir("$dir")){
 			$data = array();
@@ -55,7 +55,7 @@
 			closedir($handle);
 		}
 	}
-	else if($p === "list"){
+	else if($p == "list"){
 		if($handle = opendir("../../feeds/")){
 			$data = array();
 			while(false !== ($entry = readdir($handle))){
