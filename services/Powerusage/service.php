@@ -18,7 +18,7 @@ class Powerusage extends Service {
 	public function getViews() {
 		$time = $this->readParameter("time");
 		$html = "<p>Herpderp</p>";
-		$js = "setInterval(function(){ $.ajax({type: 'POST', url: '../services/Powerusage/powerusage.php', data: '', success: function(msg){console.log(msg);}});}, 1000);";
+		$js = "$.ajax({type: 'POST', url: '../services/Powerusage/powerusage.php', data: '', success: function(msg){console.log(msg);}});";
 		
 		$title = "Power usage";
 		
