@@ -6,7 +6,7 @@ body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	font-family:"Droid Sans", "Calibri";
+	font-family:"Calibri", "Droid Sans";
 	color: white;
 	/*background: black;*/
 	background-image: -moz-linear-gradient(top, #000000 0%, #363636 50%, #111111 75%, #000305 100%);
@@ -15,7 +15,7 @@ body {
 	cursor: none;
 }
 a{
-	color::white;
+	color:white;
 	text-decoration:none;
 }
 
