@@ -11,17 +11,19 @@
 		$data['expiretime'] = $_POST['expiretime'];
 		$data['timingmode'] = $_POST['timingmode'];
 		
-		$c = explode(",",$custom);
-		
-		foreach($c as $item){
-			$split = explode("|",$item);
-			$data[$split[0]] = $split[1];
+		if($custom != ""){
+			$c = explode(",",$custom);
+			
+			foreach($c as $item){
+				$split = explode("|",$item);
+				$data[$split[0]] = $split[1];
+			}
 		}
 		
 		$jsondata = json_encode($data);
 		echo $jsondata;
 		
-		$fh = fopen("../../feeds/$name.json", "w");
+		$fh = fopen("../../feeds/$data[name].json", "w");
 		fwrite($fh, $jsondata);
 
 		fclose($fh);

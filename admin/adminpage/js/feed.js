@@ -118,6 +118,7 @@ function editFeed(edit, name){
 				title.removeChild(title.lastChild);
 				title.appendChild(document.createTextNode("Edit feed"));
 				
+				console.log(msg);
 				var jsonobj = jQuery.parseJSON(msg);
 				console.log(jsonobj);
 				getFeedTypes(jsonobj);
@@ -277,7 +278,7 @@ function getTypeParameters(json){
 			}
 			if(json != undefined){
 				var keys = Object.keys(json);
-				
+				console.log(json);
 				for(var i = 0; i < keys.length; i++){
 					var key = keys[i];
 					document.getElementsByName(key)[0].value = json[key];
