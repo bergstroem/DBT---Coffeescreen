@@ -22,7 +22,7 @@ class Powerusage extends Service {
 					"url: '../services/Powerusage/powerusage.php',".
 					"data: '',".
 					"success: function(msg){".
-					"var val = parseDouble(msg);".
+					"var val = parseFloat(msg);".
 					"console.log(val);".
 					"document.getElementById('disp').appendChild(document.createTextNode(msg))".
 				"}});";
