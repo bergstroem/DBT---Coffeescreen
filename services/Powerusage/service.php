@@ -23,8 +23,7 @@ class Powerusage extends Service {
 					"data: '',".
 					"success: function(msg){".
 					"var val = parseFloat(msg);".
-					"console.log(val);".
-					"document.getElementById('disp').appendChild(document.createTextNode(msg))".
+					"document.getElementById('disp').appendChild(document.createTextNode(val + 'W'))".
 				"}});";
 		
 		$title = "Power usage";
