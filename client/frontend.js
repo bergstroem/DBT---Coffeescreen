@@ -74,7 +74,7 @@ function switchMainInformation() {
 				var scr = document.createElement("script");
 				scr.setAttribute("id", "jsfile");
 				scr.setAttribute("type", "text/javascript");
-				sct.setAttribute("src", script);
+				scr.setAttribute("src", script);
 				document.getElementsByTagName("head")[0].appendChild(scr);
 				js.push(scr);
 			}
