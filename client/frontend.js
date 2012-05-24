@@ -37,8 +37,16 @@ function switchMainInformation() {
 	console.log("Switching...");
 	var js = document.getElementById("jsfile");
 	var css = document.getElementById("cssfile");
-	if(js != null)
-		document.getElementsByTagName("head")[0].removeChild(js);
+	if(js != null){
+		if(typeof(js) == "string"){
+			document.getElementsByTagName("head")[0].removeChild(js);
+		}
+		else{
+			for(script in js){
+				document.getElementsByTagName("head")[0].removeChild(script);
+			}
+		}
+	}
 	if(css != null)
 		document.getElementsByTagName("head")[0].removeChild(css);
 	//Extract article info
@@ -49,12 +57,25 @@ function switchMainInformation() {
 	document.getElementById("mainContent").innerHTML = content;
 	
 	if(contentjs != ""){
-		console.log(typeof(contentjs));
-		var js=document.createElement("script");
-		js.setAttribute("id", "jsfile");
-		js.setAttribute("type", "text/javascript");
-		js.setAttribute("src", contentjs);
-		document.getElementsByTagName("head")[0].appendChild(js);
+		var js = "";
+		if(typeof(contentjs) == "string"){
+			js = document.createElement("script");
+			js.setAttribute("id", "jsfile");
+			js.setAttribute("type", "text/javascript");
+			js.setAttribute("src", contentjs);
+			document.getElementsByTagName("head")[0].appendChild(js);	
+		}
+		else{
+			js = new Array();
+			for(script in contentjs){
+				var scr = document.createElement("script");
+				scr.setAttribute("id", "jsfile");
+				scr.setAttribute("type", "text/javascript");
+				sct.setAttribute("src", script);
+				document.getElementsByTagName("head")[0].appendChild(scr);
+				js.push(scr);
+			}
+		}
 	}
 	
 	if(contentcss != ""){
