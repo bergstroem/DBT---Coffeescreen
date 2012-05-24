@@ -12,7 +12,7 @@ $.ajax({
 
 
 function draw(power){
-	var rotval = (val/9000+1)%2;
+	var rotval = (power/9000+1)%2;
 	var c = document.getElementById("gauge");
 	var ctx = c.getContext("2d");
 	if(power > 3000){
