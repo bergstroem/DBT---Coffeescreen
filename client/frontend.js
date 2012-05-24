@@ -38,7 +38,8 @@ function switchMainInformation() {
 	var js = document.getElementById("jsfile");
 	var css = document.getElementById("cssfile");
 	if(js != null){
-		if(typeof(js) == "string"){
+		console.log(typeof(contentjs) + " remove");
+		if(typeof(contentjs) == "string"){
 			document.getElementsByTagName("head")[0].removeChild(js);
 		}
 		else{
@@ -57,7 +58,9 @@ function switchMainInformation() {
 	document.getElementById("mainContent").innerHTML = content;
 	
 	if(contentjs != ""){
-		var js = "";
+		var js;
+		console.log(typeof(contentjs) + " add");
+		console.log(contentjs + " add");
 		if(typeof(contentjs) == "string"){
 			js = document.createElement("script");
 			js.setAttribute("id", "jsfile");
