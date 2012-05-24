@@ -21,7 +21,7 @@ function draw(power){
 	ctx.font = "15pt Calibri";
 	ctx.fillStyle = "white";
 	ctx.fillText("0W", 0, 125);
-	ctx.fillText(maxval+"W", 180, 125);
+	ctx.fillText(maxval+"W", 170, 125);
 	
 	/* Background part */
 	ctx.beginPath();
