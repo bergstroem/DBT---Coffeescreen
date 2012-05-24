@@ -93,7 +93,8 @@ h1 {
 }
 
 
-#mainContent {
+#mainContent img {
+	margin: 0 auto;
 }
 
 .content {
