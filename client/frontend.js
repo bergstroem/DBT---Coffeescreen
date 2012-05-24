@@ -60,7 +60,7 @@ function switchMainInformation() {
 	if(contentjs != ""){
 		var js;
 		console.log(typeof(contentjs) + " add");
-		console.log(contentjs + " add");
+		console.log(contentjs);
 		if(typeof(contentjs) == "string"){
 			js = document.createElement("script");
 			js.setAttribute("id", "jsfile");
