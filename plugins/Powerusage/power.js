@@ -20,8 +20,8 @@ function draw(power){
 	
 	ctx.font = "15pt Calibri";
 	ctx.fillStyle = "white";
-	ctx.fillText("0W", 10, 125);
-	ctx.fillText(maxval+"W", 200, 125);
+	ctx.fillText("0W", 0, 125);
+	ctx.fillText(maxval+"W", 190, 125);
 	
 	/* Background part */
 	ctx.beginPath();
