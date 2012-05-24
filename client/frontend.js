@@ -455,7 +455,7 @@ function moveRight() {
 	if(mainContentCounter >= currentInformation.maincontent.posts.length && futureInformation != null) {
 		currentInformation = futureInformation;
 		futureInformation = null;
-
+		mainContentCounter = -1;
 		forceSwitch(1);
 	} else if(mainContentCounter < currentInformation.maincontent.posts.length) {
 		forceSwitch(1);
