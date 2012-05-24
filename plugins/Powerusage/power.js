@@ -19,19 +19,20 @@ function draw(power){
 	var ctx = c.getContext("2d");
 	
 	ctx.font = "10pt Calibri";
-	ctx.fillText("0W", 200, 150);
+	ctx.fillStyle = "white";
+	ctx.fillText("0W", 100, 150);
 	ctx.fillText(maxval+"W", 50, 150);
 	
 	/* Background part */
 	ctx.beginPath();
-	ctx.arc(110,150,100,1*Math.PI,0*Math.PI);
+	ctx.arc(110,110,100,1*Math.PI,0*Math.PI);
 	ctx.lineWidth = thickness;
 	ctx.strokeStyle = "gray";
 	ctx.stroke();
 	
 	/* Green part */
 	ctx.beginPath();
-	ctx.arc(110,150,100,1*Math.PI,rotval*Math.PI);
+	ctx.arc(110,110,100,1*Math.PI,rotval*Math.PI);
 	ctx.lineWidth = thickness;
 	ctx.strokeStyle = "green";
 	ctx.stroke();
@@ -39,7 +40,7 @@ function draw(power){
 	if(rotval > 1.5 || rotval == 0){
 		/* Yellow part */
 		ctx.beginPath();
-		ctx.arc(110,150,100,1.5*Math.PI,rotval*Math.PI);
+		ctx.arc(110,110,100,1.5*Math.PI,rotval*Math.PI);
 		ctx.lineWidth = thickness;
 		ctx.strokeStyle = "yellow";
 		ctx.stroke();
@@ -47,7 +48,7 @@ function draw(power){
 		if(rotval > 1.8 || rotval == 0){
 			/* Red part */
 		ctx.beginPath();
-		ctx.arc(110,150,100,1.8*Math.PI,rotval*Math.PI);
+		ctx.arc(110,110,100,1.8*Math.PI,rotval*Math.PI);
 		ctx.lineWidth = thickness;
 		ctx.strokeStyle = "red";
 		ctx.stroke();
