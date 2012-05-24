@@ -3,9 +3,18 @@
 	margin:50px auto 0 auto;
 }
 
+#gauge{
+	margin:0 auto;
+}
+
 #powertext{
 	width:220px;
+	margin:0 auto;
 	text-align:center;
 	font-size:3em;
 	color:white;
+}
+
+#wisdom{
+	margin:0 auto;
 }

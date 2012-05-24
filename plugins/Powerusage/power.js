@@ -55,3 +55,23 @@ function draw(power){
 		}
 	}
 }
+
+function wisdom(power){
+	var rand = Math.floor(Math.random()*2);
+	var wisdom = document.getElementById('wisdom');
+	
+	switch(rand){
+		case 0:
+			var num = power*3.6/1259;
+			var text = "Consuming this power for 1 hour is equivalent to eating " + num + " McD Cheesburgers."
+			wisdom.appendChild(document.createTextNode(text));
+			break;
+		case 1:
+			var num = power*3.6/1259;
+			var text = "Consuming this power for 1 hour is equivalent to eating " + num + " McD Cheesburgers."
+			wisdom.appendChild(document.createTextNode(text));
+			break;
+		default:
+			break;
+	}
+}
