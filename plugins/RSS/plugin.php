@@ -56,7 +56,7 @@ class RSS extends Plugin {
 			$html .= "<p class='small-text'>".$feedTitle." ".date("j F Y H:i", $time)."</p>";
 			$html .= "<div style=\"overflow: auto; margin: 10px 0;\">$content</div>";
 			$html .= "<p class=\"small-text\" style=\"color:#999;\">Source: $source</p>";
-			$html .= "<img src=\"http://chart.apis.google.com/chart?cht=qr&chs=50x50&chld=L|0&chl=$source\" />";
+			$html .= "<img src=\"www.esponce.com/api/v3/generate?format=png&size=2&padding=0&background=00000000&foreground=FFFFFFFF&content=$source\" />";
 			$this->bundleView($title, $time, $html);
 		}
 	}
