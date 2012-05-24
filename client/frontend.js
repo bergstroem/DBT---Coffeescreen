@@ -49,7 +49,7 @@ function switchMainInformation() {
 	document.getElementById("mainContent").innerHTML = content;
 	
 	if(contentjs != ""){
-		console.log(contentjs);
+		console.log(typeof(contentjs));
 		var js=document.createElement("script");
 		js.setAttribute("id", "jsfile");
 		js.setAttribute("type", "text/javascript");
