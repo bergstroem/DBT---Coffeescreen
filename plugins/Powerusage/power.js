@@ -13,7 +13,7 @@ $.ajax({
 		var rotval = 180*val/9000;
 		
 		document.getElementById('disp').appendChild(document.createTextNode(val + 'W'))
-		drawChart();
+
 		var c = document.getElementById("gauge");
 		var ctx = c.getContext("2d");
 		ctx.beginPath();
