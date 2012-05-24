@@ -38,7 +38,7 @@ function switchMainInformation() {
 	var js = document.getElementById("jsfile");
 	var css = document.getElementById("cssfile");
 	if(js != null){
-		if(typeof(js) == "string"){
+		if(typeof(contentjs) == "string"){
 			document.getElementsByTagName("head")[0].removeChild(js);
 		}
 		else{
