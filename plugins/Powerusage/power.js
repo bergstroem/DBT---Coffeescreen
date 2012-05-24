@@ -1,9 +1,8 @@
-var disp = document.getElementById("disp");
-
 google.load('visualization', '1', {packages:['gauge']});
 google.setOnLoadCallback(drawChart);
 
 function drawChart() {
+	console.log("baibai");
 	var data = google.visualization.arrayToDataTable([
 		['Label', 'Value'],
 		['Memory', 80],
