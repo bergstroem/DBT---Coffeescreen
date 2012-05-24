@@ -71,6 +71,7 @@ function switchMainInformation() {
 		else{
 			js = new Array();
 			for(script in contentjs){
+				console.log(script);
 				var scr = document.createElement("script");
 				scr.setAttribute("id", "jsfile");
 				scr.setAttribute("type", "text/javascript");
