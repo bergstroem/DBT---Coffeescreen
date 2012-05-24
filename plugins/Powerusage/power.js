@@ -1,7 +1,7 @@
 var disp = document.getElementById("disp");
 
 google.load('visualization', '1', {packages:['gauge']});
-google.setOnLoadCallback(drawChart);
+//google.setOnLoadCallback(drawChart);
 
 function drawChart() {
 	var data = google.visualization.arrayToDataTable([
@@ -30,6 +30,7 @@ $.ajax({
 		var val = parseFloat(msg);
 		
 		disp.appendChild(document.createTextNode(val + 'W'))
+		drawChart();
 	}
 });
 

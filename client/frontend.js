@@ -85,7 +85,6 @@ function switchMainInformation(direction) {
 		else{
 			js = new Array();
 			for(var i = 0; i < contentjs.length; i++){
-				console.log(contentjs[i]);
 				var scr = document.createElement("script");
 				scr.setAttribute("id", "jsfile");
 				scr.setAttribute("type", "text/javascript");
