@@ -1,6 +1,8 @@
 console.log("haihai");
+console.log(google);
 google.setOnLoadCallback(drawChart);
 google.load('visualization', '1', {packages:['gauge']});
+console.log(google);
 
 function drawChart() {
 	console.log("baibai");
