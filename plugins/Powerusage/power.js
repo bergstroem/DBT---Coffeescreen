@@ -1,7 +1,7 @@
 var disp = document.getElementById("disp");
 
 google.load('visualization', '1', {packages:['gauge']});
-//google.setOnLoadCallback(drawChart);
+google.setOnLoadCallback(drawChart);
 
 function drawChart() {
 	var data = google.visualization.arrayToDataTable([
@@ -18,10 +18,10 @@ function drawChart() {
 		minorTicks: 5	
 	};
 
-	var chart = new google.visualization.Gauge(disp);
+	var chart = new google.visualization.Gauge(document.getElementById('disp'));
 	chart.draw(data, options);
 }
-
+/*
 $.ajax({
 	type: 'POST',
 	url: '../plugins/Powerusage/powerusage.php',
@@ -32,6 +32,6 @@ $.ajax({
 		disp.appendChild(document.createTextNode(val + 'W'))
 		drawChart();
 	}
-});
+});*/
 
 
