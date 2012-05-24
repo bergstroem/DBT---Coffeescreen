@@ -1,6 +1,6 @@
 $.ajax({
 	type: 'POST',
-	url: '../services/Powerusage/powerusage.php',
+	url: '../plugins/Powerusage/powerusage.php',
 	data: '',
 	success: function(msg){
 		var val = parseFloat(msg);
