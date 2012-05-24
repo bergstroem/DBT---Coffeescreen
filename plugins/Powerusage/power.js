@@ -1,9 +1,3 @@
-var c = document.getElementById("gauge");
-var ctx = c.getContext("2d");
-ctx.beginPath();
-ctx.arc(100,75,50,0*Math.PI,1.5*Math.PI);
-ctx.stroke();
-
 $.ajax({
 	type: 'POST',
 	url: '../plugins/Powerusage/powerusage.php',
