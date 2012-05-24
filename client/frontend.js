@@ -56,6 +56,8 @@ function switchMainInformation(direction) {
 	newPage.className = 'content';
 	newPage.id = "mainContent";
 	newPage.innerHTML = content;
+	newPage.style.opacity = 0.0;
+	mainPage.style.opacity = 0.0;
 	
 	if(direction > 0){
 		newPage.style.left = window.innerWidth + "px";
@@ -69,9 +71,13 @@ function switchMainInformation(direction) {
 	
 	var transitionEnd = whichTransitionEvent();
 	mainPage.addEventListener( transitionEnd, 
-    function( event ) { document.getElementById("contentArea").removeChild(mainPage); }, false );
+    function( event ) { 
+		var contentArea = document.getElementById("contentArea");
+		if(mainPage.parentNode == contentArea)
+			contentArea.removeChild(mainPage);		
+	}, false );
 	
-	setTimeout(function() { newPage.style.left = "0px"; },100);
+	setTimeout(function() { newPage.style.left = "0px"; newPage.style.opacity = 1.0; },100);
 	
 	if(contentjs != ""){
 		var js;

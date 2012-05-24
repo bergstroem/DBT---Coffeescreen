@@ -97,10 +97,10 @@ h1 {
 }
 
 .content {
-	transition: left .25s ease-in-out;
-	-moz-transition: left .25s ease-in-out;
-	-webkit-transition: left .25s ease-in-out; 
-	-o-transition: left .25s ease-in-out;
+	transition: left .3s ease-in-out, opacity .3s ease-in-out;
+	-moz-transition: left .3s ease-in-out, opacity .3s ease-in-out;
+	-webkit-transition: left .3s ease-in-out, opacity .3s ease-in-out; 
+	-o-transition: left .3s ease-in-out, opacity .3s ease-in-out;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box; 
