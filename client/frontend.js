@@ -73,11 +73,27 @@ function switchMainInformation(direction) {
 	setTimeout(function() { newPage.style.left = "0px"; },100);
 	
 	if(contentjs != ""){
-		var js=document.createElement("script");
-		js.setAttribute("id", "jsfile");
-		js.setAttribute("type", "text/javascript");
-		js.setAttribute("src", contentjs);
-		document.getElementsByTagName("head")[0].appendChild(js);
+		var js;
+		console.log(typeof(contentjs) + " add");
+		console.log(contentjs);
+		if(typeof(contentjs) == "string"){
+			js = document.createElement("script");
+			js.setAttribute("id", "jsfile");
+			js.setAttribute("type", "text/javascript");
+			js.setAttribute("src", contentjs);
+			document.getElementsByTagName("head")[0].appendChild(js);	
+		}
+		else{
+			js = new Array();
+			for(script in contentjs){
+				var scr = document.createElement("script");
+				scr.setAttribute("id", "jsfile");
+				scr.setAttribute("type", "text/javascript");
+				scr.setAttribute("src", script);
+				document.getElementsByTagName("head")[0].appendChild(scr);
+				js.push(scr);
+			}
+		}
 	}
 	
 	if(contentcss != ""){
