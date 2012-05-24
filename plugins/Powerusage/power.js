@@ -4,7 +4,7 @@ $.ajax({
 	data: '',
 	success: function(msg){
 		var val = parseFloat(msg);
-		var rotval = 180*val/9000;
+		var rotval = (val/9000+1)%2;
 		
 		document.getElementById('disp').appendChild(document.createTextNode(val + 'W'))
 
