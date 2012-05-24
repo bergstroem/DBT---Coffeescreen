@@ -25,29 +25,21 @@ function init() {
 }
 
 //Switch to next view
-function switchMainInformation() {
-	mainContentCounter++;
+function switchMainInformation(direction) {
+	mainContentCounter += direction;
 	if(mainContentCounter >= currentInformation.maincontent.posts.length) {
 		mainContentCounter = 0;
 	}
-
+	console.log("direction: " +direction);
+	
 	console.log(mainContentCounter + ", " + currentInformation.maincontent.posts.length);
 
 	//Här byts channel
 	console.log("Switching...");
 	var js = document.getElementById("jsfile");
 	var css = document.getElementById("cssfile");
-	if(js != null){
-		console.log(typeof(contentjs) + " remove");
-		if(typeof(contentjs) == "string"){
-			document.getElementsByTagName("head")[0].removeChild(js);
-		}
-		else{
-			for(script in js){
-				document.getElementsByTagName("head")[0].removeChild(script);
-			}
-		}
-	}
+	if(js != null)
+		document.getElementsByTagName("head")[0].removeChild(js);
 	if(css != null)
 		document.getElementsByTagName("head")[0].removeChild(css);
 	//Extract article info
@@ -55,7 +47,30 @@ function switchMainInformation() {
 	var contentjs = currentInformation.maincontent.posts[mainContentCounter].js;
 	var contentcss = currentInformation.maincontent.posts[mainContentCounter].css;
 	
-	document.getElementById("mainContent").innerHTML = content;
+	//document.getElementById("mainContent").innerHTML = content;
+	//GLÖM INTE, TA BORT MAIN PAGE EFTER ANIMERING
+	var mainPage = document.getElementById("mainContent");
+	mainPage.id = "";
+	var newPage = document.createElement("div");
+	newPage.className = 'content';
+	newPage.id = "mainContent";
+	newPage.innerHTML = content;
+	
+	if(direction > 0){
+		newPage.style.left = window.innerWidth + "px";
+		mainPage.style.left = "-" + window.innerWidth + "px";
+	}
+	if(direction < 0){
+		newPage.style.left = "-" + window.innerWidth + "px";
+		mainPage.style.left = window.innerWidth + "px";
+	}
+	document.getElementById("contentArea").appendChild(newPage);
+	
+	var transitionEnd = whichTransitionEvent();
+	mainPage.addEventListener( transitionEnd, 
+    function( event ) { document.getElementById("contentArea").removeChild(mainPage); }, false );
+	
+	setTimeout(function() { newPage.style.left = "0px"; },100);
 	
 	if(contentjs != ""){
 		var js;
@@ -126,6 +141,24 @@ function switchMainInformation() {
 		connection.send('Refresh');
 	}
 }
+//Cross browser transitionend suppport!
+function whichTransitionEvent(){
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+      'transition':'transitionEnd',
+      'OTransition':'oTransitionEnd',
+      'MSTransition':'msTransitionEnd',
+      'MozTransition':'transitionend',
+      'WebkitTransition':'webkitTransitionEnd'
+    }
+
+    for(t in transitions){
+        if( el.style[t] !== undefined ){
+            return transitions[t];
+        }
+    }
+}
 
 //What to do when all the images are loaded in a view
 function mainPostLoaded() {
@@ -145,7 +178,6 @@ function mainPostLoaded() {
 	displaytime = parseFloat(displaytime)*1000;
 
 	var totalTime = 50;
-	var delay = 4000;
 
 	if(displaytime==0){
 		//Calculate time to display the view
@@ -163,10 +195,6 @@ function mainPostLoaded() {
 			}
 			break;
 		}
-
-		if(delay <= 0)
-			delay = 4000;
-
 	}
 	else{
 		//Setup progress bar variables
@@ -183,12 +211,12 @@ function mainPostLoaded() {
 	document.getElementById("pageWrapper").scrollLeft = 0;
 	document.getElementById('progressBar').style.width = 0;
 	clearTimeout(mainContentProgressTimeout);
-	stepContent(totalTime, delay);
+	stepContent(totalTime);
 }
 
 //One scrolling jump
-function stepContent(totalTime, delay) {
-	//var delay = 4000;
+function stepContent(totalTime) {
+	var delay = 4000;
 	var totalElapsedTime = new Date().getTime() - startTime;
 	
 	var progress = totalElapsedTime/(totalTime + 3*delay);
@@ -212,43 +240,41 @@ function stepContent(totalTime, delay) {
 	}
 	
 	if(progress < 1 || paused) {
-		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime, delay);
+		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime);
 	} else {
-		switchMainInformation();
+		switchMainInformation(1);
 	}
 }
 
 function adjustPostWidth() {
-	document.getElementById('mainContent').style.width = "";
+	
 	//Get mainContent and its child images
 	var main = document.getElementById('mainContent');
+	
+	var fullWidth = window.innerWidth;
+	var fullHeight = window.innerHeight;
+	main.style.width = fullWidth + "px";
 	var childImages = document.getElementById('mainContent').getElementsByTagName('img');
 	
 	//First, if any image is larger than the parent divs width/1.5, than scale it up
 	//and set the width of the parent to the new width
 	var adjusted = false;
 	for (var i = 0; i < childImages.length; i++) {
-		
 		//If the image isnt too small or too big, scale it.
 		if(childImages[i].clientWidth > main.clientWidth/1.5 && childImages[i].clientWidth < main.clientWidth*1.5) {
-			console.log("Scaling image from: " + childImages[i].clientWidth + ", to: " + (main.clientWidth - 100));
+			console.log("Scaling image on width");
 			adjusted = true;
-			childImages[i].style.width = main.clientWidth - 100 + "px"; // -100 to get some margin
-			main.style.width = childImages[i].clientWidth + "px";
+			childImages[i].style.width = "100%"; // -100 to get some margin
 			break;
 		}
 		
 		//If too high, try scaling on height
-		if(!adjusted) {
+		else if(!adjusted) {
 			if(childImages[i].clientHeight > main.clientHeight && childImages[i].clientHeight < main.clientHeight*1.5) {
-				childImages[i].style.height = main.clientHeight - 100 + "px"; // -100 to get some margin
+				childImages[i].style.height = main.clientHeight - 100 + "px"; // -100 to get some margin4
 				adjusted = true;
 			}
 		}
-	}
-	if(!adjusted) {
-		console.log("Scaling content");
-		document.getElementById('mainContent').style.width = window.innerWidth - 100 + "px";
 	}
 	
 }
@@ -371,7 +397,7 @@ function connectToServer () {
             	
             	//Force immediate change if panic feed
 				if(!running || json.name == "panic"){
-					switchMainInformation();
+					switchMainInformation(1);
 					running = true;
 				}
             } else {
@@ -429,20 +455,18 @@ function getQueryVariable(variable) {
 
 function moveRight() {
 	if(mainContentCounter >= currentInformation.maincontent.posts.length && futureInformation != null) {
-		mainContentCounter = -1;
 		currentInformation = futureInformation;
 		futureInformation = null;
 
-		forceSwitch();
+		forceSwitch(1);
 	} else if(mainContentCounter < currentInformation.maincontent.posts.length) {
-		forceSwitch();
+		forceSwitch(1);
 	}
 }
 
 function moveLeft() {
 	if(mainContentCounter > 0 && (Date.now()-startTime) < 1000 ) {
-		mainContentCounter -= 2;
-		forceSwitch();
+		forceSwitch(-1);
 	} else {
 		startTime = Date.now();
 	}
@@ -458,12 +482,12 @@ function unPause() {
 	paused = false;
 }
 
-function forceSwitch() {
+function forceSwitch(direction) {
 		for(var i = newimages.length; i--;)
 			newimages[i].onload = function() {};
 		newimages = new Array();
 
-		switchMainInformation();
+		switchMainInformation(direction);
 }
 
 function getButton(event) {
