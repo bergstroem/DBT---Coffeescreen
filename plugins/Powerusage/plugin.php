@@ -16,8 +16,10 @@ class Powerusage extends Plugin {
 	**/
 	public function getViews() {
 		$time = $this->readParameter("time");
-		$html = '<div id="disp" style="text-align:center; font-size:5em; margin: 100px auto;"></div>';
-		$js = "../plugins/Powerusage/power.js";
+		$html = '<script type="text/javascript" src="../plugins/Powerusage/power.js"></script><div id="disp" style="text-align:center; font-size:5em; margin: 100px auto;"></div>';
+		//$js = "../plugins/Powerusage/power.js";
+		//$js = array('0' => "https://www.google.com/jsapi", '1' => "../plugins/Powerusage/power.js");
+		$js = json_encode($value);
 		
 		$title = "Power usage";
 		
