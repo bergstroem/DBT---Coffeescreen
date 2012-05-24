@@ -127,7 +127,6 @@ function switchMainInformation(direction) {
 		for(var i = 0; i < images.length; i++){
 			images[i].src = images[i].src.replace("%20", "").replace(" ", "");
 			images[i].style.display = "block";
-			images[i].style.margin = "0 auto";
 			urls.push(images[i].src);
 		}
 	}
