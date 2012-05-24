@@ -1,6 +1,6 @@
 <?php
 
-abstract class Service {
+abstract class Plugin {
 	private $parameters;
 	private $views;
 
@@ -10,7 +10,7 @@ abstract class Service {
 	}
 
 	/**
-	 * Load parameters into the service from the given JSON string.
+	 * Load parameters into the plugin from the given JSON string.
 	**/
 	public function loadParameters($params) {
 		//$params = json_decode($json);
@@ -23,7 +23,7 @@ abstract class Service {
 	}
 
 	/**
-	 * Returns a list of the required parameters for the service.
+	 * Returns a list of the required parameters for the plugin.
 	**/
 	public function getParameters() {
 		$this->specifyParameters();

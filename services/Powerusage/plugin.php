@@ -1,8 +1,8 @@
 <?php
-//Include the base class for services.
-include_once("Service.php");
+//Include the base class for plugins.
+include_once("Plugin.php");
 
-class Powerusage extends Service {
+class Powerusage extends Plugin {
 	/**
 	 * This is where the required parameters are specified with calls to
 	 * createParameter.
@@ -17,7 +17,7 @@ class Powerusage extends Service {
 	public function getViews() {
 		$time = $this->readParameter("time");
 		$html = '<div id="disp" style="text-align:center; font-size:5em; margin: 100px auto;"></div>';
-		$js = "../services/Powerusage/power.js";
+		$js = "../plugins/Powerusage/power.js";
 		
 		$title = "Power usage";
 		

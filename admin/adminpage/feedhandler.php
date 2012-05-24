@@ -41,7 +41,7 @@
 		unlink("../../feeds/$name");
 	}
 	else if($p == "type"){
-		$dir = "../../services/";
+		$dir = "../../plugins/";
 		if($handle = opendir("$dir")){
 			$data = array();
 			while(false !== ($entry = readdir($handle))){

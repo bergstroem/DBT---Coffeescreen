@@ -196,8 +196,8 @@ function getTypeParameters(json){
 	
 	$.ajax({
 		type: "GET",
-		url: "../../services/Api.php",
-		data: "getParameters&service="+sel,
+		url: "../../plugins/Api.php",
+		data: "getParameters&plugin="+sel,
 		success: function(msg){
 			var jsonobj = jQuery.parseJSON(msg);
 			for(row in jsonobj){
