@@ -13,15 +13,15 @@ $.ajax({
 
 function draw(power){
 	var maxval = 9000;
-	var thickness = 20;
+	var thickness = 20;	
 	var rotval = (power/maxval+1)%2;
 	var c = document.getElementById("gauge");
 	var ctx = c.getContext("2d");
 	
-	ctx.font = "10pt Calibri";
+	ctx.font = "15pt Calibri";
 	ctx.fillStyle = "white";
-	ctx.fillText("0W", 100, 150);
-	ctx.fillText(maxval+"W", 50, 150);
+	ctx.fillText("0W", 10, 125);
+	ctx.fillText(maxval+"W", 200, 125);
 	
 	/* Background part */
 	ctx.beginPath();
