@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	console.log("haihai");
-	google.load('visualization', '1.0', {packages:['corechart']});
-	google.setOnLoadCallback(drawChart);	
+	google.load('visualization', '1.0', {packages:['gauge'], "callback": drawChart()});
 });
 
 function drawChart() {
