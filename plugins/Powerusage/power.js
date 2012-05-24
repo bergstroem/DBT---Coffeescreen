@@ -1,5 +1,5 @@
-google.load('visualization', '1', {packages:['gauge']});
 google.setOnLoadCallback(drawChart);
+google.load('visualization', '1', {packages:['gauge']});
 
 function drawChart() {
 	console.log("baibai");
