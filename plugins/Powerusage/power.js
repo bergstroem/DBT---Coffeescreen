@@ -1,3 +1,4 @@
+console.log("haihai");
 google.setOnLoadCallback(drawChart);
 google.load('visualization', '1', {packages:['gauge']});
 
