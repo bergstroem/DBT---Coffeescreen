@@ -16,55 +16,35 @@ function draw(power){
 	var c = document.getElementById("gauge");
 	var ctx = c.getContext("2d");
 	
+	/* Background part */
 	ctx.beginPath();
 	ctx.arc(150,150,100,1*Math.PI,0*Math.PI);
 	ctx.lineWidth = 15;
 	ctx.strokeStyle = "gray";
 	ctx.stroke();
 	
-	if(power > 7200){
-		/* Green part */
-		ctx.beginPath();
-		ctx.arc(150,150,100,1*Math.PI,1.5*Math.PI);
-		ctx.lineWidth = 15;
-		ctx.strokeStyle = "green";
-		ctx.stroke();
-		
-		/* Yellow part */
-		ctx.beginPath();
-		ctx.arc(150,150,100,1.5*Math.PI,1.8*Math.PI);
-		ctx.lineWidth = 15;
-		ctx.strokeStyle = "yellow";
-		ctx.stroke();
-		
-		/* Red part */
-		ctx.beginPath();
-		ctx.arc(150,150,100,1.8*Math.PI,rotval*Math.PI);
-		ctx.lineWidth = 15;
-		ctx.strokeStyle = "red";
-		ctx.stroke();
-	}
-	else if(power > 4500){
-		/* Green part */
-		ctx.beginPath();
-		ctx.arc(150,150,100,1*Math.PI,1.5*Math.PI);
-		ctx.lineWidth = 15;
-		ctx.strokeStyle = "green";
-		ctx.stroke();
-		
+	/* Green part */
+	ctx.beginPath();
+	ctx.arc(150,150,100,1*Math.PI,rotval*Math.PI);
+	ctx.lineWidth = 15;
+	ctx.strokeStyle = "green";
+	ctx.stroke();
+	
+	if(rotval > 1.5 || rotval == 0){
 		/* Yellow part */
 		ctx.beginPath();
 		ctx.arc(150,150,100,1.5*Math.PI,rotval*Math.PI);
 		ctx.lineWidth = 15;
 		ctx.strokeStyle = "yellow";
 		ctx.stroke();
-	}
-	else{
-		/* Green part */
+		
+		if(rotval > 1.8 || rotval == 0){
+			/* Red part */
 		ctx.beginPath();
-		ctx.arc(150,150,100,1*Math.PI,rotval*Math.PI);
+		ctx.arc(150,150,100,1.8*Math.PI,rotval*Math.PI);
 		ctx.lineWidth = 15;
-		ctx.strokeStyle = "green";
+		ctx.strokeStyle = "red";
 		ctx.stroke();
+		}
 	}
 }
