@@ -119,6 +119,7 @@ function mainPostLoaded() {
 	displaytime = parseFloat(displaytime)*1000;
 
 	var totalTime = 50;
+	var delay = 4000;
 
 	if(displaytime==0){
 		//Calculate time to display the view
@@ -136,6 +137,10 @@ function mainPostLoaded() {
 			}
 			break;
 		}
+
+		if(delay <= 0)
+			delay = 4000;
+
 	}
 	else{
 		//Setup progress bar variables
@@ -152,12 +157,12 @@ function mainPostLoaded() {
 	document.getElementById("pageWrapper").scrollLeft = 0;
 	document.getElementById('progressBar').style.width = 0;
 	clearTimeout(mainContentProgressTimeout);
-	stepContent(totalTime);
+	stepContent(totalTime, delay);
 }
 
 //One scrolling jump
-function stepContent(totalTime) {
-	var delay = 4000;
+function stepContent(totalTime, delay) {
+	//var delay = 4000;
 	var totalElapsedTime = new Date().getTime() - startTime;
 	
 	var progress = totalElapsedTime/(totalTime + 3*delay);
@@ -181,7 +186,7 @@ function stepContent(totalTime) {
 	}
 	
 	if(progress < 1 || paused) {
-		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime);
+		mainContentProgressTimeout = setTimeout(stepContent, 1000/30, totalTime, delay);
 	} else {
 		switchMainInformation();
 	}
