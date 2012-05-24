@@ -6,7 +6,7 @@ $.ajax({
 		var power = parseFloat(msg);
 		
 		draw(power);
-		document.getElementById('disp').appendChild(document.createTextNode(power + 'W'))
+		document.getElementById('powertext').appendChild(document.createTextNode(power + 'W'))
 	}
 });
 
