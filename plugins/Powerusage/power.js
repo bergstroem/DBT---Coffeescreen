@@ -1,4 +1,5 @@
 console.log("hai");
+var disp = document.getElementById("disp");
 
 $.ajax({
 	type: 'POST',
@@ -7,7 +8,8 @@ $.ajax({
 	success: function(msg){
 		console.log("bai");
 		var val = parseFloat(msg);
-		var disp = document.getElementById("disp");
+		
+		
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallBack(drawChart);
 		function drawChart(){
@@ -22,10 +24,10 @@ $.ajax({
 				minorTicks:5
 			};
 			
-			var chart = new google.visualization.Gauge(document.getElementById('disp'));
+			var chart = new google.visualization.Gauge(disp);
 			chart.draw(data, options);
 		}
-		//document.getElementById('disp').appendChild(document.createTextNode(val + 'W'))
+		disp.appendChild(document.createTextNode(val + 'W'))
 	}
 });
 
