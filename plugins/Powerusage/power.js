@@ -1,13 +1,10 @@
-console.log("haihai");
-console.log(google);
-google.setOnLoadCallback(drawChart);
-google.load('visualization', '1', {packages:['gauge']});
-console.log(google);
-
-setTimeout(function(){drawChart();},1000); 
+$(document).ready(function(){
+	console.log("haihai");
+	google.load('visualization', '1.0', {packages:['gauge'], "callback": drawChart()});
+});
 
 function drawChart() {
-	console.log("baibai");
+	console.log("derp");
 	var data = google.visualization.arrayToDataTable([
 		['Label', 'Value'],
 		['Memory', 80],
