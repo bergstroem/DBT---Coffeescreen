@@ -18,7 +18,7 @@ function draw(power){
 	var c = document.getElementById("gauge");
 	var ctx = c.getContext("2d");
 	
-	ctx.font = "1em Calibri";
+	ctx.font = "10pt Calibri";
 	ctx.fillText("0W", 200, 150);
 	ctx.fillText(maxval+"W", 50, 150);
 	
@@ -31,7 +31,7 @@ function draw(power){
 	
 	/* Green part */
 	ctx.beginPath();
-	ctx.arc(100,100,100,1*Math.PI,rotval*Math.PI);
+	ctx.arc(100,150,100,1*Math.PI,rotval*Math.PI);
 	ctx.lineWidth = thickness;
 	ctx.strokeStyle = "green";
 	ctx.stroke();
