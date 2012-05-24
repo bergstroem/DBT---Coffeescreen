@@ -16,7 +16,7 @@ class Powerusage extends Plugin {
 	**/
 	public function getViews() {
 		$time = $this->readParameter("time");
-		$html = '<canvas id="gauge"></canvas><div id="powertext"></div>';
+		$html = '<div id="powercontainer"><canvas id="gauge"></canvas><div id="powertext"></div></div>';
 		$js = "../plugins/Powerusage/power.js";
 		$css = "../plugins/Powerusage/power.css";
 		
