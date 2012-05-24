@@ -1,10 +1,11 @@
-
+console.log("hai");
 
 $.ajax({
 	type: 'POST',
 	url: '../plugins/Powerusage/powerusage.php',
 	data: '',
 	success: function(msg){
+		console.log("bai");
 		var val = parseFloat(msg);
 		var disp = document.getElementById("disp");
 		google.load('visualization', '1', {packages:['gauge']});
