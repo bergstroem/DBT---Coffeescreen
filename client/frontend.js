@@ -36,9 +36,10 @@ function switchMainInformation(direction) {
 
 	//Här byts channel
 	console.log("Switching...");
-	var js = document.getElementById("jsfile");
+	var js;
 	var css = document.getElementById("cssfile");
-	if(js != null)
+	
+	while((js = document.getElementById("jsfile")) != null)
 		document.getElementsByTagName("head")[0].removeChild(js);
 	if(css != null)
 		document.getElementsByTagName("head")[0].removeChild(css);
@@ -74,8 +75,6 @@ function switchMainInformation(direction) {
 	
 	if(contentjs != ""){
 		var js;
-		console.log(typeof(contentjs) + " add");
-		console.log(contentjs);
 		if(typeof(contentjs) == "string"){
 			js = document.createElement("script");
 			js.setAttribute("id", "jsfile");
@@ -86,7 +85,6 @@ function switchMainInformation(direction) {
 		else{
 			js = new Array();
 			for(var i = 0; i < contentjs.length; i++){
-				console.log(contentjs[i]);
 				var scr = document.createElement("script");
 				scr.setAttribute("id", "jsfile");
 				scr.setAttribute("type", "text/javascript");
