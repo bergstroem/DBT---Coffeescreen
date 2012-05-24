@@ -24,14 +24,14 @@ function draw(power){
 	
 	/* Background part */
 	ctx.beginPath();
-	ctx.arc(100,150,100,1*Math.PI,0*Math.PI);
+	ctx.arc(110,150,100,1*Math.PI,0*Math.PI);
 	ctx.lineWidth = thickness;
 	ctx.strokeStyle = "gray";
 	ctx.stroke();
 	
 	/* Green part */
 	ctx.beginPath();
-	ctx.arc(100,150,100,1*Math.PI,rotval*Math.PI);
+	ctx.arc(110,150,100,1*Math.PI,rotval*Math.PI);
 	ctx.lineWidth = thickness;
 	ctx.strokeStyle = "green";
 	ctx.stroke();
@@ -39,7 +39,7 @@ function draw(power){
 	if(rotval > 1.5 || rotval == 0){
 		/* Yellow part */
 		ctx.beginPath();
-		ctx.arc(100,150,100,1.5*Math.PI,rotval*Math.PI);
+		ctx.arc(110,150,100,1.5*Math.PI,rotval*Math.PI);
 		ctx.lineWidth = thickness;
 		ctx.strokeStyle = "yellow";
 		ctx.stroke();
@@ -47,7 +47,7 @@ function draw(power){
 		if(rotval > 1.8 || rotval == 0){
 			/* Red part */
 		ctx.beginPath();
-		ctx.arc(100,150,100,1.8*Math.PI,rotval*Math.PI);
+		ctx.arc(110,150,100,1.8*Math.PI,rotval*Math.PI);
 		ctx.lineWidth = thickness;
 		ctx.strokeStyle = "red";
 		ctx.stroke();
