@@ -49,7 +49,7 @@ class RSS extends Plugin {
 			$source = ($item->get_link())? $item->get_link(): $feedSource;
 
 			$time = strtotime($item->get_date());
-			$content = $item->get_content();
+			$content = preg_replace("/<a[^>]*>(.*)<\/a>/iU", "$1", $item->get_content());
 
 			//Generate a HTML string
 			$html = "<h1>".$title."</h1>";
