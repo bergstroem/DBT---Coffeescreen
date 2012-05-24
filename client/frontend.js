@@ -70,12 +70,12 @@ function switchMainInformation() {
 		}
 		else{
 			js = new Array();
-			for(script in contentjs){
-				console.log(script);
+			for(var i = 0; i < contentjs.length; i++){
+				console.log(contentjs[i]);
 				var scr = document.createElement("script");
 				scr.setAttribute("id", "jsfile");
 				scr.setAttribute("type", "text/javascript");
-				scr.setAttribute("src", script);
+				scr.setAttribute("src", contentjs[i]);
 				document.getElementsByTagName("head")[0].appendChild(scr);
 				js.push(scr);
 			}
