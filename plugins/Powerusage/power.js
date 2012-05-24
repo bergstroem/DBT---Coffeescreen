@@ -1,38 +1,27 @@
-$(document).ready(function(){
-	console.log("haihai");
-	google.load('visualization', '1.0', {packages:['gauge'], "callback": drawChart()});
-});
+var c = document.getElementById("gauge");
+var ctx = c.getContext("2d");
+ctx.beginPath();
+ctx.arc(100,75,50,0*Math.PI,1.5*Math.PI);
+ctx.stroke();
 
-function drawChart() {
-	console.log("derp");
-	var data = google.visualization.arrayToDataTable([
-		['Label', 'Value'],
-		['Memory', 80],
-		['CPU', 55],
-		['Network', 68]
-	]);
-
-	var options = {
-		width: 400, height: 120,
-		redFrom: 90, redTo: 100,
-		yellowFrom:75, yellowTo: 90,
-		minorTicks: 5	
-	};
-
-	var chart = new google.visualization.Gauge(document.getElementById('disp'));
-	chart.draw(data, options);
-}
-/*
 $.ajax({
 	type: 'POST',
 	url: '../plugins/Powerusage/powerusage.php',
 	data: '',
 	success: function(msg){
 		var val = parseFloat(msg);
+		var rotval = 180*val/9000;
 		
 		disp.appendChild(document.createTextNode(val + 'W'))
 		drawChart();
+		var c = document.getElementById("gauge");
+		var ctx = c.getContext("2d");
+		ctx.beginPath();
+		ctx.arc(150,150,100,1*Math.PI,rotval*Math.PI);
+		ctx.lineWidth = 15;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
 	}
-});*/
+});
 
 
