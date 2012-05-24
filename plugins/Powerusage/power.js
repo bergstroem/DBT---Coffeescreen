@@ -12,21 +12,27 @@ $.ajax({
 
 
 function draw(power){
-	var rotval = (power/9000+1)%2;
+	var maxval = 9000;
+	var thickness = 20;
+	var rotval = (power/maxval+1)%2;
 	var c = document.getElementById("gauge");
 	var ctx = c.getContext("2d");
+	
+	context.font = "1em Calibri";
+	context.fillText("0W", 200, 100);
+	context.fillText(maxval+"W", 50, 100);
 	
 	/* Background part */
 	ctx.beginPath();
 	ctx.arc(150,150,100,1*Math.PI,0*Math.PI);
-	ctx.lineWidth = 15;
+	ctx.lineWidth = thickness;
 	ctx.strokeStyle = "gray";
 	ctx.stroke();
 	
 	/* Green part */
 	ctx.beginPath();
 	ctx.arc(150,150,100,1*Math.PI,rotval*Math.PI);
-	ctx.lineWidth = 15;
+	ctx.lineWidth = thickness;
 	ctx.strokeStyle = "green";
 	ctx.stroke();
 	
@@ -34,7 +40,7 @@ function draw(power){
 		/* Yellow part */
 		ctx.beginPath();
 		ctx.arc(150,150,100,1.5*Math.PI,rotval*Math.PI);
-		ctx.lineWidth = 15;
+		ctx.lineWidth = thickness;
 		ctx.strokeStyle = "yellow";
 		ctx.stroke();
 		
@@ -42,7 +48,7 @@ function draw(power){
 			/* Red part */
 		ctx.beginPath();
 		ctx.arc(150,150,100,1.8*Math.PI,rotval*Math.PI);
-		ctx.lineWidth = 15;
+		ctx.lineWidth = thickness;
 		ctx.strokeStyle = "red";
 		ctx.stroke();
 		}
