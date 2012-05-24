@@ -1,4 +1,3 @@
-console.log("hai");
 var disp = document.getElementById("disp");
 
 $.ajax({
@@ -6,10 +5,8 @@ $.ajax({
 	url: '../plugins/Powerusage/powerusage.php',
 	data: '',
 	success: function(msg){
-		console.log("bai");
 		var val = parseFloat(msg);
-		
-		
+		/*
 		google.load('visualization', '1', {packages:['gauge']});
 		google.setOnLoadCallBack(drawChart);
 		function drawChart(){
@@ -26,7 +23,7 @@ $.ajax({
 			
 			var chart = new google.visualization.Gauge(disp);
 			chart.draw(data, options);
-		}
+		}*/
 		disp.appendChild(document.createTextNode(val + 'W'))
 	}
 });
