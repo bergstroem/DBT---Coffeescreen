@@ -1,6 +1,4 @@
-var disp = document.getElementById("disp");
-google.load('visualization', '1', {packages:['gauge']});
-google.setOnLoadCallBack(drawChart);
+
 
 $.ajax({
 	type: 'POST',
@@ -8,7 +6,10 @@ $.ajax({
 	data: '',
 	success: function(msg){
 		var val = parseFloat(msg);
-		document.getElementById('disp').appendChild(document.createTextNode(val + 'W'))
+		var disp = document.getElementById("disp");
+		google.load('visualization', '1', {packages:['gauge']});
+		google.setOnLoadCallBack(drawChart);
+		//document.getElementById('disp').appendChild(document.createTextNode(val + 'W'))
 	}
 });
 
