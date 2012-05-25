@@ -11,6 +11,8 @@
 		$fh = fopen("../../channels/Panic.json", "r");
 		if($fh != FALSE && $name != "Panic"){
 			$panic = fread($fh, filesize("../../channels/Panic.json"));
+			$panic = json_encode($panic);
+			$panic = json_decode($panic);
 		}
 		fclose($fh);
 		
