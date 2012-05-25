@@ -5,9 +5,16 @@
 		$note = $_POST['note'];
 		$static = $_POST['static'];
 		$maincontent = $_POST['maincontent'];
-		$subcontent = $_POST['subcontent'];
+		//$subcontent = $_POST['subcontent'];
+		$panic = "";
 		
-		$data = array('name' => $name ,'static' => $static, 'note' => $note, 'maincontent' => $maincontent, 'subcontent' => $subcontent);
+		$fh = fopen("../../channels/panic.json", "r");
+		if($fh != FALSE && strtolower($name) != "panic"){
+			$panic = fread($fh, filesize("../../channels/panic.json"));
+		}
+		fclose($fh);
+		
+		$data = array('name' => $name ,'static' => $static, 'note' => $note, 'maincontent' => $maincontent, 'panic' => $panic);
 		$jsondata = json_encode($data);
 		echo $jsondata;
 		

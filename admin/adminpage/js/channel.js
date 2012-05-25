@@ -128,8 +128,7 @@ function saveChannel(){
 			mainContent += children[i].getAttribute('data') + ",";
 		}
 		mainContent = mainContent.substr(0,mainContent.length-1);
-		
-		var panic = "";
+
 		var url = document.URL;
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
@@ -160,7 +159,7 @@ function saveChannel(){
 								$.ajax({
 									type: "POST",
 									url: "channelhandler.php",
-									data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&panic="+panic,
+									data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent,
 									success: function(msg){
 										window.location = "adminchannel.php";
 									}
@@ -171,7 +170,7 @@ function saveChannel(){
 						$.ajax({
 							type: "POST",
 							url: "channelhandler.php",
-							data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&panic="+panic,
+							data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent,
 							success: function(msg){
 								window.location = "adminchannel.php";
 							}
@@ -183,7 +182,7 @@ function saveChannel(){
 			$.ajax({
 				type: "POST",
 				url: "channelhandler.php",
-				data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent+"&panic="+panic,
+				data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent,
 				success: function(msg){
 					window.location = "adminchannel.php";
 				}
@@ -323,13 +322,15 @@ function listChannels(){
 				td.appendChild(document.createTextNode(note));
 				tr.appendChild(td);
 				
-				td = document.createElement("td");
-				button = document.createElement("input");
-				button.type = "button";
-				button.id = jsonitem["name"] + ".json";
-				button.value = "Delete";
-				button.className = "itemButton redbutton";
-				td.appendChild(button);
+				if(jsonitem["name"].toLowerCase() != "panic"){
+					td = document.createElement("td");
+					button = document.createElement("input");
+					button.type = "button";
+					button.id = jsonitem["name"] + ".json";
+					button.value = "Delete";
+					button.className = "itemButton redbutton";
+					td.appendChild(button);
+				}
 				
 				button = document.createElement("input");
 				button.type = "button";

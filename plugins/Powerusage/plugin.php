@@ -16,13 +16,13 @@ class Powerusage extends Plugin {
 	**/
 	public function getViews() {
 		$time = $this->readParameter("time");
-		$html = '<div id="disp" style="text-align:center; font-size:5em; margin: 100px auto;"></div>';
-		//$js = "../plugins/Powerusage/power.js";
-		$js = array("https://www.google.com/jsapi", "../plugins/Powerusage/power.js");
+		$html = '<div id="powercontainer"><div id="gaugewrap"><canvas id="gauge" width="220" height="150"></canvas></div><div id="powertext"></div><div id="wisdom"></div></div>';
+		$js = "../plugins/Powerusage/power.js";
+		$css = "../plugins/Powerusage/power.css";
 		
 		$title = "Power usage";
 		
-		$this->bundleView($title, time(), $html, "", $js);
+		$this->bundleView($title, time(), $html, $css, $js);
 	}
 }
 
