@@ -8,8 +8,8 @@
 		//$subcontent = $_POST['subcontent'];
 		$panic = "";
 		
-		$fh = fopen("../../channels/panic.json", "r");
-		if($fh != FALSE && strtolower($name) != "panic"){
+		$fh = fopen("../../channels/Panic.json", "r");
+		if($fh != FALSE && $name != "Panic"){
 			$panic = fread($fh, filesize("../../channels/panic.json"));
 		}
 		fclose($fh);
