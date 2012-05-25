@@ -32,12 +32,12 @@ function Channel(name, note, mainContent, panic, staticText) {
 		    var mainFeed = results[0];
 		    var panicContent = results[1];
 			
-			this.panic.mainContent = panicContent;
+			panic.mainContent = panicContent;
 			
 			console.log("Fetched " + mainFeed);
 		    
 		    var feed = '{'
-			+ '"name":"' + this.name + '","static":"' + this.staticText + '","maincontent":' + mainFeed + ',"panic":' + this.panic + "}";
+			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"panic":' + panic + "}";
 			
 		    connection.send(feed);
 		});
