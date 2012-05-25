@@ -24,18 +24,20 @@ function Channel(name, note, mainContent, panic, staticText) {
 				fetchContent(mainContent, callback);
 		    },
 		    function(callback){
-				fetchContent(panic, callback);
+				fetchContent(this.panic.mainContent, callback);
 		    },
 		],
 		//Callback after both above functions are done.
 		function(err, results){
 		    var mainFeed = results[0];
-		    var panic = results[1];
+		    var panicContent = results[1];
+			
+			this.panic.mainContent = panicContent;
 			
 			console.log("Fetched " + mainFeed);
 		    
 		    var feed = '{'
-			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"panic":' + panic + "}";
+			+ '"name":"' + this.name + '","static":"' + this.staticText + '","maincontent":' + mainFeed + ',"panic":' + this.panic + "}";
 			
 		    connection.send(feed);
 		});
@@ -79,10 +81,12 @@ this.prepareChannelFileForDelivery = function(connection, channel) {
 	var name = jsonObject.name;
 	var note = jsonObject.note;
 	var mainContent = jsonObject.maincontent;
-	var panic = jsonObject.subcontent;
+	var panic = jsonObject.panic;
 	var staticText = jsonObject.static;
 	
-	var channel = new Channel(name, note, mainContent, panic, staticText);
+	var panicChannel = new Channel(panic.name, panic.note, panic.mainContent, "", panic.static);
+	
+	var channel = new Channel(name, note, mainContent, panicChannel, staticText);
 	
 	var feed = channel.sendJson(connection);
 	
