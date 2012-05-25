@@ -57,7 +57,7 @@ function fetchContent(content, callback) {
 		
 		var result = "";
 		
-		var req = http.get(options, function(res) {  
+		var req = http.get(options, function(res) {
 		 	res.setEncoding('utf8');
 		 	
 			res.on('data', function(chunk) {
