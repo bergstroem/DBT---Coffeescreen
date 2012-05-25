@@ -24,7 +24,7 @@ function Channel(name, note, mainContent, panic, staticText) {
 				fetchContent(mainContent, callback);
 		    },
 		    function(callback){
-				fetchContent(this.panic.mainContent, callback);
+				fetchContent(panic.mainContent, callback);
 		    },
 		],
 		//Callback after both above functions are done.
