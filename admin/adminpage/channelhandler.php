@@ -11,12 +11,12 @@
 		$fh = fopen("../../channels/Panic.json", "r");
 		if($fh != FALSE && $name != "Panic"){
 			$panic = fread($fh, filesize("../../channels/Panic.json"));
+			$panic = json_decode($panic);
 		}
 		fclose($fh);
 		
 		$data = array('name' => $name ,'static' => $static, 'note' => $note, 'maincontent' => $maincontent, 'panic' => $panic);
 		$jsondata = json_encode($data);
-		echo $jsondata;
 		
 		$fh = fopen("../../channels/$name.json", "w");
 		fwrite($fh, $jsondata);
