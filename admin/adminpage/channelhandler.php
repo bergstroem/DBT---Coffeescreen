@@ -9,7 +9,7 @@
 		$panic = "";
 		
 		$fh = fopen("../../channels/panic.json", "r");
-		if($fh != FALSE){
+		if($fh != FALSE && strtolower($name) != "panic"){
 			$panic = fread($fh, filesize("../../channels/panic.json"));
 		}
 		fclose($fh);

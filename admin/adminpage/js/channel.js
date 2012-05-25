@@ -322,13 +322,15 @@ function listChannels(){
 				td.appendChild(document.createTextNode(note));
 				tr.appendChild(td);
 				
-				td = document.createElement("td");
-				button = document.createElement("input");
-				button.type = "button";
-				button.id = jsonitem["name"] + ".json";
-				button.value = "Delete";
-				button.className = "itemButton redbutton";
-				td.appendChild(button);
+				if(jsonitem["name"].toLowerCase() != "panic"){
+					td = document.createElement("td");
+					button = document.createElement("input");
+					button.type = "button";
+					button.id = jsonitem["name"] + ".json";
+					button.value = "Delete";
+					button.className = "itemButton redbutton";
+					td.appendChild(button);
+				}
 				
 				button = document.createElement("input");
 				button.type = "button";
