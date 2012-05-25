@@ -84,7 +84,7 @@ this.prepareChannelFileForDelivery = function(connection, channel) {
 	var panic = jsonObject.panic;
 	var staticText = jsonObject.static;
 	
-	var panicChannel = new Channel(panic.name, panic.note, panic.mainContent, "", panic.static);
+	var panicChannel = new Channel(panic.name, panic.note, panic.maincontent, "", panic.static);
 	
 	var channel = new Channel(name, note, mainContent, panicChannel, staticText);
 	
