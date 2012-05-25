@@ -10,7 +10,7 @@
 		
 		$fh = fopen("../../channels/Panic.json", "r");
 		if($fh != FALSE && $name != "Panic"){
-			$panic = fread($fh, filesize("../../channels/panic.json"));
+			$panic = fread($fh, filesize("../../channels/Panic.json"));
 		}
 		fclose($fh);
 		
