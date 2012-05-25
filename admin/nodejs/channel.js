@@ -35,8 +35,6 @@ function Channel(name, note, mainContent, panic, staticText) {
 		    var panicContent = results[1];
 			
 			panic.mainContent = panicContent;
-			
-			console.log("Fetched " + mainFeed);
 		    
 		    var feed = '{'
 			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"panic":' + JSON.stringify(panic) + "}";
