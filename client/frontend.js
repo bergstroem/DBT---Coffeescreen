@@ -1,9 +1,11 @@
 var retries = 0;
+var informationRoot = null;
 var futureInformation = null;
 var currentInformation = null;
 var mainContentCounter = -1;
 var mainContentProgressTimeout = null;
 var staticText = null;
+var isPanic = false;
 
 var connection;
 
@@ -378,11 +380,15 @@ function connectToServer () {
     connection.onmessage = function (message) {
     
     	if(message.data == "Panic"){
-    		console.log("TODO: I should go to panic now");
+    		console.log("I should go to panic now");
+			isPanic = true;
+			currentInformation = informationRoot.panic;
     		return;
     	}
     	else if(message.data == "Unpanic"){
-    		console.log("TODO: I should go to unpanic now");
+    		console.log("I should go to unpanic now");
+			isPanic = false;
+			currentInformation = informationRoot;
     		return;
     	}
         // try to decode json (I assume that each messagse from server is json)
@@ -392,7 +398,11 @@ function connectToServer () {
             var json = JSON.parse(message.data);
 
             if(currentInformation == null || json.name != channel) {
-				currentInformation = json;
+				informationRoot = json;
+				if(isPanic == true)
+					currentInformation = json.panic;
+				else 
+					currentInformation = json;
 				mainContentCounter = -1;
 				futureInformation = null;
             

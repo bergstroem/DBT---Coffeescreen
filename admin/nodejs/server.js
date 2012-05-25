@@ -26,31 +26,20 @@ function Screen(id, name, channel, connection) {
 	}
 	
 	this.sendChannel = function() {
-		if(isPanicMode) {
-			console.log("Panic mode. Only send panic channel");
-			fs.readFile(__dirname + "/../../channels/panic.json", 'utf8', function(err, data) {
-				if(err) {
-					connection.send("No data available");
-				}
-				else ch.prepareChannelFileForDelivery(connection, data);
-			});
-		}
-		else {
-			fs.readFile(__dirname + "/../../channels/" + channel + ".json", 'utf8', function (err, data) {
-				if (err) {
-					console.log("Looking for default");
-					fs.readFile(__dirname + "/../../channels/default.json", 'utf8', function (err, data) {
-						if(err) {
-							//Send no data
-							connection.send("No data available");
-						}
-						else ch.prepareChannelFileForDelivery(connection, data);
-				
-					});
-				}
-				else ch.prepareChannelFileForDelivery(connection, data);
-			});
-		}
+		fs.readFile(__dirname + "/../../channels/" + channel + ".json", 'utf8', function (err, data) {
+			if (err) {
+				console.log("Looking for default");
+				fs.readFile(__dirname + "/../../channels/default.json", 'utf8', function (err, data) {
+					if(err) {
+						//Send no data
+						connection.send("No data available");
+					}
+					else ch.prepareChannelFileForDelivery(connection, data);
+			
+				});
+			}
+			else ch.prepareChannelFileForDelivery(connection, data);
+		});
 	}
 }
 
