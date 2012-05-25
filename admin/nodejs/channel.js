@@ -37,7 +37,7 @@ function Channel(name, note, mainContent, panic, staticText) {
 			console.log("Fetched " + mainFeed);
 		    
 		    var feed = '{'
-			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"panic":' + panic + "}";
+			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"panic":' + JSON.stringify(panic) + "}";
 			
 		    connection.send(feed);
 		});
