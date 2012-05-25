@@ -382,7 +382,7 @@ function connectToServer () {
     	if(message.data == "Panic"){
     		console.log("I should go to panic now");
 			isPanic = true;
-			currentInformation = informationRoot.panic;
+			currentInformation = JSON.parse(informationRoot.panic);
     		return;
     	}
     	else if(message.data == "Unpanic"){
@@ -399,8 +399,9 @@ function connectToServer () {
 
             if(currentInformation == null || json.name != channel) {
 				informationRoot = json;
+				console.log(informationRoot);
 				if(isPanic == true)
-					currentInformation = json.panic;
+					currentInformation = JSON.parse(json.panic);
 				else 
 					currentInformation = json;
 				mainContentCounter = -1;
