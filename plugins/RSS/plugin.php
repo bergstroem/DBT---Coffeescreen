@@ -49,14 +49,14 @@ class RSS extends Plugin {
 			$source = ($item->get_link())? $item->get_link(): $feedSource;
 
 			$time = strtotime($item->get_date());
-			$content = preg_replace("/<a[^>]*>(.*)<\/a>/iU", "$1", $item->get_content());
+			$content = $item->get_content();
 
 			//Generate a HTML string
 			$html = "<h1>".$title."</h1>";
 			$html .= "<p class='small-text'>".$feedTitle." ".date("j F Y H:i", $time)."</p>";
 			$html .= "<div style=\"overflow: auto; margin: 10px 0;\">$content</div>";
 			$html .= "<p class=\"small-text\" style=\"color:#999;\">Source: $source</p>";
-			$html .= "<img style=\"margin-left: 0;\" src=\"http://www.esponce.com/api/v3/generate?format=png&size=2&padding=1&background=66ffffff&foreground=ff000000&content=$source\" />";
+			$html .= "<img src=\"../plugins/RSS/QR.php?url=".urlencode($source)."\" />";
 			$this->bundleView($title, $time, $html);
 		}
 	}

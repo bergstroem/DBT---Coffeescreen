@@ -1,0 +1,102 @@
+2012-05-27 22:26:30: 
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/frame_1.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrspec.php on line 568
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_0/mask_21_0.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_1/mask_21_1.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_2/mask_21_2.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_3/mask_21_3.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_4/mask_21_4.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_5/mask_21_5.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_6/mask_21_6.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_7/mask_21_7.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+2012-05-27 22:28:08: 
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/frame_1.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrspec.php on line 568
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_0/mask_21_0.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_1/mask_21_1.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_2/mask_21_2.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_3/mask_21_3.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_4/mask_21_4.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_5/mask_21_5.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_6/mask_21_6.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_7/mask_21_7.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+2012-05-27 22:28:18: 
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/frame_1.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrspec.php on line 568
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_0/mask_21_0.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_1/mask_21_1.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_2/mask_21_2.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_3/mask_21_3.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_4/mask_21_4.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_5/mask_21_5.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_6/mask_21_6.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
+
+Warning: mkdir(): Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 154
+
+Warning: file_put_contents(/web/DBT---Coffeescreen/plugins/RSS/phpqrcode/cache/mask_7/mask_21_7.dat): failed to open stream: Permission denied in /web/DBT---Coffeescreen/plugins/RSS/phpqrcode/qrmask.php on line 155
