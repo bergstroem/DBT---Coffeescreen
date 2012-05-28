@@ -322,8 +322,8 @@ function listChannels(){
 				td.appendChild(document.createTextNode(note));
 				tr.appendChild(td);
 				
+				td = document.createElement("td");
 				if(jsonitem["name"].toLowerCase() != "panic"){
-					td = document.createElement("td");
 					button = document.createElement("input");
 					button.type = "button";
 					button.id = jsonitem["name"] + ".json";
