@@ -21,7 +21,7 @@ class TextMessage extends Plugin {
 		$title = $this->readParameter("title");
 		
 		//Generate a HTML string
-		$html = "<div style='margin: 0 auto'><h1>$title</h1><p>$text</p></div>";
+		$html = "<div style='text-align: center;'><h1>$title</h1><p>$text</p></div>";
 		
 		$this->bundleView($title, time(), $html);
 	}
