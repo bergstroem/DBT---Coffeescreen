@@ -1,11 +1,11 @@
 ﻿<?php
 	$p = $_POST['p'];
+	/* Save channel */
 	if($p == 1){
 		$name = $_POST['name'];
 		$note = $_POST['note'];
 		$static = $_POST['static'];
 		$maincontent = $_POST['maincontent'];
-		//$subcontent = $_POST['subcontent'];
 		$panic = "";
 		
 		$fh = fopen("../../channels/Panic.json", "r");
@@ -23,6 +23,7 @@
 
 		fclose($fh);
 	}
+	/* Edit channel */
 	else if($p == 2){
 		$name = $_POST['name'];
 		$name = "../../channels/$name";
@@ -31,10 +32,12 @@
 		fclose($fh);
 		echo $jsondata;
 	}
+	/* Delete channel */
 	else if($p == 3){
 		$name = $_POST['name'];
 		unlink("../../channels/$name");
 	}
+	/* Get all channels */
 	else if($p === "list"){
 		if($handle = opendir("../../channels/")){
 			$data = array();

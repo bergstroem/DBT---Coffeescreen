@@ -1,5 +1,6 @@
 ﻿<?php
 	$p = $_POST['p'];
+	/* Create new feed */
 	if($p == 1){
 		$data = array();
 		$data['name'] = $_POST['name'];
@@ -28,6 +29,7 @@
 
 		fclose($fh);
 	}
+	/* Edit feed */
 	else if($p == 2){
 		$name = $_POST['name'];
 		$name = "../../feeds/$name";
@@ -36,10 +38,12 @@
 		fclose($fh);
 		echo $jsondata;
 	}
+	/* Delete feed */
 	else if($p == 3){
 		$name = $_POST['name'];
 		unlink("../../feeds/$name");
 	}
+	/* Get plugin types */
 	else if($p == "type"){
 		$dir = "../../plugins/";
 		if($handle = opendir("$dir")){
@@ -55,6 +59,7 @@
 			closedir($handle);
 		}
 	}
+	/* Get all feeds */
 	else if($p == "list"){
 		if($handle = opendir("../../feeds/")){
 			$data = array();
