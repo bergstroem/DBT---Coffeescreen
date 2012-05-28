@@ -2,6 +2,7 @@
 //Include the base class for plugins.
 include_once("Plugin.php");
 
+//This is our custom plugin class
 class Powerusage extends Plugin {
 	/**
 	 * This is where the required parameters are specified with calls to
@@ -12,7 +13,7 @@ class Powerusage extends Plugin {
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled using bundleView and returned.
+	 * parameters. These must be bundeled using bundleView.
 	**/
 	public function getViews() {
 		$time = $this->readParameter("time");

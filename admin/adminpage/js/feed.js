@@ -15,12 +15,11 @@ $(document).ready(function(){
 	});
 	
 	$('#type').bind('change', function(e){
-		getTypeParameters();
+		getPluginParameters();
 	});
 });
 
 /*
- * saveFeed()
  * Used for saving a feed, will use the information in the form.
 */
 function saveFeed(){
@@ -49,6 +48,7 @@ function saveFeed(){
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
 		var oname = url.substr(9);
+		/* Will remove the old file if the feed get a new name */
 		if(p == "p=2"){
 			if(!(oname.substr(0,oname.indexOf(".")) == name))
 				$.ajax({
@@ -60,6 +60,7 @@ function saveFeed(){
 				});
 		}
 		
+		var datastr = "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode;
 		if(oname.substr(0,oname.length-5) != name){
 			$.ajax({
 				type: "POST",
@@ -75,7 +76,7 @@ function saveFeed(){
 								$.ajax({
 									type: "POST",
 									url: "feedhandler.php",
-									data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
+									data: datastr,
 									success: function(msg){
 										window.location = "adminfeed.php";
 									}
@@ -86,7 +87,7 @@ function saveFeed(){
 						$.ajax({
 							type: "POST",
 							url: "feedhandler.php",
-							data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
+							data: datastr,
 							success: function(msg){
 								window.location = "adminfeed.php";
 							}
@@ -98,7 +99,7 @@ function saveFeed(){
 			$.ajax({
 				type: "POST",
 				url: "feedhandler.php",
-				data: "p=1&name="+name+"&type="+type+poststr+"&note="+note+"&priority="+priority+"&displaytime="+displaytime+"&expiretime="+expiretime+"&timingmode="+timingmode,
+				data: datastr,
 				success: function(msg){
 					window.location = "adminfeed.php";
 				}
@@ -107,6 +108,11 @@ function saveFeed(){
 	}
 }
 
+/*
+ * Edit the feed.
+ * edit: True if the feed is going to be edited.
+ * name: name of the feed.
+ */
 function editFeed(edit, name){
 	if(edit){
 		$.ajax({
@@ -118,20 +124,17 @@ function editFeed(edit, name){
 				title.removeChild(title.lastChild);
 				title.appendChild(document.createTextNode("Edit feed"));
 				
-				console.log(msg);
 				var jsonobj = jQuery.parseJSON(msg);
-				console.log(jsonobj);
-				getFeedTypes(jsonobj);
+				getPlugins(jsonobj);
 			}
 		});
 	}
 	else{
-		getFeedTypes();
+		getPlugins();
 	}
 }
 
 /*
- * deleteFeed(name)
  * Will delete the feed with the given name.
  * name: Name of the feed that is going to be deleted.
 */
@@ -152,10 +155,12 @@ function deleteFeed(name){
 	}
 }
 
-
-function getFeedTypes(json){
+/*
+ * Get all plugintypes and fill them in the dropdownlist.
+ * json: The jsondata that is in the feedfile.
+ */
+function getPlugins(json){
 	var select = document.getElementById("type");
-	console.log(json);
 	$.ajax({
 		type: "POST",
 		url: "feedhandler.php",
@@ -168,25 +173,24 @@ function getFeedTypes(json){
 				temp.appendChild(document.createTextNode(arr[i]));
 				select.appendChild(temp);
 			}
-			getTypeParameters(json);
+			getPluginParameters(json);
 		}
 	});
 }
 
-/**
+/*
+ * Get the parameters required by the given plugin.
+ * The different parameter types supported.
  * Parametertypes:
  * ShortText = 0; (input text)
- * LongText = 1; (text area)
+ * LongText = 1; (textarea)
  * Number = 2; (input number)
  * Boolean = 3; (input checkbox)
  */
-function getTypeParameters(json){
+function getPluginParameters(json){
 	var table = document.getElementById("required").getElementsByTagName("tbody")[0];
 	var sel = (json == undefined) ? document.getElementById("type").value : json["type"];
 	document.getElementById("type").value = sel;
-	
-	console.log(json);
-	console.log(sel);
 	
 	if(table.getElementsByTagName("tr").length > 5){
 		for(var i = table.getElementsByTagName("tr").length-1; i >= 5; i--){
@@ -227,7 +231,7 @@ function getTypeParameters(json){
 
 						$('#'+row).watermark(item["tooltip"]);
 						break;
-					case 1: //LongText = 1; (text area)
+					case 1: //LongText = 1; (textarea)
 						input = document.createElement("textarea");	
 						input.id = row;
 						input.name = row;
@@ -278,7 +282,6 @@ function getTypeParameters(json){
 			}
 			if(json != undefined){
 				var keys = Object.keys(json);
-				console.log(json);
 				for(var i = 0; i < keys.length; i++){
 					var key = keys[i];
 					document.getElementsByName(key)[0].value = json[key];
@@ -288,6 +291,9 @@ function getTypeParameters(json){
 	});
 }
 
+/*
+ * Get and list all the available feeds.
+ */
 function listFeeds(){
 	var table = document.getElementById("listContent");
 	
