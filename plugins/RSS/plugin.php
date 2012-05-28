@@ -3,7 +3,7 @@
 include_once("Plugin.php");
 
 //Required for RSS
-include_once('simplepie.inc');
+include_once("simplepie.inc");
 
 //This is our custom plugin class
 class RSS extends Plugin {
@@ -19,9 +19,10 @@ class RSS extends Plugin {
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled using bundleView and returned.
+	 * parameters. These must be bundeled using bundleView.
 	**/
 	public function getViews() {
+		//make sure there is "http" at the beginning of the url
 		if(substr($this->readParameter("url"), 0, 4) == "http"){
 			$feedSource = $this->readParameter("url");
 		}
@@ -30,8 +31,11 @@ class RSS extends Plugin {
 		}
 		
 		$feedSourcesArray = array($feedSource);
-		$quantity = max(array($this->readParameter("quantity")), 0);
 		
+		//atleast one post
+		$quantity = max(array($this->readParameter("quantity")), 1);
+		
+		//connect with SimplePie
 		$feed = new SimplePie();
 		$feed->set_feed_url($feedSourcesArray);
 		$feed->init();
@@ -39,6 +43,7 @@ class RSS extends Plugin {
 		
 		$posts = array();
 		
+		//Extract data from every post and bundle it
 		for ($i = 0; $i < min($feed->get_item_quantity(), $quantity); $i++){
 			$item = $feed->get_item($i);
 
