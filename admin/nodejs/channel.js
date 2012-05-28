@@ -21,9 +21,11 @@ function Channel(name, note, mainContent, panic, staticText) {
 		//Get main and sub content at the same time
 		async.parallel([
 		    function(callback){
+				console.log("FETCHING: " + mainContent);
 				fetchContent(mainContent, callback);
 		    },
 		    function(callback){
+				console.log("FETCHING: " + panic.mainContent);
 				fetchContent(panic.mainContent, callback);
 		    },
 		],
@@ -33,8 +35,6 @@ function Channel(name, note, mainContent, panic, staticText) {
 		    var panicContent = results[1];
 			
 			panic.mainContent = panicContent;
-			
-			console.log("Fetched " + mainFeed);
 		    
 		    var feed = '{'
 			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"panic":' + JSON.stringify(panic) + "}";
@@ -57,7 +57,7 @@ function fetchContent(content, callback) {
 		
 		var result = "";
 		
-		var req = http.get(options, function(res) {  
+		var req = http.get(options, function(res) {
 		 	res.setEncoding('utf8');
 		 	
 			res.on('data', function(chunk) {
@@ -81,10 +81,10 @@ this.prepareChannelFileForDelivery = function(connection, channel) {
 	var name = jsonObject.name;
 	var note = jsonObject.note;
 	var mainContent = jsonObject.maincontent;
-	var panic = JSON.parse(jsonObject.panic);
+	var panic = jsonObject.panic;
 	var staticText = jsonObject.static;
 	
-	var panicChannel = new Channel(panic.name, panic.note, panic.mainContent, "", panic.static);
+	var panicChannel = new Channel(panic.name, panic.note, panic.maincontent, "", panic.static);
 	
 	var channel = new Channel(name, note, mainContent, panicChannel, staticText);
 	
