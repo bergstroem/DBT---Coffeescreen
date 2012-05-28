@@ -1,23 +1,33 @@
+//Number of connection retries
 var retries = 0;
+
+//Content storage
 var informationRoot = null;
 var futureInformation = null;
 var currentInformation = null;
+var staticText = null;
+
+//View switching variables
 var mainContentCounter = -1;
 var mainContentProgressTimeout = null;
-var staticText = null;
-var isPanic = false;
-
-var connection;
-
 var running = false;
 var startTime = 0;
 var paused = false;
 var pauseTime = 0;
 
+//Storage for the preloaded images (usable for canceling preload)
 var newimages = new Array();
 
+//Panic state
+var isPanic = false;
+
+//The connection object
+var connection;
+
+//The name of the current 
 var channel = "";
 
+//Setup init function
 window.onload = init;
 
 function init() {
@@ -50,8 +60,6 @@ function switchMainInformation(direction) {
 	var contentjs = currentInformation.maincontent.posts[mainContentCounter].js;
 	var contentcss = currentInformation.maincontent.posts[mainContentCounter].css;
 	
-	//document.getElementById("mainContent").innerHTML = content;
-	//GLÖM INTE, TA BORT MAIN PAGE EFTER ANIMERING
 	var mainPage = document.getElementById("mainContent");
 	mainPage.id = "";
 	var newPage = document.createElement("div");
@@ -146,6 +154,7 @@ function switchMainInformation(direction) {
 		connection.send('Refresh');
 	}
 }
+
 //Cross browser transitionend suppport!
 function whichTransitionEvent(){
     var t;
@@ -251,6 +260,7 @@ function stepContent(totalTime) {
 	}
 }
 
+//Ajust the with of the images in the view
 function adjustPostWidth() {
 	
 	//Get mainContent and its child images
@@ -313,7 +323,14 @@ function preloadimages(arr){
     }
 }
 
-//Do connecting stuff
+
+
+
+/**
+ * Do connecting stuff
+**/
+
+//Connect to the node.js server
 function connectToServer () {
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -465,8 +482,12 @@ function getQueryVariable(variable) {
 }
 
 
-//Physical button integration
 
+/**
+ * Physical button integration
+**/
+
+//Swithc to the next view
 function moveRight() {
 	if(mainContentCounter >= currentInformation.maincontent.posts.length && futureInformation != null) {
 		currentInformation = futureInformation;
@@ -478,6 +499,7 @@ function moveRight() {
 	}
 }
 
+//Swithch to the previous view
 function moveLeft() {
 	if(mainContentCounter > 0 && (Date.now()-startTime) < 1000 ) {
 		forceSwitch(-1);
@@ -486,16 +508,19 @@ function moveLeft() {
 	}
 }
 
+//Set pause mode
 function pause() {
 	pauseTime = Date.now();
 	paused = true;
 }
 
+//Remove pause mode
 function unPause() {
 	startTime += (Date.now() - pauseTime);
 	paused = false;
 }
 
+//Foreces the view to change in the given direcion
 function forceSwitch(direction) {
 		for(var i = newimages.length; i--;)
 			newimages[i].onload = function() {};
@@ -504,6 +529,7 @@ function forceSwitch(direction) {
 		switchMainInformation(direction);
 }
 
+//Returns the number of the pressed mouse button from event
 function getButton(event) {
 	var button = 0;
 	
@@ -519,6 +545,7 @@ function getButton(event) {
 	return button;
 }
 
+//Mouse button actions
 document.onmousedown = function(event) {
 	switch (getButton(event)) {
         case 1:
@@ -535,6 +562,7 @@ document.onmousedown = function(event) {
 	return false;
 };
 
+//Unpause when middle button is released
 document.onmouseup = function(event){
 	if(getButton(event) == 3)
 		unPause();
@@ -542,6 +570,7 @@ document.onmouseup = function(event){
 	return false;
 };
 
+//Block context menu
 document.oncontextmenu = function() {
 	return false;
 };
