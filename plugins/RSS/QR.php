@@ -2,7 +2,7 @@
 ini_set('display_errors',true); 
 error_reporting(-1);
 
-header('Content-Type: image/png');
+//header('Content-Type: image/png');
 
 include "phpqrcode/qrlib.php";
 
