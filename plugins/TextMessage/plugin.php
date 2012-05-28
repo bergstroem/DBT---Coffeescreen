@@ -8,20 +8,20 @@ class TextMessage extends Plugin {
 	 * createParameter.
 	**/
 	protected function specifyParameters() {
+		$this->createParameter("title", "Title", "The title for your message", Type::ShortText);
 		$this->createParameter("text", "Message", "The text you want to display", Type::LongText);
 	}
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled using bundleView and returned.
+	 * parameters. These must be bundeled using bundleView.
 	**/
 	public function getViews() {
 		$text = $this->readParameter("text");
+		$title = $this->readParameter("title");
 		
 		//Generate a HTML string
-		$html = "<p>$text</p>";
-		
-		$title = "Text message";
+		$html = "<h1>$title</h1><p>$text</p>";
 		
 		$this->bundleView($title, time(), $html);
 	}

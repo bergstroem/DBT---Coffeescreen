@@ -19,7 +19,7 @@ class TodayInHistory extends Plugin {
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled using bundleView and returned.
+	 * parameters. These must be bundeled using bundleView.
 	**/
 	public function getViews() {
 		$day = date("j");
