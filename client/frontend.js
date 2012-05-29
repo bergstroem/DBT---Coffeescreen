@@ -38,12 +38,17 @@ function init() {
 
 //Switch to next view
 function switchMainInformation(direction) {
+	//If maincontent is unparsed
+	if(typeof currentInformation.maincontent.posts == 'undefined') {
+		currentInformation.maincontent = JSON.parse(currentInformation.maincontent);
+	}
 
 	mainContentCounter += direction;
 	if(mainContentCounter >= currentInformation.maincontent.posts.length) {
 		mainContentCounter = 0;
 	}
 	console.log("direction: " +direction);
+	
 	
 	console.log(mainContentCounter + ", " + currentInformation.maincontent.posts.length);
 
@@ -416,14 +421,15 @@ function connectToServer () {
 
             if(currentInformation == null || json.name != channel) {
 				informationRoot = json;
-				console.log(informationRoot);
+				
 				if(isPanic == true)
-					currentInformation = JSON.parse(json.panic);
+					currentInformation = json.panic;
 				else 
 					currentInformation = json;
 				mainContentCounter = -1;
 				futureInformation = null;
-            
+				
+				
             	channel = json.name;
             	
             	//Force immediate change if panic feed
