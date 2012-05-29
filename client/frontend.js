@@ -405,12 +405,14 @@ function connectToServer () {
     		console.log("I should go to panic now");
 			isPanic = true;
 			currentInformation = informationRoot.panic;
+			forceSwitch(1);
     		return;
     	}
     	else if(message.data == "Unpanic"){
     		console.log("I should go to unpanic now");
 			isPanic = false;
 			currentInformation = informationRoot;
+			forceSwitch(1);
     		return;
     	}
         // try to decode json (I assume that each messagse from server is json)
