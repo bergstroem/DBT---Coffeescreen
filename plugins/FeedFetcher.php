@@ -53,7 +53,6 @@
 		$result = null;
 	}
 	else {
-		echo "Duplicating";
 		$result = duplicate(merge_sort($result));
 	}
 	
