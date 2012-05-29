@@ -21,11 +21,9 @@ function Channel(name, note, mainContent, panic, staticText) {
 		//Get main and sub content at the same time
 		async.parallel([
 		    function(callback){
-				console.log("FETCHING: " + mainContent);
 				fetchContent(mainContent, callback);
 		    },
 		    function(callback){
-				console.log("FETCHING: " + panic.mainContent);
 				fetchContent(panic.mainContent, callback);
 		    },
 		],
@@ -35,7 +33,8 @@ function Channel(name, note, mainContent, panic, staticText) {
 		    var panicContent = results[1];
 			
 			panic.mainContent = panicContent;
-		    
+		    console.log("FETCHED 1: " + mainFeed);
+		    console.log("FETCHED 2: " + panicContent);
 		    var feed = '{'
 			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"panic":' + JSON.stringify(panic) + "}";
 			

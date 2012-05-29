@@ -1,4 +1,7 @@
 <?php
+	ini_set('display_errors',1); 
+	error_reporting(-1);
+
 	if($handle = opendir(".")){
 		$plugins = array();
 		while(false !== ($entry = readdir($handle))){
