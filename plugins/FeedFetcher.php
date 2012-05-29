@@ -13,7 +13,7 @@
 		closedir($handle);
 	}
 	foreach($plugins as $plugin){
-		require("$plugin/plugin.php");
+		include_once("$plugin/plugin.php");
 	}
 	/*require('TodayInHistory/plugin.php');
 	require('RSS/plugin.php');*/
