@@ -1,6 +1,6 @@
 ﻿/*
  * Handle clicks in adminchannel.php
-*/
+ */
 $(document).ready(function(){
 	$('.content').click(function(e){
 		if($(e.target).is('.itemButton')){
@@ -15,102 +15,53 @@ $(document).ready(function(){
 });
 
 /* 
- * createItem(name, target)
  * Function used for creating a new drag-/droppable div inside a target div.
  * name: Will be the id of the div
- * target: The target div to place the new div inside
-*/
-function createItem(name, target, filler, feeddata){
-	var fill = filler || false;
+ * target: Id of the target div
+ * feeddata: Data of the feed
+ */
+function createItem(name, target, feeddata){
 	var data = feeddata || null;
-	if(feedExists(name)){
-		if(!fill){
-			alert("Feed already exist");
-		}
-	}
-	else{
-		var divTag = document.createElement("div");
-		divTag.id = "" + name;
-		divTag.className = "contentitem";
-		divTag.setAttribute("draggable","true");
-		divTag.setAttribute("data",data);
-		divTag.setAttribute("disabled","true");
-		divTag.addEventListener('dragstart', handleDragStart, false);
-		divTag.addEventListener('dragend', handleDragEnd, false);
-		divTag.appendChild(document.createTextNode(name));
-		
-		var delbutton = document.createElement("input");
-		delbutton.setAttribute("type","button");
-		delbutton.setAttribute("name","rbutton");
-		delbutton.setAttribute("value","Remove");
-		delbutton.setAttribute("class","removebutton");
-		delbutton.setAttribute("onclick","removeItem(this)");
-		divTag.appendChild(delbutton);
-		
-		document.getElementById(target).appendChild(divTag);
-	}
+
+	var divTag = document.createElement("div");
+	divTag.id = "" + name;
+	divTag.className = "contentitem";
+	divTag.setAttribute("draggable","true");
+	divTag.setAttribute("data",data);
+	divTag.setAttribute("disabled","true");
+	divTag.addEventListener('dragstart', handleDragStart, false);
+	divTag.addEventListener('dragend', handleDragEnd, false);
+	divTag.appendChild(document.createTextNode(name));
+	
+	var delbutton = document.createElement("input");
+	delbutton.setAttribute("type","button");
+	delbutton.setAttribute("name","rbutton");
+	delbutton.setAttribute("value","Remove");
+	delbutton.setAttribute("class","removebutton");
+	delbutton.setAttribute("onclick","removeItem(this)");
+	divTag.appendChild(delbutton);
+	
+	document.getElementById(target).appendChild(divTag);
 }
 
 /*
- * fillcontent(csv, target)
- * Wrapper function for createItem, will create the given items from the csv 
- * string and put them in the target div.
- * csv: Comma-separated value containing the RSS feeds.
- * target: The id off the target div.
-*/
-function fillcontent(csv, target){
-	if(csv.length > 0){
-		var items = csv.split(',');
-		
-		for(var i = 0; i < items.length; i++){
-			createItem(items[i],target)
-		}
-	}
-}
-
-/*
- * removeItem(element)
- * Used for removing a feed item.
+ * Removes a feed from the content area an returns it to the feedlist.
  * element: The element that will be removed.
-*/
+ */
 function removeItem(element){
 	var name = element.parentNode.getAttribute("id");
-	var parentname = element.parentNode.parentNode.getAttribute("id");
 	document.getElementById("contentlist").appendChild(document.getElementById(name));
 	var maincont = document.getElementById("maincontent");
+	
 	if(maincont.childNodes.length == 0){
 		maincont.style.backgroundImage = "url(images/dropFeedsHere.png)";
 	}
 }
 
 /*
- * feedExists(name)
- * Used for checking so that the feed trying to be added does not already exist.
- * name: The name of the feed trying to be added.
-*/
-function feedExists(name){
-	var children = document.getElementById('maincontent').childNodes;
-	var length = children.length;
-	for(var i = 0; i < length; i++){
-		if(name == children[i].getAttribute('id'))
-			return true;
-	}
-	
-	children = document.getElementById('contentlist').childNodes;
-	length = children.length;
-	for(var i = 0; i < length; i++){
-		if(!(children[i].nodeName == "#text"))
-			if(name == children[i].getAttribute('id'))
-				return true;
-	}
-	
-	return false;
-}
-
-/*
- * saveChannel()
- * Used for saving a channel, will use the information in the form.
-*/
+ * Used for saving a channel, saving information from the inputfields and 
+ * the feeds dropped in the content area.
+ */
 function saveChannel(){
 	var name = document.getElementById("name").value;
 	if(name == ""){
@@ -133,6 +84,8 @@ function saveChannel(){
 		url = url.substr(url.indexOf("?")+1);
 		var p = url.substr(0,3);
 		var oname = url.substr(9);
+		
+		/* Removes the old file if the channel get a new name */
 		if(p == "p=2"){
 			if(!(oname.substr(0,oname.indexOf(".")) == name))
 				$.ajax({
@@ -143,7 +96,7 @@ function saveChannel(){
 					}
 				});
 		}
-		
+		var datastr  = "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent;
 		if(oname.substr(0,oname.length-5) != name){
 			$.ajax({
 				type: "POST",
@@ -159,7 +112,7 @@ function saveChannel(){
 								$.ajax({
 									type: "POST",
 									url: "channelhandler.php",
-									data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent,
+									data: datastr,
 									success: function(msg){
 										window.location = "adminchannel.php";
 									}
@@ -170,7 +123,7 @@ function saveChannel(){
 						$.ajax({
 							type: "POST",
 							url: "channelhandler.php",
-							data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent,
+							data: datastr,
 							success: function(msg){
 								window.location = "adminchannel.php";
 							}
@@ -182,7 +135,7 @@ function saveChannel(){
 			$.ajax({
 				type: "POST",
 				url: "channelhandler.php",
-				data: "p=1&name="+name+"&note="+note+"&static="+stat+"&maincontent="+mainContent,
+				data: datastr,
 				success: function(msg){
 					window.location = "adminchannel.php";
 				}
@@ -192,10 +145,9 @@ function saveChannel(){
 }
 
 /*
- * editChannel(name)
- * Get the information from the json file and fill the form with the information.
+ * Get the information from the channel json-file and fill the form with the information.
  * name: Name of the channel that is going to be edited.
-*/
+ */
 function editChannel(name){
 	$.ajax({
 		type: "POST",
@@ -220,10 +172,9 @@ function editChannel(name){
 }
 
 /*
- * deleteChannel(name)
  * Will delete the channel with the given name.
  * name: Name of the channel that is going to be deleted.
-*/
+ */
 function deleteChannel(name){
 	var divname = name.substr(0, name.length-5);
 	var parentname = document.getElementById(name).parentNode.parentNode.parentNode.getAttribute("id");
@@ -241,6 +192,11 @@ function deleteChannel(name){
 	}
 }
 
+/*
+ * Will fill the content area with feeds if the channel that is getting edited
+ * has any feeds saved. Feeds not belonging to the channel will be placed in the
+ * feedlist.
+ */
 function getFeeds(data){
 	var arr = (data == undefined) ? new Array(0): data;
 
@@ -271,7 +227,7 @@ function getFeeds(data){
 				for(var i = 0; i < jsonobj.length; i++){
 					var jsonitem = jQuery.parseJSON(jsonobj[i])
 					var data = jsonToString(jsonitem);
-					createItem(jsonitem["name"], "contentlist", true, data);
+					createItem(jsonitem["name"], "contentlist", data);
 				}
 			}
 			else{
@@ -279,10 +235,10 @@ function getFeeds(data){
 					var jsonitem = jQuery.parseJSON(jsonobj[i])
 					var data = jsonToString(jsonitem);
 					if($.inArray(jsonitem["name"], names) != -1){
-						createItem(jsonitem["name"], "maincontent", true, data);
+						createItem(jsonitem["name"], "maincontent", data);
 					}
 					else{
-						createItem(jsonitem["name"], "contentlist", true, data);
+						createItem(jsonitem["name"], "contentlist", data);
 					}
 					
 				}
@@ -292,8 +248,7 @@ function getFeeds(data){
 }
 
 /*
- * listChannels()
- * Used for listing all the existing channels and displaying them.
+ * Get and list all available channels.
 */
 function listChannels(){
 	var table = document.getElementById("listContent");
@@ -322,8 +277,8 @@ function listChannels(){
 				td.appendChild(document.createTextNode(note));
 				tr.appendChild(td);
 				
+				td = document.createElement("td");
 				if(jsonitem["name"].toLowerCase() != "panic"){
-					td = document.createElement("td");
 					button = document.createElement("input");
 					button.type = "button";
 					button.id = jsonitem["name"] + ".json";
@@ -348,6 +303,9 @@ function listChannels(){
 	});
 }
 
+/*
+ * Turn json into a string.
+ */
 function jsonToString(jsonitem){
 	var data = "{";
 	for(var key in jsonitem){

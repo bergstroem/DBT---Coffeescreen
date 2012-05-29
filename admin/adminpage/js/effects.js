@@ -1,4 +1,7 @@
-﻿$(document).ready(function(){
+﻿/*
+ * Handles the menu events.
+ */
+$(document).ready(function(){
 	var st = window.location.href;
 	var loc = st.substr(st.lastIndexOf("/")+1);	
 	

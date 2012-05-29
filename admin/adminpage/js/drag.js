@@ -1,5 +1,8 @@
 ﻿var dragSrcEl = null;
 
+/*
+ * Handles dragstart event.
+ */
 function handleDragStart(e){
 	this.style.opacity = '0.5';
 	
@@ -8,6 +11,9 @@ function handleDragStart(e){
 	e.dataTransfer.setData('Text', e.target.id);
 }
 
+/*
+ * Handles dragover event.
+ */
 function handleDragOver(e){
 	if(e.preventDefault){
 		e.preventDefault();
@@ -16,6 +22,9 @@ function handleDragOver(e){
 	return false;
 }
 
+/*
+ * Handles drop event.
+ */
 function handleDrop(e){
 	if(e.stopPropagation){
 		e.stopPropagation();
@@ -34,6 +43,9 @@ function handleDrop(e){
 	return false;
 }
 
+/*
+ * Handles dragend event.
+ */
 function handleDragEnd(e){
 	this.style.opacity = '1';
 }

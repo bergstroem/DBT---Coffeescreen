@@ -1,4 +1,7 @@
 <?php
+	ini_set('display_errors',0); 
+	error_reporting(0);
+
 	if($handle = opendir(".")){
 		$plugins = array();
 		while(false !== ($entry = readdir($handle))){
@@ -10,7 +13,7 @@
 		closedir($handle);
 	}
 	foreach($plugins as $plugin){
-		require("$plugin/plugin.php");
+		include_once("$plugin/plugin.php");
 	}
 	/*require('TodayInHistory/plugin.php');
 	require('RSS/plugin.php');*/
@@ -53,7 +56,6 @@
 		$result = null;
 	}
 	else {
-		echo "Duplicating";
 		$result = duplicate(merge_sort($result));
 	}
 	

@@ -1,9 +1,9 @@
-
 ﻿var host = window.location.host;//"dbt2k12b.codemill.se";//window.location.host/*"85.24.223.52"*/;
+
 /*
  * Handles click events in index.php
+ * All SET and PANIC commands set to the client.
 */
-
 $(document).ready(function(){
 	$.ajax({
 		type: "POST",
@@ -85,8 +85,7 @@ $(document).ready(function(){
 });
 
 /*
- * listScreens()
- * Will connect to the node server and get all the connected screens and display them.
+ * Get all screens connected to the node server and display them.
 */
 function listScreens(){
 	var table = document.getElementById("listContent");
@@ -106,7 +105,6 @@ function listScreens(){
 }
 
 /*
- * createScreen(info)
  * Used for creating a screen, used by listScreens().
  * info: Name of the screen that will be displayed and current channel (comma separated).
 */
@@ -169,11 +167,13 @@ function createScreen(info){
 			var jsonobj = jQuery.parseJSON(msg);
 			for(var i = 0; i < jsonobj.length; i++){
 				var jsonitem = jQuery.parseJSON(jsonobj[i]);
-				var item = document.createElement("option");
-				item.value = jsonitem["name"];
-				item.appendChild(document.createTextNode(jsonitem["name"]));
-				
-				select.appendChild(item);
+				if(jsonitem["name"] != "Panic"){
+					var item = document.createElement("option");
+					item.value = jsonitem["name"];
+					item.appendChild(document.createTextNode(jsonitem["name"]));
+					
+					select.appendChild(item);
+				}
 			}
 			//Select the current channel
 			var options = select.options;

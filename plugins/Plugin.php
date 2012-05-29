@@ -13,7 +13,6 @@ abstract class Plugin {
 	 * Load parameters into the plugin from the given JSON string.
 	**/
 	public function loadParameters($params) {
-		//$params = json_decode($json);
 		$this->parameters = array();
 		if($params != null) {
 			foreach ($params as $key => $value) {
@@ -54,7 +53,7 @@ abstract class Plugin {
 
 	/**
 	 * Composes the html, javascript and css for the view using the preloaded
-	 * parameters. These should be bundeled using bundleView and returned.
+	 * parameters. These must be bundeled using bundleView.
 	**/
 	protected abstract function getViews();
 
@@ -74,11 +73,16 @@ abstract class Plugin {
 	/**
 	 * Creates a new parameter.
 	 * 		$key			- The key for the parameter.
-	 * 		$label 			- [Optional] The form field label for the parameter.
+	 * 		$label 			- The form field label for the parameter.
+	 * 		$tooltip		- The descriptive text shown inside or beside the
+	 * 							element.
+	 * 		$type			- [Optional] The expected datatype for the parameter
 	 * 		$defaultValue	- [Optional] The default value for the parameter if
-	 * 			nothing else is set.
+	 * 							nothing else is set.
 	**/
-	protected function createParameter($key, $label, $tooltip, $type=Type::ShortText, $defaultValue="") {
+	protected function createParameter(
+			$key, $label, $tooltip, $type=Type::ShortText, $defaultValue="") {
+		
 		$this->parameters[$key]["label"] = $label;
 		$this->parameters[$key]["tooltip"] = $tooltip;
 		$this->parameters[$key]["type"] = $type;
@@ -86,30 +90,38 @@ abstract class Plugin {
 	}
 
 	/**
-	 * Packs the provided HTML, CSS and JavaScript into the list of views.
+	 * Packs the provided HTML, CSS, JavaScript and info into the list of views.
+	 * 		$title	- The title of the view. Will be used beside the forward and
+	 * 					backwards arrows.
 	 * 		$time	- The time of creation for the content.
 	 * 		$html	- A string containing the HTML to show.
-	 * 		$css	- [Optional] A string containing the extra CSS for the view.
-	 * 		$js		- [Optional] A string containing the extra JavaScript for
-	 * 					the view.
+	 * 		$css	- [Optional] A string containing the url to the extra CSS
+	 * 					for the view.
+	 * 		$js		- [Optional] A string containing the url to the extra
+	 * 					JavaScript for the view.
 	**/
 	protected function bundleView($title, $time, $html, $css="", $js="") {
-		$this->views[] = array("title" => $title, "date" => $time, "html" => $html, "css" => $css, "js" => $js);
+		$this->views[] = array(
+				"title" => $title,
+				"date" => $time,
+				"html" => $html,
+				"css" => $css,
+				"js" => $js
+			);
 	}
 
-
-	/************************************
-	 *           FIELD TYPES            *
-	 ************************************/
-
-	
 }
 
+
+/**
+ * This class is works like an enum for the field types. Example:
+ * 		$type = Type::ShortText;
+**/
 abstract class Type {
-	const ShortText = 0;
-	const LongText = 1;
-	const Number = 2;
-	const Boolean = 3;
+	const ShortText = 0;	//Standard text field
+	const LongText = 1;		//Textarea
+	const Number = 2;		//HTML5 number field or text field if not supported
+	const Boolean = 3;		//Checkbox
 }
 
 ?>
