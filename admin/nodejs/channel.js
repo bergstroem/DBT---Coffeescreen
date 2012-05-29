@@ -9,10 +9,10 @@ var async = require('async');
 var http = require('http');
 
 //Representation of a channel
-function Channel(name, note, mainContent, panic, staticText) {
+function Channel(name, note, maincontent, panic, staticText) {
 	this.name = name;
 	this.note = note;
-	this.mainContent = mainContent;
+	this.maincontent = maincontent;
 	this.panic = panic;
 	this.staticText = staticText;
 	
@@ -21,12 +21,12 @@ function Channel(name, note, mainContent, panic, staticText) {
 		//Get main and sub content at the same time
 		async.parallel([
 		    function(callback){
-				console.log("FETCHING: " + mainContent);
-				fetchContent(mainContent, callback);
+				console.log("FETCHING: " + maincontent);
+				fetchContent(maincontent, callback);
 		    },
 		    function(callback){
-				console.log("FETCHING: " + panic.mainContent);
-				fetchContent(panic.mainContent, callback);
+				console.log("FETCHING: " + panic.maincontent);
+				fetchContent(panic.maincontent, callback);
 		    },
 		],
 		//Callback after both above functions are done.
@@ -34,7 +34,7 @@ function Channel(name, note, mainContent, panic, staticText) {
 		    var mainFeed = results[0];
 		    var panicContent = results[1];
 			
-			panic.mainContent = panicContent;
+			panic.maincontent = panicContent;
 		    
 		    var feed = '{'
 			+ '"name":"' + name + '","static":"' + staticText + '","maincontent":' + mainFeed + ',"panic":' + JSON.stringify(panic) + "}";
@@ -80,13 +80,13 @@ this.prepareChannelFileForDelivery = function(connection, channel) {
 	
 	var name = jsonObject.name;
 	var note = jsonObject.note;
-	var mainContent = jsonObject.maincontent;
+	var maincontent = jsonObject.maincontent;
 	var panic = jsonObject.panic;
 	var staticText = jsonObject.static;
 	
 	var panicChannel = new Channel(panic.name, panic.note, panic.maincontent, "", panic.static);
 	
-	var channel = new Channel(name, note, mainContent, panicChannel, staticText);
+	var channel = new Channel(name, note, maincontent, panicChannel, staticText);
 	
 	var feed = channel.sendJson(connection);
 	

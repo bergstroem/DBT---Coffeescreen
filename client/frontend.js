@@ -28,6 +28,7 @@ function init() {
 
 //Switch to next view
 function switchMainInformation(direction) {
+
 	mainContentCounter += direction;
 	if(mainContentCounter >= currentInformation.maincontent.posts.length) {
 		mainContentCounter = 0;
@@ -128,7 +129,6 @@ function switchMainInformation(direction) {
 	if(images.length > 0){
 		for(var i = 0; i < images.length; i++){
 			images[i].src = images[i].src.replace("%20", "").replace(" ", "");
-			images[i].style.display = "block";
 			urls.push(images[i].src);
 		}
 	}
@@ -382,7 +382,7 @@ function connectToServer () {
     	if(message.data == "Panic"){
     		console.log("I should go to panic now");
 			isPanic = true;
-			currentInformation = JSON.parse(informationRoot.panic);
+			currentInformation = informationRoot.panic;
     		return;
     	}
     	else if(message.data == "Unpanic"){

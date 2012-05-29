@@ -92,11 +92,6 @@ h1 {
 	position: relative;
 }
 
-
-#mainContent img {
-	margin: 0 auto;
-}
-
 .content {
 	transition: left .3s ease-in-out, opacity .3s ease-in-out;
 	-moz-transition: left .3s ease-in-out, opacity .3s ease-in-out;
@@ -109,6 +104,11 @@ h1 {
 	overflow: hidden;
 	width: 300px;
 	padding: 50px;
+}
+
+.content img {
+	display: block;
+	margin: 0 auto;
 }
 
 #progressBar {
