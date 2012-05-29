@@ -21,10 +21,10 @@ function Channel(name, note, maincontent, panic, staticText) {
 		//Get main and sub content at the same time
 		async.parallel([
 		    function(callback){
-				fetchContent(mainContent, callback);
+				fetchContent(maincontent, callback);
 		    },
 		    function(callback){
-				fetchContent(panic.mainContent, callback);
+				fetchContent(panic.maincontent, callback);
 		    },
 		],
 		//Callback after both above functions are done.
