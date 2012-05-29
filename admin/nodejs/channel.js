@@ -32,6 +32,8 @@ function Channel(name, note, mainContent, panic, staticText) {
 		    var mainFeed = results[0];
 		    var panicContent = results[1];
 			
+			console.log(typeof(mainFeed));
+			
 			panic.mainContent = panicContent;
 		    console.log("FETCHED 1: " + mainFeed);
 		    console.log("FETCHED 2: " + panicContent);
